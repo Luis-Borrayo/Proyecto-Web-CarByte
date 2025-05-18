@@ -1,0 +1,60 @@
+.login-container {
+    border: 2px solid #9e3120;
+    background-color: #c90a0a;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(50, 21, 21, 0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 380px;
+    transform: translate(-50%, -50%);
+}
+
+.textbox-login{
+    width: 320px;   
+    padding: 7px;
+    border: 2px solid #4f1212;
+    border-radius: 5px;
+    font-size: 13px;
+    box-sizing: border-box;
+    display: block;
+    margin: 10px auto;
+    color: #405162;
+}
+.ingresar{
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #531a1a;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.ingresar:hover {
+    background-color: #224367;
+}
+
+.txt-login {
+    font-size: 14px;
+    margin: 10px 20px;
+    display: block;
+    text-align: left;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.titulo{
+    font-size: 35px;
+    font-family:'Times New Roman', Times, serif
+}
+
+img {
+    width:200px;
+}
+
+.check-login {
+    transform: translateX(-5px); /* Mueve hacia la izquierda */
+}

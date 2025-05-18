@@ -1,0 +1,120 @@
+/* Estilos para el menú desplegable de usuario */
+/* Reset básico para asegurar coherencia en diferentes páginas */
+.dropdown *,
+.nav-links * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal del menú desplegable */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    z-index: 1000; /* Asegura que el menú desplegable aparezca sobre otros elementos */
+}
+
+/* Estilo del enlace/botón que activa el menú desplegable */
+.dropdown-trigger {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 12px;
+    font-family: inherit;
+}
+
+/* Contenedor del menú desplegable */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #3e3e3e;
+    min-width: 200px; /* Aumentado para mejor visibilidad */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1001; /* Mayor que el z-index del contenedor padre */
+    border-radius: 4px;
+    padding: 5px 0;
+    margin-top: 3px;
+}
+
+/* Estilo de los elementos de lista en el menú desplegable */
+.dropdown-content li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Estilo de los enlaces dentro del menú desplegable */
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+/* Efecto hover para los enlaces del menú desplegable */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Muestra el menú desplegable al hacer hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Estilo para los íconos de Material Design */
+.material-icons {
+    margin-right: 8px;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+/* Estilo para el texto de bienvenida */
+.welcome-text {
+    font-weight: bold;
+}
+
+/* Ajustes para posicionar el menú de usuario en la barra de navegación */
+.nav-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.user-menu {
+    margin-left: auto;
+}
+
+/* Clase específica para los elementos del menú de inicio de sesión/registro */
+.logmenu {
+    width: 100%;
+}
+
+/* Estilos para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .dropdown-content {
+        position: absolute;
+        width: 200px;
+        right: 0;
+    }
+    
+    .user-menu {
+        position: relative;
+    }
+    
+    /* Mejoras para navegación móvil */
+    .nav-links {
+        justify-content: space-between;
+    }
+}
+
+/* Asegura que el menú no se oculte al cambiar de página */
+body .navbar .nav-links .dropdown .dropdown-content {
+    transition: display 0.3s ease;
+}
