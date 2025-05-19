@@ -1,13 +1,13 @@
 .sidebar {
-    width: 250px;
+    width: 210px;
     height: calc(100vh - 60px);
     position: fixed;
-    top: 60px;
+    top: 70px;
     left: 0;
-    background-color: #161d35;
+    background-color: #15151c;
     color: #ffffff;
     padding: 20px;
-    z-index: 100;
+    z-index: 900;
     overflow-y: auto;
 }
 
@@ -84,7 +84,15 @@
 }
 
 .menu-section a i{
-    color: orange;
+    text-decoration: none;
+    background: linear-gradient(45deg, #D16002, #ED9121, #CC5500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 600;
+    position: relative;
+    transition: all 0.3s ease;
 }
 .menu-section a:hover,
 .menu-section a.active {

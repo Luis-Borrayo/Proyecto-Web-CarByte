@@ -16,9 +16,8 @@ session_start();
 </head>
 <body class="body-index">
     <?php include('barras/navbar-cliente.php')?>
-    <?php ?>
+    <?php include('barras/sidebar-cliente.php')?>
     <main>
-        <div class="space"></div>
         <div id= "conteItemsCarrusel">
             <div class="ItemCarrusel" id="ItemCarrusel1">
             <div class="tarjetaCarrusel" id="tarjetaCarrusel1">

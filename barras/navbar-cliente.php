@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toyota | Venta de Autos</title>
+    <title>Carbyte | Distribuidor de Autos</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/Menu.css">
     <link rel="stylesheet" href="css/modal.css">
@@ -34,7 +34,7 @@
             <a href="Mision.php">Mision</a>
             <a href="Vision.php">Vision</a>
             <a href="accesorios.php">Productos</a>
-            <a href="#">Contactos</a>
+            <a href="Contacto.php">Contactos</a>
             <a href="#">Citas</a>
 
             <div class="user-menu dropdown">
