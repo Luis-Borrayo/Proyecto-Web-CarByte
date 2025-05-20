@@ -1,15 +1,5 @@
 <?php
-$host = 'localhost';
-$nom = 'root';
-$pass = '';
-$bd = 'uspg';
-
-$connec = mysqli_connect($host, $nom, $pass, $bd);
-
-if (!$connec) {
-    die("Error de conexión con la base de datos: " . mysqli_connect_error());
-}
-
+session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = mysqli_real_escape_string($connec, $_POST['usuario']);
     $correo = mysqli_real_escape_string($connec, $_POST['correo']);
@@ -35,49 +25,90 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Toyota | Venta de Autos</title>
     <link rel="stylesheet" href="./css/contac.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="contac-body">
+    <?php include('barras/navbar-cliente.php')?>
+    <?php include('barras/sidebar-cliente.php')?>
   <div class="contac-container">
+
     <!-- Lado izquierdo -->
     <div class="contact-info">
       <h2 style="text-align: center;">Contáctanos</h2>
-      <div class="info-itemcontact">
+      <p class="descripcontac">Llama o visitanos por nuestros medios de comunicacion o completa el formulario
+        y uno de nuestros representantes se pondrá en contacto contigo lo antes posible. <br>
+        Tu opinión, preguntas o sugerencias son muy importantes para nosotros.</p>
+      <div class="contac-bloc">
+        <div class="bloque-contac1">
+        <div class="info-itemcontact">
         <i class="fas fa-clock"></i>
         <div>
           <strong>Horario de apertura</strong><br>
-          Lunes - Viernes, 8:00 - 9:00
+          Lunes - Viernes, 8:00am - 4:00pm
         </div>
       </div>
       <div class="info-itemcontact">
-        <i class="fas fa-phone"></i>
+        <i class="fa fa-phone"></i>
         <div>
           <strong>Llàmanos</strong><br>
-          +012 345 6789
+          PBX: 2228-6100
         </div>
       </div>
-      <div class="info-itemcontact">
-        <i class="fas fa-envelope"></i>
+      </div>
+      <div class="bloque-contac2">
+        <div class="info-itemcontact">
+        <i class="fa fa-envelope"></i>
         <div>
           <strong>Envíenos un correo electrónico</strong><br>
-          info@ejemplo.com
+          info@carbyte.com.gt
         </div>
       </div>
-      <h2 style="text-align: center;">Sucursales</h2>
-      <h3>Central</h3>
       <div class="info-itemcontact">
-        <p>Dirección: Calle Ficticia 123, Ciudad X</p>
-        <p>Teléfono: (123) 456-7890</p>
+        <i class="fab fa-whatsapp"></i>
+        <div>
+          <strong>WHATSAPP</strong><br>
+          +502 5638-9688
+        </div>
       </div>
-      <h3>Norte</h3>
-      <div class="info-itemcontact">
-        <p>Dirección: Calle Ficticia 123, Ciudad X</p>
-        <p>Teléfono: (123) 456-7890</p>
       </div>
+      </div>
+      <h2 style="text-align: center;">Visítanos</h2>
+    <div class="contac-bloc">
+        <div class="bloque-contac1">
+        <h3>CarByte La Republica</h3>
+      <div class="info-sucursal">
+        <p>Zona 9 7Av 11-65</p>
+        <p>Teléfono: +502 2354-9635</p>
+      </div>
+      <h3>CarByte Las Américas</h3>
+      <div class="info-sucursal">
+        <p>Avenida las américas 21calle</p>
+        <p>Teléfono: +502 2335-8546</p>
+      </div>
+      <h3>CarByte CA Salvador</h3>
+      <div class="info-sucursal">
+        <p>Km. 3.5 Carretera a El Salvador</p>
+        <p>Teléfono: +502 2356-9685</p>
+      </div>
+        </div>
+        <div class="bloque-contac2">
+            <h3>CarByte Santa Fe</h3>
+      <div class="info-sucursal">
+        <p>27 calle 10 avenida Colonia Santa Fe</p>
+        <p>Teléfono: +502 2456-5821</p>
+      </div>
+      <h3>CarByte zona 10</h3>
+      <div class="info-sucursal">
+        <p>20 calle 15av zona 10</p>
+        <p>Teléfono: +502 2387-8925</p>
+      </div>
+        </div>
+    </div>
     </div>
 
     <!-- Lado derecho -->
     <div id="contacto" class="form-container">
-      <h1>Contáctanos Para Cualquier Consulta</h1>
+      <h1>Envía un mensaje</h1>
       <form class="formContac-container" method="post" action="#">
         <div class="form-group">
           <label for="usuario">Nombre_Completo</label>
@@ -102,6 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit" class="btn-enviar">Enviar</button>
       </form>
     </div>
-  </div>
+
+  </div> <!-- Aquí sí se cierra correctamente contac-container -->
 </body>
 </html>
