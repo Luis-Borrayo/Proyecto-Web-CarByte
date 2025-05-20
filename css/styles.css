@@ -12,26 +12,35 @@
     margin-top: 70px;
     margin-left: 220px;
 }
-#conteItemsCarrusel{
-    border: 5px solid black;
-    height: 500px;
-    overflow:hidden;
+#conteItemsCarrusel {
+    border: 4px solid black;
+    height: 560px;
+    width: 100%;          /* Más ancho que antes, casi el total */
+    max-width: 1500px;   /* Un poco más grande */
+    margin: 0 auto;
+    overflow: hidden;
     display: flex;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
 }
+
 .ItemCarrusel{
     border: 1px solid black;
-    height: 500px;
+    height: 560px;
     flex: 0 0 100%;
     scroll-snap-align: start;
     position: relative;
 
 }
-.tarjetaCarrusel{
-    background-color: rgb(89, 89, 158);
+.tarjetaCarrusel {
+    flex: 0 0 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+
 .flechaCarrusel{
     position: absolute;
     top: 0;
@@ -200,6 +209,36 @@ i{
         color: #000000;
 
 }
+
+.vehiculo {
+  position: relative;
+  overflow: visible;
+}
+
+.detalle-popup {
+  position: absolute;
+  top: 10px; right: 10px;   
+  width: calc(100% - 20px);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 5;
+}
+
+.detalle-popup.mostrar {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 
 #sucursales {
     padding: 40px 60px;
@@ -524,3 +563,4 @@ form label {
 .btn-ver-mas:hover {
     background-color: #170303;
 }
+
