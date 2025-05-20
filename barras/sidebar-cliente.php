@@ -8,19 +8,6 @@
         <link rel="stylesheet" href="../css/Menu.css">
         <link rel="stylesheet" href="../css/sidebar.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <style>
-            .navbar {
-                position: fixed;
-                top: 0;
-                width: 100%;
-                
-                z-index: 100;
-                transition: transform 0.3s ease-in-out;
-            }
-            .navbar-hidden {
-                transform: translateY(-100%);
-            }
-        </style>
     </head>
     <body>
         <?php if(session_status() === PHP_SESSION_NONE)

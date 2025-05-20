@@ -10,18 +10,11 @@
     <link rel="stylesheet" href="css/ingreso.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-
-            z-index: 100;
-            transition: transform 0.3s ease-in-out;
-        }
-        .navbar-hidden {
-            transform: translateY(-100%);
-        }
+        body {
+            margin-top: 110px;
+            }
     </style>
+
 </head>
 <body>
     <header class="navbar">
@@ -34,7 +27,7 @@
             <a href="Mision.php">Mision</a>
             <a href="Vision.php">Vision</a>
             <a href="accesorios.php">Productos</a>
-            <a href="Contacto.php">Contactos</a>
+            <a href="contacto.php">Contactos</a>
             <a href="#">Citas</a>
 
             <div class="user-menu dropdown">
