@@ -24,10 +24,10 @@ session_start();
                 <img src="./imagenes/imagenindex/Portada.png" alt="Portada" class="img-carrusel">
             </div>
             <div class="flechaCarrusel">
-                <a href="#ItemCarrusel5">
+                <a href="#ItemCarrusel5" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-left"></i>
                 </a>
-                <a href="#ItemCarrusel2">
+                <a href="#ItemCarrusel2" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-right"></i>
                 </a>
                 </div>
@@ -37,10 +37,10 @@ session_start();
                 <img src="./imagenes/imagenindex/Auto1.jpg" alt="Auto1" class="img-carrusel">
             </div>
             <div class="flechaCarrusel">
-                <a href="#ItemCarrusel1">
+                <a href="#ItemCarrusel1" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-left"></i>
                 </a>
-                <a href="#ItemCarrusel3">
+                <a href="#ItemCarrusel3" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-right"></i>
                 </a>
                 </div>
@@ -50,10 +50,10 @@ session_start();
                 <img src="./imagenes/imagenindex/Auto2.jpg" alt="Auto2" class="img-carrusel">
             </div>
             <div class="flechaCarrusel">
-                <a href="#ItemCarrusel2">
+                <a href="#ItemCarrusel2" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-left"></i>
                 </a>
-                <a href="#ItemCarrusel4">
+                <a href="#ItemCarrusel4" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-right"></i>
                 </a>
                 </div>
@@ -63,10 +63,10 @@ session_start();
                 <img src="./imagenes/imagenindex/Auto3.jpg" alt="Auto3" class="img-carrusel">
             </div>
             <div class="flechaCarrusel">
-                <a href="#ItemCarrusel3">
+                <a href="#ItemCarrusel3" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-left"></i>
                 </a>
-                <a href="#ItemCarrusel5">
+                <a href="#ItemCarrusel5" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-right"></i>
                 </a>
                 </div>
@@ -76,10 +76,10 @@ session_start();
                 <img src="./imagenes/imagenindex/Auto4.jpg" alt="Auto4" class="img-carrusel">
             </div>
             <div class="flechaCarrusel">
-                <a href="#ItemCarrusel4">
+                <a href="#ItemCarrusel4" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-left"></i>
                 </a>
-                <a href="#ItemCarrusel1">
+                <a href="#ItemCarrusel1" class="carrusel-a">
                     <i class="fa-solid fa-circle-chevron-right"></i>
                 </a>
                 </div>
@@ -380,34 +380,6 @@ session_start();
 
             </div>
         </section>
-        
-        <section id="contacto">
-            <h1>Contáctanos</h1>
-            <form class="form-contacto" method="post" action="#">
-                <div class="form-group">
-                    <label for="usuario">Nombre de Usuario</label>
-                    <input type="text" id="usuario" name="usuario" required>
-                </div>
-                <div class="form-group">
-                    <label for="correo">Correo Electrónico</label>
-                    <input type="email" id="correo" name="correo" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" required>
-                </div>
-                <div class="form-group">
-                    <label for="asunto">Asunto</label>
-                    <input type="text" id="asunto" name="asunto" required>
-                </div>
-                <div class="form-group">
-                    <label for="mensaje">Mensaje</label>
-                    <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn-enviar">Enviar</button>
-            </form>
-        </section>
-
     </main>
 
     <script src="js/Menu.js"></script>

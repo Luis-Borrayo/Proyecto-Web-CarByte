@@ -23,7 +23,6 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
 }
-
 .ItemCarrusel{
     border: 1px solid black;
     height: 560px;
@@ -51,7 +50,7 @@
     justify-content: space-between;
     padding: 20px;
 }
-a{
+.carrusel-a{
     text-decoration: none;
 }
 i{
@@ -97,11 +96,7 @@ i{
         height: auto;
 }
 
-.logo-text {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #ffffff;
-}
+
 
 .nav-links {
     display: flex;
@@ -372,77 +367,6 @@ i{
         color: #ffc107;
 }
 
-#contacto {
-    padding: 40px 60px;
-    background-color: #ffffff;
-}
-
-#contacto h1 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.form-contacto {
-    max-width: 700px;
-    margin: auto;
-    background: #f9f9f9;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-    font-weight: bold;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: #fff;
-    box-sizing: border-box;
-}
-
-
-.btn-enviar {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background-color: #000000;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-enviar:hover {
-    background-color: #4a4949;
-        color: #ffc107;
-}
-
-.header-principal {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2e2d2d;
-    padding: 15px 40px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
 
 .logo {
     display: flex;
@@ -453,7 +377,6 @@ i{
 .logo-img {
     height: 50px;
 }
-
 .nombre-marca {
     font-size: 1.8rem;
     font-weight: bold;
@@ -485,7 +408,6 @@ i{
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f2f4f8;
@@ -500,7 +422,6 @@ body {
     margin: 80px auto;
     padding: 20px;
 }
-
 /* Tarjeta (como en login, formularios, etc.) */
 .card {
     background-color: #fff;
@@ -514,29 +435,6 @@ body {
     font-size: 24px;
     margin-bottom: 25px;
     color: #2c3e50;
-}
-
-/* Formularios */
-form label {
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.form-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
 /* Responsive */

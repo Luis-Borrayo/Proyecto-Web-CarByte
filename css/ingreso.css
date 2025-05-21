@@ -1,3 +1,4 @@
+/* Contenedor del login */
 .login-container {
     border: 2px solid #9e3120;
     background-color: #c90a0a;
@@ -10,20 +11,53 @@
     left: 50%;
     width: 380px;
     transform: translate(-50%, -50%);
+    display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
-.textbox-login{
-    width: 320px;   
-    padding: 7px;
-    border: 2px solid #4f1212;
-    border-radius: 5px;
-    font-size: 13px;
-    box-sizing: border-box;
-    display: block;
-    margin: 10px auto;
-    color: #405162;
+/* Título */
+.titulo {
+    font-size: 35px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    margin: 10px 20px;
+    margin-top: 30px;
 }
-.ingresar{
+
+/* Imagen superior */
+img {
+    width: 150px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+/* Texto para los labels */
+.txt-login {
+    font-size: 14px;
+    margin: 10px 20px 5px 20px;
+    text-align: left;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+}
+
+/* Campos de texto */
+.textbox-login {
+  padding: 10px;
+  border: 1px solid #16233c;
+  font-size: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-sizing: border-box;
+  height: 25px;
+}
+
+.login-group {
+  margin-bottom: 20px;
+}
+
+/* Botón ingresar */
+.ingresar {
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
@@ -32,29 +66,49 @@
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
+    border: none;
+    cursor: pointer;
 }
 
 .ingresar:hover {
     background-color: #224367;
 }
 
-.txt-login {
-    font-size: 14px;
-    margin: 10px 20px;
-    display: block;
-    text-align: left;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-
-.titulo{
-    font-size: 35px;
-    font-family:'Times New Roman', Times, serif
-}
-
-img {
-    width:200px;
-}
-
+/* Checkboxes contenedor */
 .check-login {
-    transform: translateX(-5px); /* Mueve hacia la izquierda */
+    width: 320px;
+    margin-right: 20px;
+    text-align: left;
+    padding-left: 30px;
+}
+
+/* Checkboxes individuales */
+.check-login label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.check-login input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Botón cancelar (si lo tienes) */
+.cancelar {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: orange;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.cancelar:hover {
+    text-decoration: underline;
 }

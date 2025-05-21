@@ -1,47 +1,20 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Accesorios</title>
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="css/Menu.css">
-    <link rel="stylesheet" href="css/modal.css">
-    <link rel="stylesheet" href="css/ingreso.css">
+        <link rel="stylesheet" href=".css/styles.css">
+        <link rel="stylesheet" href=".css/Menu.css">
+    <link rel="stylesheet" href=".css/modal.css">
+    <link rel="stylesheet" href=".css/ingreso.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
 </head>
   <style>
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color:rgb(29, 0, 215);
-      color: white;
-      padding: 10px 30px;
-    }
-
-    .navbar .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .navbar .logo img {
-      height: 40px;
-      margin-right: 10px;
-    }
-
-    .navbar nav a {
-      margin-left: 20px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .navbar nav a.activo {
-      text-decoration: underline;
-    }
-
     .contenedor-accesorios {
       max-width: 1200px;
       margin: auto;
@@ -117,7 +90,7 @@
 </head>
 <body class="body-index">
 <?php include('barras/navbar-cliente.php')?>
-    <?php ?>
+<?php include('barras/sidebar-cliente.php')?>
         <div class="space"></div>
   <main class="contenedor-accesorios">
     

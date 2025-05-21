@@ -1,13 +1,17 @@
 <div class="login-container">   
     <div>
-        <img src="imagenes/logo_toyota.png" alt="logo_toyota">
+        <img src="imagenes/CarByte.png" alt="logo_toyota">
     </div>
     <label class="titulo">Iniciar sesión</label>
     <form method="POST" action="crudWeb/procesar_login.php">
+        <div class="login-group">
         <label class="txt-login">Ingrese nombre de usuario:</label>
         <input type="text" name="user" id="user" class="textbox-login" placeholder="Nombre de usuario" required>
+        </div>
+        <div class="login-group">
         <label class="txt-login">Ingrese contraseña:</label>
         <input type="password" name="pass" id="pass" class="textbox-login" placeholder="Contraseña" required>
+        </div>
         <div class="check-login">
         <div>
             <label class="txt-login" for="check">

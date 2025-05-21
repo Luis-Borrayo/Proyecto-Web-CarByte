@@ -13,6 +13,11 @@
         body {
             margin-top: 110px;
             }
+            .logo-text {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ffffff;
+}
     </style>
 
 </head>
@@ -27,7 +32,7 @@
             <a href="Mision.php">Mision</a>
             <a href="Vision.php">Vision</a>
             <a href="accesorios.php">Productos</a>
-            <a href="contacto.php">Contactos</a>
+            <a href="contacto.php">Contacto</a>
             <a href="#">Citas</a>
 
             <div class="user-menu dropdown">

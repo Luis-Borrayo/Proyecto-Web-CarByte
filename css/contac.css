@@ -4,14 +4,12 @@
   font-family: 'Segoe UI', sans-serif;
   background-color: #f9f9f9;
   margin-top: 70px;
-  margin-left: 220px;
+  margin-left: 210px;
 }
 
 /* --- Contenedor principal --- */
 .contac-container {
   display: flex;
-  margin-top: 70px;
-  margin-left: 220px;
   box-sizing: border-box;
   flex-wrap: wrap; /* Para hacer responsivo con wrap */
 }
@@ -24,7 +22,8 @@
 }
 /* --- Lado izquierdo: información --- */
 .contact-info {
-  width: 700px;
+  
+  width: 60%;
   background-color: #16233c;
   color: white;
   padding: 20px;
@@ -71,7 +70,7 @@
 
 /* --- Lado derecho: formulario --- */
 .form-container {
-  width: 400px;
+  width: 40%;
   background-color: #d0f0f9;
   padding: 70px;
   box-sizing: border-box;
@@ -124,7 +123,7 @@ textarea {
   z-index: 1;
   transition: color 0.3s ease;
   width: 150px;
-  left: 260px;
+
 }
 
 .btn-enviar::before {
