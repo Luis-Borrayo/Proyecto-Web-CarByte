@@ -39,7 +39,11 @@
     align-items: center;
 }
 
-
+.pntcarrutcel{
+    text-decoration: none;
+    color: #753d13;
+    font-size: 15px;
+}
 .flechaCarrusel{
     position: absolute;
     top: 0;
@@ -55,6 +59,7 @@
 }
 i{
     color: gray;
+    font-size: 35px;
 }
 .img-carrusel{
     height: 100%;
@@ -68,7 +73,7 @@ i{
     scroll-behavior: smooth;
 }
 #contepuntos > a{
-    margin: 4px;
+    margin: 6px;
 }
 .navbar {
     position: fixed;

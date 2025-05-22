@@ -86,11 +86,11 @@ session_start();
             </div>
         </div>
         <div id="contepuntos">
-            <a href="#ItemCarrusel1">●</a>
-            <a href="#ItemCarrusel2">●</a>
-            <a href="#ItemCarrusel3">●</a>
-            <a href="#ItemCarrusel4">●</a>
-            <a href="#ItemCarrusel5">●</a>
+            <a href="#ItemCarrusel1" class="pntcarrutcel">●</a>
+            <a href="#ItemCarrusel2" class="pntcarrutcel">●</a>
+            <a href="#ItemCarrusel3" class="pntcarrutcel">●</a>
+            <a href="#ItemCarrusel4" class="pntcarrutcel">●</a>
+            <a href="#ItemCarrusel5" class="pntcarrutcel">●</a>
         </div>
         <section id="vehiculos">
             <label class="titulo-Vehiculo">Catálogo de Vehículos</label>
