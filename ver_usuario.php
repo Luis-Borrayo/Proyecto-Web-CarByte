@@ -4,7 +4,7 @@ include 'conexion.php';
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $sql = "SELECT * FROM usuario WHERE Id1 = $id";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($connec, $sql);
     $usuario = mysqli_fetch_assoc($result);
 }
 ?>
