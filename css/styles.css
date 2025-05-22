@@ -462,3 +462,98 @@ body {
     background-color: #170303;
 }
 
+.admin-body {
+    background-color: #0d1b2a;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 30px;
+    background-color: #1b263b;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.admin-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #f4a261;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1e2a3c;
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+    border: 1px solid #324a5f;
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-table th {
+    background-color: #243447;
+    color: #f4a261;
+    font-weight: bold;
+}
+
+.avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.admin-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    color: white;
+}
+
+.crear-btn {
+    background-color: #2a9d8f;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.crear-btn:hover {
+    background-color: #21867a;
+}
+
+.ver-btn {
+    background-color: #219ebc;
+}
+
+.ver-btn:hover {
+    background-color: #176d8b;
+}
+
+.editar-btn {
+    background-color: #ffb703;
+    color: #333;
+}
+
+.editar-btn:hover {
+    background-color: #e9a503;
+    color: #000;
+}
+
+.eliminar-btn {
+    background-color: #e63946;
+}
+
+.eliminar-btn:hover {
+    background-color: #b02a35;
+}
