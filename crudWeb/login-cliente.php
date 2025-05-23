@@ -2,15 +2,11 @@
     <div>
         <img src="imagenes/CarByte.png" alt="logo_toyota">
     </div>
-    <label class="titulo">Iniciar sesión Administrador</label>
-    <form method="POST" action="crudWeb/procesar_login.php">
+    <label class="titulo">Iniciar sesión</label>
+    <form method="POST" action="crudWeb/procesar-login-cliente.php">
         <div class="login-group">
         <label class="txt-login">Ingrese nombre de usuario:</label>
         <input type="text" name="user" id="user" class="textbox-login" placeholder="Nombre de usuario" required>
-        </div>
-        <div class="login-group">
-        <label class="txt-login">Ingrese Codigo:</label>
-        <input type="text" name="cod" id="cod" class="textbox-login" placeholder="Codigo" required>
         </div>
         <div class="login-group">
         <label class="txt-login">Ingrese contraseña:</label>

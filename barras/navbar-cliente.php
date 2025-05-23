@@ -1,3 +1,9 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -68,6 +74,11 @@
                         </a>
                     </li>
                     <li class="logmenu">
+                        <a href="#" class="btn-modal" data-modal-target="modalLogin-usuario">
+                        <i class="material-icons">login</i> Ingresar como administrador
+                        </a>
+                    </li>
+                    <li class="logmenu">
                         <a href="#" class="btn-modal" data-modal-target="modalRegistro">
                         <i class="material-icons">person_add</i> Registrarse
                         </a>
@@ -77,10 +88,15 @@
             <div id="modalLogin" class="modal">
                 <div class="modal-content">
                     <span class="close-btn" onclick="cerrarModal()">✖</span>
-                    <?php include('crudWeb/login.php'); ?>
+                    <?php include('crudWeb/login-cliente.php'); ?>
                 </div>
             </div>  
-
+            <div id="modalLogin-usuario" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="cerrarModal()">✖</span>
+                    <?php include('crudWeb/login.php'); ?>
+                </div>
+            </div> 
             <div id="modalRegistro" class="modal">
                 <div class="modal-content">
                     <span class="close-btn" onclick="cerrarModal()">✖</span>
