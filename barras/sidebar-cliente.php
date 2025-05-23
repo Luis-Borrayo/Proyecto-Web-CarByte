@@ -1,4 +1,4 @@
-<?php
+<?php 
 // Iniciar sesión
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -6,16 +6,35 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include(__DIR__ . "/../conexion.php");
 
-// Obtener usuario actual
 $username = $_SESSION['username'] ?? '';
-$query = "SELECT avatar FROM usuario WHERE username = ?";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar']) && $username !== '') {
+    $avatar = $_FILES['avatar'];
+
+    if ($avatar['error'] === 0) {
+        $ext = pathinfo($avatar['name'], PATHINFO_EXTENSION);
+        $file_name = uniqid('avatar_') . '.' . $ext;
+        $upload_path = __DIR__ . "/../avatars/" . $file_name;
+
+        // Mover el archivo
+        if (move_uploaded_file($avatar['tmp_name'], $upload_path)) {
+            // Guardar en BD
+            $query = "UPDATE clientes SET avatar = ? WHERE username = ?";
+            $stmt = mysqli_prepare($connec, $query);
+            mysqli_stmt_bind_param($stmt, "ss", $file_name, $username);
+            mysqli_stmt_execute($stmt);
+        }
+    }
+}
+
+// Obtener avatar actual
+$query = "SELECT avatar FROM clientes WHERE username = ?";
 $stmt = mysqli_prepare($connec, $query);
 mysqli_stmt_bind_param($stmt, "s", $username);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $user = mysqli_fetch_assoc($result);
 
-// Definir avatar
 $default_avatar = 'sinavatar.jpg';
 $avatar_file = basename($user['avatar'] ?? '');
 $avatar_path = (!empty($avatar_file) && file_exists(__DIR__ . "/../avatars/" . $avatar_file))
@@ -54,7 +73,6 @@ $nom_usuario = $username ?: 'Usuario';
             margin: 0 auto;
             border-radius: 50%;
             overflow: hidden;
-            position: relative;
             background-color: #34495e;
             border: 3px solid #06115b;
         }
@@ -63,24 +81,6 @@ $nom_usuario = $username ?: 'Usuario';
             height: 100%;
             object-fit: cover;
             display: block;
-        }
-        .avatar-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px;
-            display: none;
-        }
-        .avatar-container:hover .avatar-overlay {
-            display: block;
-        }
-        .upload-btn {
-            color: white;
-            cursor: pointer;
-            display: block;
-            text-align: center;
         }
         .profile h2 {
             color: #ffffff;
@@ -121,23 +121,35 @@ $nom_usuario = $username ?: 'Usuario';
         .menu-section a.active {
             background-color: #34495e;
         }
+        .avatar-form input[type="file"] {
+            display: none;
+        }
+        .avatar-form label {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 15px;
+            background-color: #06b6d4;
+            color: #fff;
+            font-size: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .avatar-form label:hover {
+            background-color: #0891b2;
+        }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <div class="profile">
-            <form action="../upload_avatar.php" method="POST" enctype="multipart/form-data" id="avatarForm">
-                <div class="avatar-container">
-                    <img src="<?php echo htmlspecialchars($avatar_path); ?>" alt="Avatar Usuario" id="avatarImg">
-                    <div class="avatar-overlay">
-                        <label for="avatarUpload" class="upload-btn">
-                            <i class="fas fa-camera">📷</i>
-                        </label>
-                        <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="document.getElementById('avatarForm').submit();">
-                    </div>
-                </div>
-            </form>
+            <div class="avatar-container">
+                <img src="<?php echo htmlspecialchars($avatar_path); ?>" alt="Avatar Usuario">
+            </div>
             <h2><?php echo htmlspecialchars($nom_usuario); ?></h2>
+            <form class="avatar-form" method="POST" enctype="multipart/form-data">
+                <input type="file" id="avatar" name="avatar" accept="image/*" onchange="this.form.submit()">
+                <label for="avatar">Cambiar avatar</label>
+            </form>
         </div>
         <div class="menu-section">
             <h3>Panel</h3>
