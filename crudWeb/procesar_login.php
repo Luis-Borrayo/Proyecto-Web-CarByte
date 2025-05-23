@@ -10,14 +10,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user'], $_POST['pass']
     $password = mysqli_real_escape_string($connec, trim($_POST['pass']));
     $codigo   = mysqli_real_escape_string($connec, trim($_POST['cod']));
 
-    $sql = "SELECT Id1, username, nom_usuario, password, cod, avatar FROM usuario WHERE username = ?";
+    $sql = "SELECT Id1, username, nom_usuario, password, codigo_seguridad, avatar FROM usuario WHERE username = ?";
     $stmt = mysqli_prepare($connec, $sql);
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
     $resultado = mysqli_stmt_get_result($stmt);
 
     if ($fila = mysqli_fetch_assoc($resultado)) {
-        if ($codigo !== $fila['cod']) {
+        if ($codigo !== $fila['codigo_seguridad']) {
             echo "<script>alert('Código incorrecto'); window.location.href='../index.php';</script>";
             exit();
         }
