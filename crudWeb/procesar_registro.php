@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['registro'])) {
         exit();
     }
 
-    $checkSql = "SELECT Id1 FROM clientes WHERE username = ?";
+    $checkSql = "SELECT Id FROM clientes WHERE username = ?";
     $checkStmt = mysqli_prepare($connec, $checkSql);
     mysqli_stmt_bind_param($checkStmt, "s", $user);
     mysqli_stmt_execute($checkStmt);
