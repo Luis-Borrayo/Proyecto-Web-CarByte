@@ -194,7 +194,8 @@ i{
     gap: 15px;
 }
 
-.vehiculo-botones button {
+.vehiculo-botones button,
+.vehiculo-botones a{
     background-color: #9b3e1a;
     color: #272727;
     font-weight: bold;
@@ -204,10 +205,16 @@ i{
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
-.vehiculo-botones button:hover {
+.vehiculo-botones a{
+    text-decoration: none;
+    font-size: 13px;
+    text-align: center;
+}
+.vehiculo-botones button:hover,
+.vehiculo-botones a:hover {
     background-color: #BC430D;
-        color: #000000;
+    color: #000000;
+    text-align: center;
 
 }
 
