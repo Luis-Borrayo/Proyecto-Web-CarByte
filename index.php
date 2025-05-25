@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+$tipo = $_SESSION['tipo_usuario'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,8 +17,19 @@ session_start();
     <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
 </head>
 <body class="body-index">
-    <?php include('barras/navbar-cliente.php')?>
-    <?php include('barras/sidebar-cliente.php')?>
+    <?php 
+    if ($tipo === 'cliente'){
+        include('barras/navbar-cliente.php');
+        include('barras/sidebar-cliente.php');
+    }
+    elseif ($tipo === 'usuario'){
+        include('barras/navbar-usuario.php');
+        include('barras/sidebar-usuario.php');
+    }
+    else {
+        include('barras/navbar.php');
+    }
+    ?>
     <main>
         <div id= "conteItemsCarrusel">
             <div class="ItemCarrusel" id="ItemCarrusel1">
