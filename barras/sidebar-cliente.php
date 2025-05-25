@@ -154,7 +154,7 @@ $nom_usuario = $username ?: 'Usuario';
         <div class="menu-section">
             <h3>Panel</h3>
             <a href="#"><i class="link-disebar">Inicio</i></a>
-            <a href="#"><i class="link-disebar">Citas</i></a>
+            <a href="../citas.php"><i class="link-disebar">Citas</i></a>
             <a href="#"><i class="link-disebar">Actualizar Datos</i></a>
             <a href="#"><i class="link-disebar">Compras</i></a>
         </div>

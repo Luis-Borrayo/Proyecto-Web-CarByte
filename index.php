@@ -103,7 +103,7 @@ session_start();
                     <h3>Modelo Toyota 2025</h3>
                     <div class="vehiculo-botones">
                         <button class="btn-detalles">Ver detalles</button>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@ session_start();
                         <h3>Modelo Toyota 2024</h3>
                         <div class="vehiculo-botones">
                              <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                 </div>
@@ -140,7 +140,7 @@ session_start();
                         <h3>Modelo Toyota 2024</h3>
                         <div class="vehiculo-botones">
                              <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                 </div> 
@@ -156,7 +156,7 @@ session_start();
                         <h3>Honda Civic 2023</h3>
                         <div class="vehiculo-botones">
                              <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                 </div>
@@ -173,7 +173,7 @@ session_start();
                         <h3>Ford Mustang 2022</h3>
                         <div class="vehiculo-botones">
                              <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                 </div>
@@ -190,7 +190,7 @@ session_start();
                         <h3>Chevrolet Camaro 2024</h3>
                         <div class="vehiculo-botones">
                             <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@ session_start();
                         <h3>Kia Sportage 2023</h3>
                         <div class="vehiculo-botones">
                             <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                 </div>
@@ -224,7 +224,7 @@ session_start();
                         <h3>Nissan Altima 2024</h3>
                         <div class="vehiculo-botones">
                             <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                 </div>
@@ -241,7 +241,7 @@ session_start();
                         <h3>Hyundai Elantra 2025</h3>
                         <div class="vehiculo-botones">
                             <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                         </div>
@@ -258,7 +258,7 @@ session_start();
                         <h3>BMW Serie 3 2023</h3>
                         <div class="vehiculo-botones">
                             <button class="btn-detalles">Ver detalles</button>
-                            <button>Agregar al carrito</button>
+                            <a href="citas.php">Agendar cita</a>
                         </div>
                     </div>
                 </div>
