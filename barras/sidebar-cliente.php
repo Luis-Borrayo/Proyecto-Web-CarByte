@@ -1,54 +1,85 @@
-<?php 
-// Iniciar sesión
+<?php
+// Iniciar sesión y conexión
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-include(__DIR__ . "/../conexion.php");
+include_once(__DIR__ . "/../conexion.php");
 
-$username = $_SESSION['username'] ?? '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar']) && $username !== '') {
-    $avatar = $_FILES['avatar'];
-
-    if ($avatar['error'] === 0) {
-        $ext = pathinfo($avatar['name'], PATHINFO_EXTENSION);
-        $file_name = uniqid('avatar_') . '.' . $ext;
-        $upload_path = __DIR__ . "/../avatars/" . $file_name;
-
-        // Mover el archivo
-        if (move_uploaded_file($avatar['tmp_name'], $upload_path)) {
-            // Guardar en BD
-            $query = "UPDATE clientes SET avatar = ? WHERE username = ?";
+// Procesar subida de avatar
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar'])) {
+    $username = $_SESSION['username'] ?? '';
+    if ($username !== '') {
+        $avatar = $_FILES['avatar'];
+        
+        // Validaciones
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        $max_size = 2 * 1024 * 1024; // 2MB
+        
+        if ($avatar['error'] === 0 && 
+            in_array($avatar['type'], $allowed_types) && 
+            $avatar['size'] <= $max_size) {
+            
+            // Obtener avatar actual para eliminarlo después
+            $query = "SELECT avatar FROM usuario WHERE username = ?";
             $stmt = mysqli_prepare($connec, $query);
-            mysqli_stmt_bind_param($stmt, "ss", $file_name, $username);
+            mysqli_stmt_bind_param($stmt, "s", $username);
             mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $old_avatar = mysqli_fetch_assoc($result)['avatar'] ?? '';
+            
+            // Generar nombre único
+            $ext = strtolower(pathinfo($avatar['name'], PATHINFO_EXTENSION));
+            $file_name = uniqid('avatar_') . '.' . $ext;
+            $upload_path = __DIR__ . "/../avatars/" . $file_name;
+            
+            // Mover el archivo y actualizar BD
+            if (move_uploaded_file($avatar['tmp_name'], $upload_path)) {
+                // Eliminar avatar anterior (si existe y no es el default)
+                if (!empty($old_avatar) && file_exists(__DIR__ . "/../" . $old_avatar)) {
+                    unlink(__DIR__ . "/../" . $old_avatar);
+                }
+                
+                // Actualizar BD
+                $new_avatar_path = "avatars/" . $file_name;
+                $query = "UPDATE usuario SET avatar = ? WHERE username = ?";
+                $stmt = mysqli_prepare($connec, $query);
+                mysqli_stmt_bind_param($stmt, "ss", $new_avatar_path, $username);
+                mysqli_stmt_execute($stmt);
+                
+                // Actualizar variable para mostrar inmediatamente
+                $avatar_path = "../" . $new_avatar_path;
+            }
         }
     }
 }
 
-// Obtener avatar actual
-$query = "SELECT avatar FROM clientes WHERE username = ?";
-$stmt = mysqli_prepare($connec, $query);
-mysqli_stmt_bind_param($stmt, "s", $username);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-$user = mysqli_fetch_assoc($result);
-
-$default_avatar = 'sinavatar.jpg';
-$avatar_file = basename($user['avatar'] ?? '');
-$avatar_path = (!empty($avatar_file) && file_exists(__DIR__ . "/../avatars/" . $avatar_file))
-    ? "../avatars/" . $avatar_file
-    : "../avatars/" . $default_avatar;
-
+// Obtener información del usuario
+$username = $_SESSION['username'] ?? '';
+$default_avatar = '1744068538_foto para curriculum 3.png';
+$avatar_path = "../avatars/" . $default_avatar;
 $nom_usuario = $username ?: 'Usuario';
-?>
 
+if ($username !== '') {
+    $query = "SELECT avatar FROM usuario WHERE username = ?";
+    $stmt = mysqli_prepare($connec, $query);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $user = mysqli_fetch_assoc($result);
+    
+    if (!empty($user['avatar']) && file_exists(__DIR__ . "/../" . $user['avatar'])) {
+        $avatar_path = "../" . $user['avatar'];
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Carbyte | Distribuidor de Autos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/barra_lateral.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .sidebar {
             width: 210px;
@@ -140,24 +171,23 @@ $nom_usuario = $username ?: 'Usuario';
         .sidebar.collapsed .link-disebar,
         .sidebar.collapsed .profile,
         .sidebar.collapsed .titlesidebar {
-        display: none;
+            display: none;
         }
         .sidebar.collapsed {
-        width: 70px;
+            width: 70px;
         }
-        .toggle-btn{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 50px;
-    cursor: pointer;
+        .toggle-btn {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 50px;
+            cursor: pointer;
         }
         .sidebar.collapsed .menu-section a {
-        margin-bottom: 20px; /* Ajusta el valor según necesites */
-        justify-content: center; /* Centra el ícono si ya no hay texto */
+            margin-bottom: 20px;
+            justify-content: center;
         }
     </style>
-    <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="sidebar" id="sidebar">
@@ -169,7 +199,7 @@ $nom_usuario = $username ?: 'Usuario';
             <h2><?php echo htmlspecialchars($nom_usuario); ?></h2>
             <form class="avatar-form" method="POST" enctype="multipart/form-data">
                 <input type="file" id="avatar" name="avatar" accept="image/*" onchange="this.form.submit()">
-                <label for="avatar" >Cambiar avatar</label>
+                <label for="avatar">Cambiar avatar</label>
             </form>
         </div>
         <div class="menu-section">
@@ -180,14 +210,14 @@ $nom_usuario = $username ?: 'Usuario';
             <a href="#"><i class="fa-solid fa-shop"></i><span class="link-disebar">Compras</span></a>
         </div>
     </div>
-<script>
-const toggleBtn = document.getElementById('toggleBtn');
-const sidebar = document.getElementById('sidebar');
+    <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
+    <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
 
-toggleBtn.addEventListener('click', () => {
-  sidebar.classList.toggle('collapsed');
-});
-</script>
-
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+    });
+    </script>
 </body>
 </html>

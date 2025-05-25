@@ -51,11 +51,6 @@ error_reporting(E_ALL);
                             </a>
                         </li>
                         <li class="logmenu">
-                            <a href="mis_pedidos.php">
-                                <i class="material-icons">shopping_cart</i> Mis Pedidos
-                            </a>
-                        </li>
-                        <li class="logmenu">
                             <a href="crudWeb/logout.php" onclick="return confirm('¿Desea cerrar sesión?')">
                                 <i class="material-icons">logout</i> Cerrar Sesión
                             </a>

@@ -2,6 +2,18 @@
 session_start();
 ob_start();
 include('conexion.php');
+$tipo = $_SESSION['tipo_usuario'] ?? null;
+if ($tipo === 'cliente'){
+        include('barras/navbar-cliente.php');
+        include('barras/sidebar-cliente.php');
+    }
+    elseif ($tipo === 'usuario'){
+        include('barras/navbar-usuario.php');
+        include('barras/sidebar-usuario.php');
+    }
+    else {
+        include('barras/navbar.php');
+    }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = mysqli_real_escape_string($connec, $_POST['nom']);
@@ -44,8 +56,6 @@ if (isset($_GET['enviado']) && $_GET['enviado'] == 1) {
     <title>Document</title>
 </head>
 <body class="citas-contac">
-    <?php include('barras/navbar-cliente.php')?>
-    <?php include('barras/sidebar-cliente.php')?>
     <?php if (isset($_GET['enviado'])): ?>
     <script>alert('Mensaje enviado correctamente.');</script>
     <?php endif; ?>
