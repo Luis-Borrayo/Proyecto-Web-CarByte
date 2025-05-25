@@ -1,7 +1,23 @@
 <?php
 include 'conexion.php';
 
-$sql = "SELECT * FROM usuario";
+// Parámetros de búsqueda y paginación
+$busqueda = isset($_GET['buscar']) ? $_GET['buscar'] : '';
+$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$por_pagina = 10;
+$inicio = ($pagina - 1) * $por_pagina;
+
+// Consulta con filtro si hay búsqueda
+$filtro = $busqueda ? "WHERE username LIKE '%$busqueda%' OR nom_usuario LIKE '%$busqueda%' OR puesto LIKE '%$busqueda%'" : "";
+
+// Total de registros
+$total_query = "SELECT COUNT(*) as total FROM usuario $filtro";
+$total_result = $connec->query($total_query);
+$total = $total_result->fetch_assoc()['total'];
+$total_paginas = ceil($total / $por_pagina);
+
+// Consulta paginada
+$sql = "SELECT * FROM usuario $filtro LIMIT $inicio, $por_pagina";
 $resultado = $connec->query($sql);
 ?>
 
@@ -113,12 +129,69 @@ $resultado = $connec->query($sql);
         .eliminar-btn:hover {
             background-color: #bd2130;
         }
+
+        .search-form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-form input[type="text"] {
+            padding: 8px;
+            border-radius: 6px;
+            border: none;
+            width: 250px;
+            margin-right: 8px;
+        }
+
+        .search-form button {
+            padding: 8px 16px;
+            border-radius: 6px;
+            background-color: #00c4cc;
+            color: #1b1f3a;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .search-form button:hover {
+            background-color: #00a0a7;
+        }
+
+        .paginacion {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .paginacion a {
+            margin: 0 5px;
+            padding: 6px 12px;
+            background-color: #00c4cc;
+            color: #1b1f3a;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .paginacion a:hover {
+            background-color: #00a0a7;
+        }
+
+        .total-registros {
+            text-align: right;
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body class="admin-body">
 
 <div class="admin-container">
     <h1 class="admin-title">Panel de Administración de Usuarios</h1>
+
+    <form class="search-form" method="GET" action="admin_usuarios.php">
+        <input type="text" name="buscar" placeholder="Buscar por usuario, nombre o puesto" value="<?php echo htmlspecialchars($busqueda); ?>">
+        <button type="submit">🔍 Buscar</button>
+    </form>
 
     <a href="crear_usuario.php" class="admin-btn crear-btn">➕ Crear Usuario</a>
 
@@ -150,6 +223,19 @@ $resultado = $connec->query($sql);
             <?php } ?>
         </tbody>
     </table>
+
+    <div class="total-registros">
+        Total de usuarios: <?php echo $total; ?>
+    </div>
+
+    <div class="paginacion">
+        <?php if ($pagina > 1) { ?>
+            <a href="?pagina=<?php echo $pagina - 1; ?>&buscar=<?php echo urlencode($busqueda); ?>">⬅️ Anterior</a>
+        <?php } ?>
+        <?php if ($pagina < $total_paginas) { ?>
+            <a href="?pagina=<?php echo $pagina + 1; ?>&buscar=<?php echo urlencode($busqueda); ?>">Siguiente ➡️</a>
+        <?php } ?>
+    </div>
 </div>
 
 </body>
