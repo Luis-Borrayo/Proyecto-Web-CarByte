@@ -1,3 +1,9 @@
+<?php
+session_start();
+include("conexion.php")
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,15 +14,21 @@
 </head>
 <body>
     <div class="citas-container">
-        <h3>Solicitud de compras</h3>
-        <p>Llena el formulariol de compra de pruductos, seleccionar una o vario de los pruductos y accesorios que tenemos disponibles para ti.</p>
+        <h3>SRegistro de ventas</h3>
+        <p>Llena el formulario de registro de ventas de pruductos y vehiculos</p>
         <div>
             <div>
-                <label for="">Nombre completo</label>
+                <label for="">Nombre del empleado</label>
+                <select name="empleados" id="empleados" required>
+                    <option value="">--Seleccione nombre del empleado--</option>
+                </select>
+            </div>
+            <div>
+                <label for="">Nombre completo del cliente</label>
                 <input type="text" class="nom" id="nom" placeholder="nombre completo" required>
             </div>
             <div>
-                <label for="">telefono</label>
+                <label for="">telefono del cliente</label>
                 <label for="">COrreo Electrónico</label>
             </div>
             <div>
@@ -24,15 +36,32 @@
                 <input type="email" class="email" id="email" placeholder="Correo Electrónico" required>
             </div>
             <div>
-                <label for="">DIrección</label>
+                <label for="">DIrección de zona del cliente</label>
                 <label for="">NIT</label>
             </div>
             <div>
-                <input type="text" class="dic" id="dic" placeholder="Dirección" required>
+                <select name="age" id="age" class="datoslocal" required>
+                <option value="">--Seleccione la zona del cliete--</option>
+                <option value="CarByte La República">1</option>
+                <option value="CarByte Las Américas">2</option>
+                <option value="CarByte CA Salvador">3</option>
+                <option value="CarByte Santa Fe">4</option>
+                <option value="CarByte Zona 10">5</option>
+                <option value="CarByte La República">6</option>
+                <option value="CarByte Las Américas">7</option>
+                <option value="CarByte CA Salvador">8</option>
+                <option value="CarByte Santa Fe">9</option>
+                <option value="CarByte Zona 10">10</option>
+                <option value="CarByte La República">11</option>
+                <option value="CarByte Las Américas">12</option>
+                <option value="CarByte CA Salvador">13</option>
+                <option value="CarByte Santa Fe">14</option>
+                <option value="CarByte Zona 10">15</option>
+            </select>
                 <input type="text" class="nit" id="nit" placeholder="NIT" required>
             </div>
             <div>
-                <label for="">Productos Seleccionados</label>
+                <label for="">Productos Venditos</label>
                 <select name="age" id="age" class="datoslocal" required>
                 <option value="">--Seleccione uno o varios productos--</option>
                 <option value="CarByte La República">Rines Deportivos</option>
@@ -74,7 +103,7 @@
             </select>
             </div>
             <div>
-                <label for="">Precio por productoos</label>
+                <label for="">Forma de pago de la venta</label>
                 <select name="age" id="age" class="datoslocal" required>
                 <option value="">--Seleccione forma de pago--</option>
                 <option value="CarByte La República">Efectivo</option>

@@ -210,9 +210,9 @@ $avatar_path = !empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cli
         <div class="menu-section">
             <h3 class="titlesidebar">Panel</h3>
             <a href="../index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
-            <a href="../citas.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">Dashboardd</span></a>
-            <a href="#"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar usuario</span></a>
-            <a href="#"><i class="fa-solid fa-shop"></i><span class="link-disebar">administrar cliente</span></a>
+            <a href="../citas.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">citas</span></a>
+            <a href="#"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Editar perfil</span></a>
+            <a href="#"><i class="fa-solid fa-shop"></i><span class="link-disebar">Compras</span></a>
         </div>
     </div>
 <script>
