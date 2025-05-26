@@ -4,44 +4,77 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Verificar si el usuario está logueado
+if (!isset($_SESSION['id'])) {
+    header('Location: ../login.php');
+    exit;
+}
+
 include(__DIR__ . "/../conexion.php");
 
-$username = $_SESSION['username'] ?? '';
+// Obtener ID de usuario de la sesión
+$id = $_SESSION['id'];
+$default_avatar = '../assets/images/default-avatar.jpg';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar']) && $username !== '') {
+// Consulta preparada
+$sql = "SELECT username, avatar FROM usuario WHERE Id1 = ?";
+$stmt = $connec->prepare($sql);
+
+if (!$stmt) {
+    die("Error en la preparación de la consulta: " . $connec->error);
+}
+
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+$usuario = $resultado->fetch_assoc();
+
+if (!$usuario) {
+    echo "Usuario no encontrado.";
+    exit;
+}
+
+// Procesar actualización de avatar
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar'])) {
     $avatar = $_FILES['avatar'];
-
-    if ($avatar['error'] === 0) {
+    
+    // Validaciones
+    $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+    $max_size = 2 * 1024 * 1024; // 2MB
+    
+    if ($avatar['error'] === UPLOAD_ERR_OK && 
+        in_array($avatar['type'], $allowed_types) && 
+        $avatar['size'] <= $max_size) {
+        
+        // Generar nombre único
         $ext = pathinfo($avatar['name'], PATHINFO_EXTENSION);
-        $file_name = uniqid('avatar_') . '.' . $ext;
-        $upload_path = __DIR__ . "/../avatars/" . $file_name;
-
-        // Mover el archivo
+        $new_filename = uniqid('avatar_') . '.' . $ext;
+        $upload_path = __DIR__ . '/../avatars/' . $new_filename;
+        
+        // Mover archivo
         if (move_uploaded_file($avatar['tmp_name'], $upload_path)) {
-            // Guardar en BD
-            $query = "UPDATE clientes SET avatar = ? WHERE username = ?";
-            $stmt = mysqli_prepare($connec, $query);
-            mysqli_stmt_bind_param($stmt, "ss", $file_name, $username);
-            mysqli_stmt_execute($stmt);
+            // Eliminar avatar anterior si existe
+            if (!empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usuario['avatar'])) {
+                unlink(__DIR__ . '/../' . $usuario['avatar']);
+            }
+            
+            // Actualizar en BD
+            $new_avatar_path = 'avatars/' . $new_filename;
+            $update_sql = "UPDATE usuario SET avatar = ? WHERE Id1 = ?";
+            $update_stmt = $connec->prepare($update_sql);
+            $update_stmt->bind_param("si", $new_avatar_path, $id);
+            $update_stmt->execute();
+            
+            // Actualizar variable para mostrar
+            $usuario['avatar'] = $new_avatar_path;
         }
     }
 }
 
-// Obtener avatar actual
-$query = "SELECT avatar FROM clientes WHERE username = ?";
-$stmt = mysqli_prepare($connec, $query);
-mysqli_stmt_bind_param($stmt, "s", $username);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-$user = mysqli_fetch_assoc($result);
-
-$default_avatar = 'sinavatar.jpg';
-$avatar_file = basename($user['avatar'] ?? '');
-$avatar_path = (!empty($avatar_file) && file_exists(__DIR__ . "/../avatars/" . $avatar_file))
-    ? "../avatars/" . $avatar_file
-    : "../avatars/" . $default_avatar;
-
-$nom_usuario = $username ?: 'Usuario';
+// Establecer ruta del avatar
+$avatar_path = !empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usuario['avatar']) 
+    ? '../' . $usuario['avatar'] 
+    : $default_avatar;
 ?>
 
 <!DOCTYPE html>
@@ -164,12 +197,14 @@ $nom_usuario = $username ?: 'Usuario';
         <div class="toggle-btn" id="toggleBtn"><i class="fa-solid fa-bars"></i></div>
         <div class="profile">
             <div class="avatar-container">
-                <img src="<?php echo htmlspecialchars($avatar_path); ?>" alt="Avatar Usuario">
+                <img src="<?php echo htmlspecialchars($avatar_path); ?>" 
+                     alt="Avatar de <?php echo htmlspecialchars($usuario['username']); ?>"
+                     onerror="this.src='<?php echo htmlspecialchars($default_avatar); ?>'">
             </div>
-            <h2><?php echo htmlspecialchars($nom_usuario); ?></h2>
+            <h2 class="info-group"><?php echo htmlspecialchars($usuario['username']); ?></h2>
             <form class="avatar-form" method="POST" enctype="multipart/form-data">
                 <input type="file" id="avatar" name="avatar" accept="image/*" onchange="this.form.submit()">
-                <label for="avatar" >Cambiar avatar</label>
+                <label for="avatar">Cambiar avatar</label>
             </form>
         </div>
         <div class="menu-section">
