@@ -16,12 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fecha = mysqli_real_escape_string($connec, $_POSTq['date']);
     $comentario = mysqli_real_escape_string($conn, $_POST['comentario']);
 
-    // Convertir array de productos en cadena separada
     $prod_list = implode(",", array_map(function($p) use ($conn) {
         return mysqli_real_escape_string($conn, $p);
     }, $productos));
 
-    // Insertar en base de datos
     $sql = "INSERT INTO ventas 
         (empleado, cliente, telefono, email, zona, nit, productos, precio, forma_pago, fecha, comentario)
         VALUES
@@ -52,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="empleados">Nombre del empleado</label>
                 <select name="empleados" id="empleados" required>
                     <option value="">--Seleccione nombre del empleado--</option>
-                    <!-- Aquí puedes cargar dinámicamente empleados -->
+                    <option value="">--Luis Borrayo--</option>
+                    <option value="">--Oscar Garcia--</option>
                 </select>
             </div>
             <div>
