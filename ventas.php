@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productos = $_POST['productos'] ?? [];
     $precio = mysqli_real_escape_string($conn, $_POST['precio']);
     $pago = mysqli_real_escape_string($conn, $_POST['forma_pago']);
-    $fecha = mysqli_real_escape_string($connec, $_POSTq['date']);
     $comentario = mysqli_real_escape_string($conn, $_POST['comentario']);
 
     $prod_list = implode(",", array_map(function($p) use ($conn) {
@@ -21,9 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }, $productos));
 
     $sql = "INSERT INTO ventas 
-        (empleado, cliente, telefono, email, zona, nit, productos, precio, forma_pago, fecha, comentario)
+        (empleado, cliente, telefono, email, zona, nit, productos, precio, forma_pago, comentario)
         VALUES
-        ('{$empleado}', '{$cliente}', '{$telefono}', '{$email}', {$zona}, '{$nit}', '{$prod_list}', '{$precio}', '{$pago}', '{$fecha}', '{$comentario}')";
+        ('{$empleado}', '{$cliente}', '{$telefono}', '{$email}', {$zona}, '{$nit}', '{$prod_list}', '{$precio}', '{$pago}', '{$comentario}')";
 
     if (mysqli_query($conn, $sql)) {
         echo "<p class='success'>Venta registrada con éxito.</p>";
@@ -110,10 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Efectivo">Efectivo</option>
                     <option value="Tarjeta">Tarjeta</option>
                 </select>
-            </div>
-            <div>
-                <label for="">Fecha de la venta</label>
-                <input type="date" id="date" name="date">
             </div>
             <div>
                 <label for="comentario">Comentario del pedido</label>
