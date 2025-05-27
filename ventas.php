@@ -1,33 +1,33 @@
 <?php
 session_start();
-include "conexion.php"; // Asegúrate de que conexión devuelve $conn
+include "conexion.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitizar y recolectar datos del formulario
-    $empleado   = mysqli_real_escape_string($conn, $_POST['empleados']);
-    $cliente = mysqli_real_escape_string($conn, $_POST['cliente']);
-    $telefono = mysqli_real_escape_string($conn, $_POST['telefono']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $zona = intval($_POST['zona']);
-    $nit = mysqli_real_escape_string($conn, $_POST['nit']);
-    $productos = $_POST['productos'] ?? [];
-    $precio = mysqli_real_escape_string($conn, $_POST['precio']);
-    $pago = mysqli_real_escape_string($conn, $_POST['forma_pago']);
-    $comentario = mysqli_real_escape_string($conn, $_POST['comentario']);
 
-    $prod_list = implode(",", array_map(function($p) use ($conn) {
-        return mysqli_real_escape_string($conn, $p);
+    $empleado   = mysqli_real_escape_string($connec, $_POST['empleados']);
+    $cliente = mysqli_real_escape_string($connec, $_POST['cliente']);
+    $telefono = mysqli_real_escape_string($connec, $_POST['telefono']);
+    $email = mysqli_real_escape_string($connec, $_POST['email']);
+    $zona = intval($_POST['zona']);
+    $nit = mysqli_real_escape_string($connec, $_POST['nit']);
+    $productos = $_POST['productos'] ?? [];
+    $precio = mysqli_real_escape_string($connec, $_POST['precio']);
+    $pago = mysqli_real_escape_string($connec, $_POST['forma_pago']);
+    $comentario = mysqli_real_escape_string($connec, $_POST['comentario']);
+
+    $prod_list = implode(",", array_map(function($p) use ($connec) {
+        return mysqli_real_escape_string($connec, $p);
     }, $productos));
 
     $sql = "INSERT INTO ventas 
-        (empleado, cliente, telefono, email, zona, nit, productos, precio, forma_pago, comentario)
+        (nombre_empleado, nombre_cliente, telefono_cliente, correo_cliente, direccion_zona, nit_cliente, productos, precios, forma_pago, comentario)
         VALUES
         ('{$empleado}', '{$cliente}', '{$telefono}', '{$email}', {$zona}, '{$nit}', '{$prod_list}', '{$precio}', '{$pago}', '{$comentario}')";
 
-    if (mysqli_query($conn, $sql)) {
+    if (mysqli_query($connec, $sql)) {
         echo "<p class='success'>Venta registrada con éxito.</p>";
     } else {
-        echo "<p class='error'>Error al registrar venta: " . mysqli_error($conn) . "</p>";
+        echo "<p class='error'>Error al registrar venta: " . mysqli_error($connec) . "</p>";
     }
 }
 ?>
