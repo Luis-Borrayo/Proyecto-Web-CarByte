@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }, $productos));
 
     $sql = "INSERT INTO ventas 
-        (nombre_empleado, nombre_cliente, telefono_cliente, correo_cliente, direccion_zona, nit_cliente, productos, precios, forma_pago, comentario)
+        (nombre_empleado, nombre_cliente, telefono_cliente, correo_cliente, direccion_zona, nit_cliente, productos, monto, forma_pago, comentario)
         VALUES
         ('{$empleado}', '{$cliente}', '{$telefono}', '{$email}', {$zona}, '{$nit}', '{$prod_list}', '{$precio}', '{$pago}', '{$comentario}')";
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="citas-container">
         <h3>Registro de ventas</h3>
-        <p>Llena el formulario de registro de ventas de productos y vehículos</p>
+        <p>Llena el formulario de registro de ventas de productos</p>
         <form action="" method="post">
             <div>
                 <label for="empleados">Nombre del empleado</label>
