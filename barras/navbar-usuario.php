@@ -30,7 +30,7 @@ error_reporting(E_ALL);
 <body>
     <header class="navbar">
         <div class="logo-container">
-            <img src="imagenes/CarByte.png" alt="Logo Toyota" class="logo-img">
+            <img src="../imagenes/CarByte.png" alt="Logo CarByte" class="logo-img">
             <span class="logo-text">CarByte</span>
         </div>
         <nav class="nav-links">

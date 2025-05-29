@@ -210,7 +210,7 @@ $avatar_path = !empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usu
         <div class="menu-section">
             <h3 class="titlesidebar">Panel</h3>
             <a href="../index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
-            <a href="../citas.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">Dashboardd</span></a>
+            <a href="../dashboard/dashboard-clientes.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">Dashboard Clientes</span></a>
             <a href="#"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar usuario</span></a>
             <a href="#"><i class="fa-solid fa-shop"></i><span class="link-disebar">administrar cliente</span></a>
         </div>
