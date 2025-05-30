@@ -17,21 +17,21 @@ if (!empty($zona)) {
 }
 $where = (count($condiciones) > 0) ? 'WHERE ' . implode(' AND ', $condiciones) : '';
 
-// Clientes registrados (no depende de filtro)
-$sqltotalCL = "SELECT COUNT(*) AS totalclientes FROM clientes";
-$resultadocl = $connec->query($sqltotalCL);
+//Trabajadores totales
+$sqlusuario = "SELECT COUNT(Id1) AS totalusuarios FROM usuario";
+$resulusario = $connec->query($sqlusuario);
+$totalusuario = $resulusario->fetch_assoc()['totalusuarios'] ?? 0;
+
+// Clientes totales
+$sqlclientes = "SELECT COUNT(*) AS totalclientes FROM clientes";
+$resultadocl = $connec->query($sqlclientes);
 $fila = $resultadocl->fetch_assoc();
 $totalclientes = $fila['totalclientes'];
 
-// Zonas diferentes filtradas
-$sqlubiD = "SELECT COUNT(DISTINCT direccion_zona) AS ubicacion_dictinta FROM ventas $where";
-$resultadoZona = $connec->query($sqlubiD);
-$ubicaciones = $resultadoZona->fetch_assoc()['ubicacion_dictinta'] ?? 0;
-
-// Cantidad de ventas filtradas
-$sqlventastiempo = "SELECT COUNT(*) AS ventasperiodo FROM ventas $where";
-$resutadoVentas = $connec->query($sqlventastiempo);
-$totalventas = $resutadoVentas->fetch_assoc()['ventasperiodo'] ?? 0;
+// Citas totales
+$sqlcitas = "SELECT COUNT(*) AS totalcitas FROM citas";
+$resultadocitas = $connec->query($sqlcitas);
+$totalcitas = $resultadocitas->fetch_assoc()['totalcitas'] ?? 0;
 
 // Promedio de compras (ventas + vehículos)
 $whereVehiculos = '';
@@ -46,13 +46,26 @@ SELECT (
 $resulprecio = $connec->query($promedioVentas);
 $totalprecio = $resulprecio->fetch_assoc()['promedio'] ?? 0;
 
-// Gráfica circular
-$sqlGCircule = "SELECT direccion_zona, COUNT(*) AS totalGrafica1 FROM ventas $where GROUP BY direccion_zona";
-$resultGrafica1 = $connec->query($sqlGCircule);
+//top zonas
+$sqlventastotales = "SELECT 
+        (SELECT COUNT(id) FROM ventas) as ventas,
+        (SELECT COUNT(id) FROM vehiculos) as vehiculos,
+        (SELECT COUNT(id) FROM ventas) + (SELECT COUNT(id) FROM vehiculos) as total $where";
+
+$resultventasT = $connec->query($sqlventastotales);
+$dataventasT = $resultventasT->fetch_assoc();
+
+$totalVentas = intval($dataventasT['ventas'] ?? 0);
+$totalVehiculos = intval($dataventasT['vehiculos'] ?? 0);
+$totalGeneral = intval($dataventasT['total'] ?? 0);
+
+// Gráfica barras: top productos
+$sqlBarrasProduc = "SELECT productos, COUNT(*) AS totalGrafica1 FROM ventas $where GROUP BY productos ORDER BY totalGrafica1 DESC LIMIT 3";
+$resultBarrasproduct = $connec->query($sqlBarrasProduc);
 $labelG1 = [];
 $datosG1 = [];
-while ($row = $resultGrafica1->fetch_assoc()) {
-    $labelG1[] = "Zona " . $row['direccion_zona'];
+while ($row = $resultBarrasproduct->fetch_assoc()) {
+    $labelG1[] = $row['productos'];
     $datosG1[] = $row['totalGrafica1'];
 }
 
@@ -70,7 +83,7 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Clientes | CarByte</title>
+    <title>Dashboard Vendedores | CarByte</title>
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/Menu.css">
@@ -82,7 +95,7 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
     <?php include('../barras/sidebar-usuario.php');?>
     <div class="contenedor-dashboard">
         <div class="titutlo-dash">
-            <h2>Dashboard Clientes</h2>
+            <h2>Dashboard Vendedores</h2>
         </div>
         <div class="contenedor-filtros">
         <form method="get">
@@ -105,16 +118,16 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
 
         <div class="tarjetas-container">
         <div class="tarjeta-dash">
-            <h4>Clientes Registrados Totales</h4>
-            <h2><?= $totalclientes; ?></h2>
+            <h4>Trabajadores Registrados</h4>
+            <h2><?= $totalusuario ?></h2>
         </div>
         <div class="tarjeta-dash">
-            <h4>Zonas Distintas</h4>
-            <h2><?= $ubicaciones; ?></h2>
+            <h4>Cientes Registrados</h4>
+            <h2><?= $totalclientes ?></h2>
         </div>
         <div class="tarjeta-dash">
-            <h4>Ventas por cliente</h4>
-            <h2><?= $totalventas; ?></h2>
+            <h4>Citas Registradas</h4>
+            <h2><?= $totalcitas ?></h2>
         </div>
         <div class="tarjeta-dash">
             <h4>Ingresos totales</h4>
@@ -124,14 +137,14 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
 
     <div class="graficas-container">
         <div class="grafica">
-        <h2>Clientes por Ubicación</h2>
-        <div style="width: 240px; height: 240px; padding: 0; margin: 0;">
-            <canvas id="graficaZonas"></canvas>
+        <h2>Top 3 Zonas con mas ingresos</h2>
+        <div style="width: 520px; height: 240px; padding: 0; margin: 0;">
+            <canvas id="graficaproductos"></canvas>
         </div>
     </div>
 
     <div class="grafica">
-        <h2>Top 3 vehículos más vendidos</h2>
+        <h2>Top 3 Sucursales más rentables</h2>
         <div style="width: 520px; margin: auto;">
             <canvas id="graficaTopVehiculos"></canvas>
         </div>
@@ -140,13 +153,13 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
 
     <div class="tabla-container">
         <div>
-        <h2>Top 10 Clientes Frecuentes</h2>
+        <h2>Datos de Vendedores</h2>
         <table border="1">
             <tr>
-                <th>Cliente</th>
-                <th>Total de Compras</th>
-                <th>Total Gastado</th>
-                <th>Última Compra</th>
+                <th>Vendedor</th>
+                <th>Total de Ventas</th>
+                <th>Monto Total</th>
+                <th>Última Venta</th>
             </tr>
             <?php
             $subqueryVentas = "SELECT nombre_cliente, monto, fecha FROM ventas $where";
@@ -179,49 +192,26 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
     </div>
     </div>
     <script>
-    const ctx = document.getElementById('graficaZonas').getContext('2d');
-    new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: <?= json_encode($labelG1) ?>,
-        datasets: [{
-            label: 'Clientes por zona',
-            data: <?= json_encode($datosG1) ?>,
-            backgroundColor: ['#E39A78','#B97972','#A99BAE','#71555C','#68442C','#7E8988','#A75953','#B27F84'],
-            borderColor: 'transparent' // ← Elimina borde blanco entre secciones
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-            padding: 0 // Quita padding interno del gráfico
+    const ctxbarproductos = document.getElementById('graficaproductos').getContext('2d');
+    new Chart(ctxbarproductos, {
+        type: 'bar',
+        data: {
+            labels: <?= json_encode($labelG1); ?>,
+            datasets: [{
+                label: 'Top 3 Productos más vendidos',
+                data: <?= json_encode($datosG1); ?>,
+                backgroundColor: ['#E39A78','#B97972','#A99BAE'],
+                borderWidth: 1
+            }]
         },
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: {
-                    color: '#fff', // Color del texto de leyenda
-                    boxWidth: 12,   // Tamaño del cuadrado de color
-                    padding: 8
-                }
+        options: {
+            layout: { padding: 0 },
+            scales: {
+                x: { ticks: { color: '#fff' } },
+                y: { beginAtZero: true, ticks: { stepSize: 1, color: '#fff' } }
             },
-            datalabels: {
-                color: '#fff',
-                font: {
-                    weight: 'bold',
-                    size: 12
-                },
-                padding: 0
-            }
-        },
-        elements: {
-            arc: {
-                borderWidth: 0 // ← Esto elimina cualquier borde entre secciones
-            }
+            plugins: { legend: { labels: { color: '#fff' } } }
         }
-    },
-    plugins: [ChartDataLabels]
     });
 
     const ctxbarauto = document.getElementById('graficaTopVehiculos').getContext('2d');

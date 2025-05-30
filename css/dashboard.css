@@ -10,6 +10,18 @@
     flex-wrap: wrap;
     flex-wrap: wrap;
 }
+.titutlo-dash{
+    background-color: #694786;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    color: #cdb3b1;
+}
 .contenedor-filtros{
     background-color: #694786;
     width: 100%;
@@ -58,12 +70,12 @@
     justify-content: center;
 }
 .tarjeta-dash h4 {
-    margin: 10px 0 5px 0; /* Elimina espacios arriba, deja solo un poco abajo */
-    font-size: 14px; /* Opcional: más pequeño si deseas compactar más */
+    margin: 10px 0 5px 0;
+    font-size: 14px;
 }
 .tarjeta-dash h2 {
     margin: 0;
-    font-size: 24px; /* Ajusta tamaño si lo ves muy grande */
+    font-size: 24px;
 }
 
 .tarjeta-dash:hover {
@@ -74,7 +86,7 @@
 .graficas-container{
     background-color: #522B5B;
     width: 100%;
-    height: 390px;
+    height: auto;
     display: flex;
     box-sizing: border-box;
     flex-wrap: wrap;
@@ -89,7 +101,7 @@
 .tabla-container{
     background-color: #522B5B;
     width: 100%;
-    height: 450px;
+    height: auto;
     display: flex;
     box-sizing: border-box;
     flex-wrap: wrap;
