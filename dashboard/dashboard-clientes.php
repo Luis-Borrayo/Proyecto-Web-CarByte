@@ -74,12 +74,10 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
     <link rel="stylesheet" href="../css/dashboard-clientes.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/Menu.css">
-    <link rel="stylesheet" href="../css/modal.css">
-    <link rel="stylesheet" href="../css/ingreso.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </head>
-<body>
+<body class="body-dashboard">
     <?php include('../barras/navbar-usuario.php');?>
     <?php include('../barras/sidebar-usuario.php');?>
     <div class="contenedor-dashboard">
