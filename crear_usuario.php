@@ -1,33 +1,10 @@
 <?php
 session_start();
-include("conexion.php");
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $nom_usuario = $_POST['nom_usuario'];
-    $puesto = $_POST['puesto'];
-    $password = $_POST['password']; // Contraseña sin hash
-    $codigo_seguridad = $_POST['codigo_seguridad'];
-
-    $nombre_archivo = $_FILES['avatar']['name'];
-    $archivo_tmp = $_FILES['avatar']['tmp_name'];
-    $ruta_destino = 'imagenes/avatars/' . uniqid() . '_' . basename($nombre_archivo);
-    $es_imagen = getimagesize($archivo_tmp);
-
-    if ($es_imagen && move_uploaded_file($archivo_tmp, $ruta_destino)) {
-        $sql = "INSERT INTO usuario (username, nom_usuario, puesto, password, codigo_seguridad, avatar)
-                VALUES ('$username', '$nom_usuario', '$puesto', '$password', '$codigo_seguridad', '$ruta_destino')";
-
-        if ($connec->query($sql) === TRUE) {
-            header("Location: admin_usuarios.php");
-            exit();
-        } else {
-            echo "Error al crear usuario: " . $connec->error;
-        }
-    } else {
-        echo "Error al subir el archivo. Asegúrese de que sea una imagen válida.";
-    }
-}
+// Mostrar mensajes de error/success
+$error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+$success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
+unset($_SESSION['error']);
+unset($_SESSION['success']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -117,6 +94,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form-buttons a:hover {
             background-color: #3a4060;
         }
+        .alert {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .alert-error {
+            background-color: #ff6b6b;
+            color: #fff;
+        }
+        .alert-success {
+            background-color: #51cf66;
+            color: #fff;
+        }
     </style>
 </head>
 <body class="crearusuariocontainer">
@@ -124,7 +115,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include('barras/sidebar-usuario.php'); ?>
     <div class="form-container">
         <h1>Crear Nuevo Usuario</h1>
-        <form action="crear_usuario.php" method="POST" enctype="multipart/form-data">
+        
+        <?php if ($error): ?>
+            <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+        
+        <?php if ($success): ?>
+            <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
+        <?php endif; ?>
+        
+        <form action="procesar_registro.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="username">Usuario</label>
                 <input type="text" name="username" id="username" required>
@@ -149,7 +149,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" required>
+                <input type="password" name="password" id="password" required minlength="6">
+                <small style="color: #aaa;">Mínimo 6 caracteres</small>
             </div>
 
             <div class="form-group">
@@ -159,7 +160,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
                 <label for="avatar">Subir Avatar (Imagen)</label>
-                <input type="file" name="avatar" id="avatar" accept="image/*" required>
+                <input type="file" name="avatar" id="avatar" accept="image/jpeg, image/png, image/gif" required>
+                <small style="color: #aaa;">Formatos aceptados: JPG, PNG, GIF (Máx. 2MB)</small>
             </div>
 
             <div class="form-buttons">
