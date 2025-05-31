@@ -39,7 +39,11 @@
     align-items: center;
 }
 
-
+.pntcarrutcel{
+    text-decoration: none;
+    color: #753d13;
+    font-size: 15px;
+}
 .flechaCarrusel{
     position: absolute;
     top: 0;
@@ -55,6 +59,7 @@
 }
 i{
     color: gray;
+    font-size: 35px;
 }
 .img-carrusel{
     height: 100%;
@@ -68,8 +73,9 @@ i{
     scroll-behavior: smooth;
 }
 #contepuntos > a{
-    margin: 4px;
+    margin: 6px;
 }
+
 .navbar {
     position: fixed;
     top: 0;
@@ -556,4 +562,17 @@ body {
 
 .eliminar-btn:hover {
     background-color: #b02a35;
+}
+
+.soy-wesly{
+    background-color: blue;
+    color: white;
+}
+
+.p{
+    background-color: yellow !important;
+}
+
+.titulos{
+    font-weight: bolder;
 }

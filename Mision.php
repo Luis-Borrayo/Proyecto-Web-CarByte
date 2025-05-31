@@ -94,8 +94,8 @@ session_start();
                 <p>
                     Reconocemos que la movilidad es esencial para el progreso económico, la independencia personal y el desarrollo social. Por ello, nos esforzamos día a día en ofrecer un servicio que no solo facilite la compra o venta de un automóvil, sino que acompañe a cada usuario en su camino, brindando asesoría especializada, información verificada y herramientas que le permitan tomar decisiones inteligentes, basadas en datos reales y procesos simples.
                 </p>
-                <p>
-                    Nuestro compromiso se extiende a todo el territorio guatemalteco, desde la ciudad hasta las áreas rurales, democratizando el acceso a vehículos mediante una plataforma digital que prioriza la inclusión, la facilidad de uso y la optimización del tiempo y los recursos. Creemos firmemente en el poder de la tecnología para transformar realidades, y por eso invertimos constantemente en innovación, desarrollo de software, inteligencia de mercado y atención al cliente multicanal.
+                <p class="p">
+                    <label for="" class="titulos">Nuestro</label> compromiso se extiende a todo el territorio guatemalteco, desde la ciudad hasta las áreas rurales, democratizando el acceso a vehículos mediante una plataforma digital que prioriza la inclusión, la facilidad de uso y la optimización del tiempo y los recursos. Creemos firmemente en el poder de la tecnología para transformar realidades, y por eso invertimos constantemente en innovación, desarrollo de software, inteligencia de mercado y atención al cliente multicanal.
                 </p>
                 <p>
                     En CarByte, fomentamos una cultura organizacional basada en los valores de honestidad, integridad, responsabilidad social, servicio al cliente, trabajo en equipo y mejora continua. Nuestro equipo humano, conformado por guatemaltecos comprometidos con el país, es el corazón de nuestra operación, y está capacitado para ofrecer un servicio profesional, empático y adaptado a las necesidades del mercado local.
@@ -109,6 +109,8 @@ session_start();
                 <p>
                     Porque en CarByte no solo vendemos carros, conectamos personas con su próximo destino, impulsamos historias, aceleramos cambios y trabajamos todos los días por una Guatemala más conectada, más ágil y con más oportunidades para todos.
                 </p>
+                <p class = "body">Wesly y Stephanie por siempre</p>
+                <a href="" class="btn-ver-mas">Wesly</a>
             </div>
             <div class="imagen-mision">
                 <!-- Puedes cambiar esta imagen por una tuya -->

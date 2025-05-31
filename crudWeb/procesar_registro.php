@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 include('../conexion.php');
 
@@ -18,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['registro'])) {
         exit();
     }
 
-    $checkSql = "SELECT id FROM usuario WHERE username = ?";
+    $checkSql = "SELECT Id FROM clientes WHERE username = ?";
     $checkStmt = mysqli_prepare($connec, $checkSql);
     mysqli_stmt_bind_param($checkStmt, "s", $user);
     mysqli_stmt_execute($checkStmt);
@@ -30,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['registro'])) {
     }
 
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO usuario (username, nom_usuario, password) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO clientes (username, nom_usuario, password) VALUES (?, ?, ?)";
     $stmt = mysqli_prepare($connec, $sql);
     mysqli_stmt_bind_param($stmt, "sss", $user, $nom_user, $password_hash);
 
