@@ -1,5 +1,6 @@
 <?php
-include 'conexion.php';
+session_start();
+include('conexion.php');
 
 $id = $_GET['id'] ?? null;
 
@@ -28,10 +29,13 @@ if (!$cliente) {
     <title>Editar Cliente</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        body {
+        .bodyeditarcliente {
             background-color: #1b1f3a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            margin: 0;
+            margin-top: 140px;
+            margin-left: 70px;
         }
 
         .form-container {
@@ -41,6 +45,9 @@ if (!$cliente) {
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+            height: auto;
+            min-height: 700px;
         }
 
         .form-container h1 {
@@ -111,7 +118,9 @@ if (!$cliente) {
         }
     </style>
 </head>
-<body>
+<body class="bodyeditarcliente">
+    <?php include('barras/navbar-usuario.php'); ?>
+    <?php include('barras/sidebar-usuario.php'); ?>
     <div class="form-container">
         <h1>Editar Cliente</h1>
         <form action="actualizar_cliente.php" method="POST" enctype="multipart/form-data">

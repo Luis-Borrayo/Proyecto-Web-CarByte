@@ -138,6 +138,7 @@ $avatar_path = !empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usu
             transition: all 0.3s ease;
             border-radius: 8px;
             margin-bottom: 5px;
+            font-size: 13px;
         }
         .menu-section a i {
             background: linear-gradient(45deg, #D16002, #ED9121, #CC5500);
@@ -193,6 +194,7 @@ $avatar_path = !empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usu
     <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    
     <div class="sidebar" id="sidebar">
         <div class="toggle-btn" id="toggleBtn"><i class="fa-solid fa-bars"></i></div>
         <div class="profile">
@@ -210,9 +212,13 @@ $avatar_path = !empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usu
         <div class="menu-section">
             <h3 class="titlesidebar">Panel</h3>
             <a href="../index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
-            <a href="../dashboard/dashboard-clientes.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">Dashboard Clientes</span></a>
-            <a href="#"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar usuario</span></a>
-            <a href="#"><i class="fa-solid fa-shop"></i><span class="link-disebar">administrar cliente</span></a>
+            <a href="../dashboard/dashboard-clientes.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Clientes</span></a>
+            <a href="../dashboard/dashboard-ventas.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Ventas</span></a>
+            <a href="../dashboard/dashboard-admin.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Vendedores</span></a>
+            <a href="../admin_usuarios.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar usuarios</span></a>
+            <a href="../admin_clientes.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar clientes</span></a>
+            <a href="/../ventas.php"><i class="fa-solid fa-cart-shopping"></i><span class="link-disebar">Registro ventas productos</span></a>
+            <a href="/../vehiculos-ventas.php"><i class="fa-solid fa-car-side"></i><span class="link-disebar">Registro ventas vehiculos</span></a>
         </div>
     </div>
 <script>

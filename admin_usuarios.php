@@ -1,37 +1,88 @@
 <?php
-include 'conexion.php';
+// Buffer de salida al inicio para evitar parpadeos
+ob_start();
 
-// Parámetros de búsqueda y paginación
-$busqueda = isset($_GET['buscar']) ? $_GET['buscar'] : '';
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-$por_pagina = 10;
-$inicio = ($pagina - 1) * $por_pagina;
+// Inicio seguro de sesión
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Consulta con filtro si hay búsqueda
-$filtro = $busqueda ? "WHERE username LIKE '%$busqueda%' OR nom_usuario LIKE '%$busqueda%' OR puesto LIKE '%$busqueda%'" : "";
+// Verificación de sesión
+if (!isset($_SESSION['usuarioingresando'])) {
+    header("Location: login.php");
+    exit();
+}
 
-// Total de registros
-$total_query = "SELECT COUNT(*) as total FROM usuario $filtro";
-$total_result = $connec->query($total_query);
-$total = $total_result->fetch_assoc()['total'];
-$total_paginas = ceil($total / $por_pagina);
+// Conexión a la base de datos
+require_once 'conexion.php';
 
-// Consulta paginada
-$sql = "SELECT * FROM usuario $filtro LIMIT $inicio, $por_pagina";
-$resultado = $connec->query($sql);
+// Configuración de paginación
+$limit = 10;
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Búsqueda
+$buscar = isset($_GET['buscar']) ? trim($_GET['buscar']) : '';
+$search_condition = '';
+$params = [];
+$types = '';
+
+if (!empty($buscar)) {
+    $search_condition = "WHERE username LIKE ? OR nom_usuario LIKE ? OR puesto LIKE ?";
+    $search_term = "%$buscar%";
+    $params = array_fill(0, 3, $search_term);
+    $types = str_repeat('s', count($params));
+}
+
+// Contar total de registros
+$count_query = "SELECT COUNT(*) as total FROM usuario $search_condition";
+$stmt_count = $connec->prepare($count_query);
+if (!empty($params)) {
+    $stmt_count->bind_param($types, ...$params);
+}
+$stmt_count->execute();
+$total_result = $stmt_count->get_result();
+$total_usuarios = $total_result->fetch_assoc()['total'];
+$total_pages = ceil($total_usuarios / $limit);
+$stmt_count->close();
+
+// Consulta principal
+$query = "SELECT * FROM usuario $search_condition LIMIT ? OFFSET ?";
+$params[] = $limit;
+$params[] = $offset;
+$types .= 'ii';
+
+$stmt = $connec->prepare($query);
+$stmt->bind_param($types, ...$params);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+// Obtener todos los datos
+$usuarios = [];
+while ($fila = $resultado->fetch_assoc()) {
+    $usuarios[] = $fila;
+}
+
+$stmt->close();
+
+// Limpiar buffer antes de enviar HTML
+ob_end_clean();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Usuarios</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body.admin-body {
             background-color: #1b1f3a;
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            margin-top: 140px;
+            margin-left: 70px;
         }
 
         .admin-container {
@@ -41,8 +92,11 @@ $resultado = $connec->query($sql);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
-        }
-
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            height: 1200px;
+            
+        }
         .admin-title {
             text-align: center;
             color: #00c4cc;
@@ -97,6 +151,8 @@ $resultado = $connec->query($sql);
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .acciones a {
@@ -150,6 +206,8 @@ $resultado = $connec->query($sql);
             color: #1b1f3a;
             font-weight: bold;
             cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
         }
 
         .search-form button:hover {
@@ -169,6 +227,7 @@ $resultado = $connec->query($sql);
             border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
+            transition: background-color 0.3s;
         }
 
         .paginacion a:hover {
@@ -181,62 +240,101 @@ $resultado = $connec->query($sql);
             color: #ccc;
             margin-top: 10px;
         }
+
+        /* Estilos para la carga progresiva */
+        .loaded {
+            opacity: 1 !important;
+        }
+        .avatar-loaded {
+            opacity: 1 !important;
+        }
     </style>
 </head>
 <body class="admin-body">
+    <?php include('barras/navbar-usuario.php'); ?>
+    <?php include('barras/sidebar-usuario.php'); ?>
+    
+    <div class="admin-container">
+        <h1 class="admin-title">Panel de Administración de Usuarios</h1>
 
-<div class="admin-container">
-    <h1 class="admin-title">Panel de Administración de Usuarios</h1>
+        <form class="search-form" method="GET" action="admin_usuarios.php">
+            <input type="text" name="buscar" placeholder="Buscar por usuario, nombre o puesto" 
+                   value="<?php echo htmlspecialchars($buscar ?? ''); ?>">
+            <button type="submit">🔍 Buscar</button>
+        </form>
 
-    <form class="search-form" method="GET" action="admin_usuarios.php">
-        <input type="text" name="buscar" placeholder="Buscar por usuario, nombre o puesto" value="<?php echo htmlspecialchars($busqueda); ?>">
-        <button type="submit">🔍 Buscar</button>
-    </form>
+        <a href="crear_usuario.php" class="admin-btn crear-btn">➕ Crear Usuario</a>
 
-    <a href="crear_usuario.php" class="admin-btn crear-btn">➕ Crear Usuario</a>
-
-    <table class="admin-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Usuario</th>
-                <th>Nombre</th>
-                <th>Puesto</th>
-                <th>Avatar</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while($fila = $resultado->fetch_assoc()) { ?>
+        <table class="admin-table">
+            <thead>
                 <tr>
-                    <td><?php echo $fila['Id1']; ?></td>
-                    <td><?php echo $fila['username']; ?></td>
-                    <td><?php echo $fila['nom_usuario']; ?></td>
-                    <td><?php echo $fila['puesto']; ?></td>
-                    <td><img src="<?php echo $fila['avatar']; ?>" alt="avatar" class="avatar-img"></td>
-                    <td class="acciones">
-                        <a href="ver_usuario.php?id=<?php echo $fila['Id1']; ?>" class="admin-btn ver-btn">👁️</a>
-                        <a href="editar_usuario.php?id=<?php echo $fila['Id1']; ?>" class="admin-btn editar-btn">✏️</a>
-                        <a href="eliminar_usuario.php?id=<?php echo $fila['Id1']; ?>" class="admin-btn eliminar-btn" onclick="return confirm('¿Deseas eliminar este usuario?');">🗑️</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    <th>Puesto</th>
+                    <th>Avatar</th>
+                    <th>Acciones</th>
                 </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($usuarios as $fila): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($fila['Id1'] ?? ''); ?></td>
+                        <td><?php echo htmlspecialchars($fila['username'] ?? ''); ?></td>
+                        <td><?php echo htmlspecialchars($fila['nom_usuario'] ?? ''); ?></td>
+                        <td><?php echo htmlspecialchars($fila['puesto'] ?? ''); ?></td>
+                        <td>
+                            <img src="<?php echo htmlspecialchars($fila['avatar'] ?? 'avatars/default-avatar.png'); ?>" 
+                                 alt="Avatar" class="avatar-img"
+                                 loading="lazy"
+                                 onload="this.classList.add('avatar-loaded')"
+                                 onerror="this.src='avatars/default-avatar.png';this.onerror=null;">
+                        </td>
+                        <td class="acciones">
+                            <a href="ver_usuario.php?id=<?php echo $fila['Id1'] ?? ''; ?>" class="admin-btn ver-btn">👁️</a>
+                            <a href="editar_usuario.php?id=<?php echo $fila['Id1'] ?? ''; ?>" class="admin-btn editar-btn">✏️</a>
+                            <a href="eliminar_usuario.php?id=<?php echo $fila['Id1'] ?? ''; ?>" class="admin-btn eliminar-btn" 
+                               onclick="return confirm('¿Deseas eliminar este usuario?');">🗑️</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-    <div class="total-registros">
-        Total de usuarios: <?php echo $total; ?>
+        <div class="total-registros">
+            Total de usuarios: <?php echo $total_usuarios; ?>
+        </div>
+
+        <div class="paginacion">
+            <?php if ($page > 1): ?>
+                <a href="admin_usuarios.php?page=<?php echo $page - 1; ?>&buscar=<?php echo urlencode($buscar ?? ''); ?>">⬅️ Anterior</a>
+            <?php endif; ?>
+            
+            <?php if ($page < $total_pages): ?>
+                <a href="admin_usuarios.php?page=<?php echo $page + 1; ?>&buscar=<?php echo urlencode($buscar ?? ''); ?>">Siguiente ➡️</a>
+            <?php endif; ?>
+        </div>
     </div>
 
-    <div class="paginacion">
-        <?php if ($pagina > 1) { ?>
-            <a href="?pagina=<?php echo $pagina - 1; ?>&buscar=<?php echo urlencode($busqueda); ?>">⬅️ Anterior</a>
-        <?php } ?>
-        <?php if ($pagina < $total_paginas) { ?>
-            <a href="?pagina=<?php echo $pagina + 1; ?>&buscar=<?php echo urlencode($busqueda); ?>">Siguiente ➡️</a>
-        <?php } ?>
-    </div>
-</div>
-
+    <script>
+    // Mostrar contenido cuando todo esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add('loaded');
+        
+        // Precargar imágenes de avatares para evitar parpadeos
+        const avatarImages = document.querySelectorAll('.avatar-img');
+        avatarImages.forEach(img => {
+            const tempImg = new Image();
+            tempImg.src = img.src;
+            tempImg.onload = function() {
+                img.classList.add('avatar-loaded');
+            };
+            tempImg.onerror = function() {
+                img.src = 'avatars/default-avatar.png';
+                img.classList.add('avatar-loaded');
+            };
+        });
+    });
+    </script>
 </body>
 </html>

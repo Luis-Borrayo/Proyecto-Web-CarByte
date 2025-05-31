@@ -17,7 +17,7 @@ if (!empty($zona)) {
 }
 $where = (count($condiciones) > 0) ? 'WHERE ' . implode(' AND ', $condiciones) : '';
 
-//Trabajadores totales
+// Trabajadores totales
 $sqlusuario = "SELECT COUNT(Id1) AS totalusuarios FROM usuario";
 $resulusario = $connec->query($sqlusuario);
 $totalusuario = $resulusario->fetch_assoc()['totalusuarios'] ?? 0;
@@ -46,39 +46,42 @@ SELECT (
 $resulprecio = $connec->query($promedioVentas);
 $totalprecio = $resulprecio->fetch_assoc()['promedio'] ?? 0;
 
-//top zonas
-$sqlventastotales = "SELECT 
-        (SELECT COUNT(id) FROM ventas) as ventas,
-        (SELECT COUNT(id) FROM vehiculos) as vehiculos,
-        (SELECT COUNT(id) FROM ventas) + (SELECT COUNT(id) FROM vehiculos) as total $where";
-
-$resultventasT = $connec->query($sqlventastotales);
-$dataventasT = $resultventasT->fetch_assoc();
-
-$totalVentas = intval($dataventasT['ventas'] ?? 0);
-$totalVehiculos = intval($dataventasT['vehiculos'] ?? 0);
-$totalGeneral = intval($dataventasT['total'] ?? 0);
-
-// Gráfica barras: top productos
-$sqlBarrasProduc = "SELECT productos, COUNT(*) AS totalGrafica1 FROM ventas $where GROUP BY productos ORDER BY totalGrafica1 DESC LIMIT 3";
+// Top zonas con más ingresos (aplicando filtros)
+$sqlBarrasProduc = "SELECT direccion_zona, SUM(monto) AS ingresos_zona FROM (
+                    SELECT direccion_zona, monto, fecha FROM ventas UNION ALL
+                    SELECT direccion_zona, monto, fecha FROM vehiculos
+                    ) AS ingresos_totales WHERE 1=1
+                    " . (!empty($fecha_inicio) && !empty($fecha_fin) ? " AND fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'" : '') . "
+                    " . (!empty($zona) ? " AND direccion_zona = '$zona'" : '') . "
+                    GROUP BY direccion_zona
+                    ORDER BY ingresos_zona DESC
+                    LIMIT 3";
 $resultBarrasproduct = $connec->query($sqlBarrasProduc);
 $labelG1 = [];
 $datosG1 = [];
 while ($row = $resultBarrasproduct->fetch_assoc()) {
-    $labelG1[] = $row['productos'];
-    $datosG1[] = $row['totalGrafica1'];
+    $labelG1[] = $row['direccion_zona'];
+    $datosG1[] = $row['ingresos_zona'];
 }
 
-// Gráfica de barras: top vehículos
-$sqlTopAuto = "SELECT vehiculo, COUNT(*) AS totalauto FROM vehiculos $whereVehiculos GROUP BY vehiculo ORDER BY totalauto DESC LIMIT 3";
-$resultAuto = $connec->query($sqlTopAuto);
-$vehiculos = [];
-$totalauto = [];
-while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
-    $vehiculos[] = $rowauto['vehiculo'];
-    $totalauto[] = $rowauto['totalauto'];
+// Gráfica de barras: top sucursales con más ingresos (aplicando filtros)
+$sqlsucursal = "SELECT sucursal, SUM(monto) AS topsucursal FROM (
+                SELECT sucursal, monto, fecha FROM ventas
+                UNION ALL
+                SELECT sucursal, monto, fecha FROM vehiculos) AS montosucursal WHERE 1=1
+                " . (!empty($fecha_inicio) && !empty($fecha_fin) ? " AND fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'" : '') . "
+                GROUP BY sucursal
+                ORDER BY topsucursal DESC
+                LIMIT 3";
+$resultsucursal = $connec->query($sqlsucursal);
+$sucursal = [];
+$totalsucursal = [];
+while ($rowsucursal = mysqli_fetch_assoc($resultsucursal)) {
+    $sucursal[] = $rowsucursal['sucursal'];
+    $totalsucursal[] = $rowsucursal['topsucursal'];
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -146,7 +149,7 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
     <div class="grafica">
         <h2>Top 3 Sucursales más rentables</h2>
         <div style="width: 520px; margin: auto;">
-            <canvas id="graficaTopVehiculos"></canvas>
+            <canvas id="graficaTopsucursales"></canvas>
         </div>
     </div>
     </div>
@@ -162,11 +165,11 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
                 <th>Última Venta</th>
             </tr>
             <?php
-            $subqueryVentas = "SELECT nombre_cliente, monto, fecha FROM ventas $where";
-            $subqueryVehiculos = "SELECT nombre_cliente, monto, fecha FROM vehiculos $whereVehiculos";
+            $subqueryVentas = "SELECT vendedor, monto, fecha FROM ventas $where";
+            $subqueryVehiculos = "SELECT vendedor, monto, fecha FROM vehiculos $whereVehiculos";
 
             $slqTopClientes = "
-                SELECT nombre_cliente, COUNT(*) AS cant_compras,
+                SELECT vendedor, COUNT(*) AS cant_ventas,
                        SUM(monto) AS total_monto,
                        MAX(fecha) AS ulti_compra
                 FROM (
@@ -174,14 +177,14 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
                     UNION ALL
                     $subqueryVehiculos
                 ) AS datos_compras
-                GROUP BY nombre_cliente
-                ORDER BY cant_compras DESC
+                GROUP BY vendedor
+                ORDER BY cant_ventas DESC
                 LIMIT 10";
             $resulTopClientes = $connec->query($slqTopClientes);
             while($filaTopclientes = mysqli_fetch_assoc($resulTopClientes)) {
                 echo "<tr>
-                        <td>{$filaTopclientes['nombre_cliente']}</td>
-                        <td>{$filaTopclientes['cant_compras']}</td>
+                        <td>{$filaTopclientes['vendedor']}</td>
+                        <td>{$filaTopclientes['cant_ventas']}</td>
                         <td>Q " . number_format($filaTopclientes['total_monto'], 2) . "</td>
                         <td>{$filaTopclientes['ulti_compra']}</td>
                     </tr>";
@@ -198,9 +201,9 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
         data: {
             labels: <?= json_encode($labelG1); ?>,
             datasets: [{
-                label: 'Top 3 Productos más vendidos',
+                label: 'Top 1',
                 data: <?= json_encode($datosG1); ?>,
-                backgroundColor: ['#E39A78','#B97972','#A99BAE'],
+                backgroundColor: ['#B97972','#7E8988','#A75953'],
                 borderWidth: 1
             }]
         },
@@ -214,46 +217,45 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
         }
     });
 
-    const ctxbarauto = document.getElementById('graficaTopVehiculos').getContext('2d');
-    new Chart(ctxbarauto, {
-        type: 'bar',
-        data: {
-            labels: <?= json_encode($vehiculos); ?>,
-            datasets: [{
-                label: 'Top 3 Vehículos más vendidos',
-                data: <?= json_encode($totalauto); ?>,
-                backgroundColor: ['#A3AAA6', '#B27F84', '#BCA2E7'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-    layout: {
-        padding: 0
+    const ctxbarsucursal = document.getElementById('graficaTopsucursales').getContext('2d');
+new Chart(ctxbarsucursal, {
+    type: 'bar',
+    data: {
+        labels: <?= json_encode($sucursal); ?>,
+        datasets: [{
+            label: 'Top 3 Sucursales con más ingresos',
+            data: <?= json_encode($totalsucursal); ?>,
+            backgroundColor: ['#B27F84', '#A99BAE', '#BCA2E7'],
+            borderWidth: 1
+        }]
     },
-    scales: {
-        x: {
-            ticks: {
-                color: '#fff'
+    options: {
+        layout: {
+            padding: 0
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: '#fff'
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1,
+                    color: '#fff'
+                }
             }
         },
-        y: {
-            beginAtZero: true,
-            ticks: {
-                stepSize: 1,
-                color: '#fff'
-            }
-        }
-    },
-    plugins: {
-        legend: {
-            labels: {
-                color: '#fff'
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#fff'
+                }
             }
         }
     }
-}
-
-    });
+});
     </script>
 </body>
 </html>

@@ -1,5 +1,12 @@
 <?php
-include 'conexion.php';
+session_start();
+include('conexion.php');
+
+// Verificación de sesión
+if (!isset($_SESSION['usuarioingresando'])) {
+    header("Location: login.php");
+    exit();
+}
 
 $id = $_GET['id'] ?? null;
 
@@ -28,10 +35,13 @@ if (!$usuario) {
     <title>Editar Usuario</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        body {
+        .bodyactuazlizarcl {
             background-color: #1b1f3a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            margin: 0;
+            margin-top: 140px;
+            margin-left: 70px;
         }
 
         .form-container {
@@ -41,6 +51,9 @@ if (!$usuario) {
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+            height: auto;
+            min-height: 700px;
         }
 
         .form-container h1 {
@@ -112,24 +125,26 @@ if (!$usuario) {
         }
     </style>
 </head>
-<body>
+<body class="bodyactuazlizarcl">
+    <?php include('barras/navbar-usuario.php'); ?>
+    <?php include('barras/sidebar-usuario.php'); ?>
     <div class="form-container">
         <h1>Editar Usuario</h1>
         <form action="actualizar_usuario.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="Id1" value="<?= $usuario['Id1'] ?>">
             <div class="form-group">
                 <label for="username">Usuario</label>
-                <input type="text" name="username" id="username" value="<?= htmlspecialchars($usuario['username']) ?>" required>
+                <input type="text" name="username" id="username" value="<?= $usuario['username'] ?>" required>
             </div>
             <div class="form-group">
                 <label for="nom_usuario">Nombre</label>
-                <input type="text" name="nom_usuario" id="nom_usuario" value="<?= htmlspecialchars($usuario['nom_usuario']) ?>" required>
+                <input type="text" name="nom_usuario" id="nom_usuario" value="<?= $usuario['nom_usuario'] ?>" required>
             </div>
             <div class="form-group">
                 <label for="puesto">Puesto</label>
                 <select name="puesto" id="puesto" required>
                     <?php
-                    $puestos = ['Cliente', 'Vendedor', 'Admin', 'Gerente', 'Jefe'];
+                    $puestos = ['Vendedor', 'Admin', 'Gerente', 'Jefe'];
                     foreach ($puestos as $puesto) {
                         $selected = ($usuario['puesto'] == $puesto) ? 'selected' : '';
                         echo "<option value=\"$puesto\" $selected>$puesto</option>";
@@ -139,11 +154,11 @@ if (!$usuario) {
             </div>
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" value="<?= htmlspecialchars($usuario['password']) ?>" required>
+                <input type="password" name="password" id="password" value="<?= $usuario['password'] ?>" required>
             </div>
             <div class="form-group">
                 <label for="codigo_seguridad">Código de Seguridad</label>
-                <input type="text" name="codigo_seguridad" id="codigo_seguridad" value="<?= htmlspecialchars($usuario['codigo_seguridad']) ?>" required>
+                <input type="text" name="codigo_seguridad" id="codigo_seguridad" value="<?= $usuario['codigo_seguridad'] ?>" required>
             </div>
             <div class="form-group">
                 <label for="avatar">Avatar actual</label><br>

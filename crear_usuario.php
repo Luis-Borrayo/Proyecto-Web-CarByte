@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("conexion.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,10 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Crear Usuario</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        body {
+        .crearusuariocontainer {
             background-color: #1b1f3a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            margin: 0;
+            margin-top: 140px;
+            margin-left: 70px;
         }
         .form-container {
             max-width: 500px;
@@ -47,6 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            height: auto;
         }
         .form-container h1 {
             margin-bottom: 25px;
@@ -112,7 +119,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
-<body>
+<body class="crearusuariocontainer">
+    <?php include('barras/navbar-usuario.php'); ?>
+    <?php include('barras/sidebar-usuario.php'); ?>
     <div class="form-container">
         <h1>Crear Nuevo Usuario</h1>
         <form action="crear_usuario.php" method="POST" enctype="multipart/form-data">

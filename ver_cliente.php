@@ -1,5 +1,6 @@
 <?php
-include 'conexion.php';
+session_start();
+include('conexion.php');
 
 $id = $_GET['id'] ?? null;
 
@@ -28,10 +29,13 @@ if (!$cliente) {
     <title>Ver Cliente</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        body {
+        .body-verusuario {
             background-color: #1b1f3a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            margin: 0;
+            margin-top: 140px;
+            margin-left: 70px;
         }
 
         .container {
@@ -44,6 +48,9 @@ if (!$cliente) {
             text-align: center;
             word-wrap: break-word;
             overflow-wrap: break-word;
+            flex-wrap: wrap;
+            height: auto;
+            min-height: 700px;
         }
 
         h1 {
@@ -84,7 +91,9 @@ if (!$cliente) {
         }
     </style>
 </head>
-<body>
+<body class="body-verusuario">
+    <?php include('barras/navbar-usuario.php'); ?>
+    <?php include('barras/sidebar-usuario.php'); ?>
     <div class="container">
         <h1>Detalle del Cliente</h1>
         <img src="<?= $cliente['avatar'] ?>" alt="Avatar del cliente">

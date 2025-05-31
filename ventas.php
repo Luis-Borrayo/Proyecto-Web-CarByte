@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = mysqli_real_escape_string($connec, $_POST['email']);
     $zona = intval($_POST['zona']);
     $nit = mysqli_real_escape_string($connec, $_POST['nit']);
+    $sucursal = mysqli_real_escape_string($connec, $_POST['age']);
     $productos = $_POST['productos'] ?? [];
     $precio = mysqli_real_escape_string($connec, $_POST['precio']);
     $pago = mysqli_real_escape_string($connec, $_POST['forma_pago']);
@@ -20,9 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }, $productos));
 
     $sql = "INSERT INTO ventas 
-        (nombre_empleado, nombre_cliente, telefono_cliente, correo_cliente, direccion_zona, nit_cliente, productos, monto, forma_pago, comentario)
+        (vendedor, nombre_cliente, telefono_cliente, correo_cliente, direccion_zona, nit_cliente, sucursal, productos, monto, forma_pago, comentario)
         VALUES
-        ('{$empleado}', '{$cliente}', '{$telefono}', '{$email}', {$zona}, '{$nit}', '{$prod_list}', '{$precio}', '{$pago}', '{$comentario}')";
+        ('{$empleado}', '{$cliente}', '{$telefono}', '{$email}', {$zona}, '{$nit}', '{$sucursal}', '{$prod_list}', '{$precio}', '{$pago}', '{$comentario}')";
 
     if (mysqli_query($connec, $sql)) {
         echo "<p class='success'>Venta registrada con éxito.</p>";
@@ -49,8 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="empleados">Nombre del empleado</label>
                 <select name="empleados" id="empleados" required>
                     <option value="">--Seleccione nombre del empleado--</option>
-                    <option value="">--Luis Borrayo--</option>
-                    <option value="">--Oscar Garcia--</option>
+                    <option value="Luis Borrayo">Luis Borrayo</option>
+                    <option value="Oscar Garcia">Oscar Garcia</option>
+                    <option value="Wesley Lopez">Wesley Lopez</option>
+                    <option value="Moise Cabrera">Moise Cabrera</option>
+                    <option value="Lourdes Alvarado">Lourdes Alvarado</option>
                 </select>
             </div>
             <div>
@@ -73,6 +77,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="<?= $i ?>">Zona <?= $i ?></option>
                     <?php endfor; ?>
                 </select>
+            </div>
+            <div>
+                <label for="sucursal">Sucursal</label>
+                <select name="age" id="age"  name="age" class="datoslocal" required>
+                <option value="">--Seleccione una opción--</option>
+                <option value="CarByte La República">CarByte La República</option>
+                <option value="CarByte Las Américas">CarByte Las Américas</option>
+                <option value="CarByte CA Salvador">CarByte CA Salvador</option>
+                <option value="CarByte Santa Fe">CarByte Santa Fe</option>
+                <option value="CarByte Zona 10">CarByte Zona 10</option>
+            </select>
             </div>
             <div>
                 <label for="nit">NIT</label>
