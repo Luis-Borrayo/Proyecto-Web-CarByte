@@ -9,140 +9,156 @@ $result_empleados = mysqli_query($connec, $query_empleados);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $empleado   = mysqli_real_escape_string($connec, $_POST['empleados']);
-    $cliente = mysqli_real_escape_string($connec, $_POST['cliente']);
-    $telefono = mysqli_real_escape_string($connec, $_POST['telefono']);
-    $email = mysqli_real_escape_string($connec, $_POST['email']);
-    $zona = intval($_POST['zona']);
-    $nit = mysqli_real_escape_string($connec, $_POST['nit']);
-    $sucursal = mysqli_real_escape_string($connec, $_POST['age']);
-    $productos = $_POST['productos'] ?? [];
-    $precio = mysqli_real_escape_string($connec, $_POST['precio']);
-    $pago = mysqli_real_escape_string($connec, $_POST['forma_pago']);
+    $cliente    = mysqli_real_escape_string($connec, $_POST['cliente']);
+    $telefono   = mysqli_real_escape_string($connec, $_POST['telefono']);
+    $email      = mysqli_real_escape_string($connec, $_POST['email']);
+    $zona       = intval($_POST['zona']);
+    $nit        = mysqli_real_escape_string($connec, $_POST['nit']);
+    $sucursal   = mysqli_real_escape_string($connec, $_POST['age']);
+    $productos  = $_POST['productos'] ?? [];
+    $precio     = mysqli_real_escape_string($connec, $_POST['precio']);
     $comentario = mysqli_real_escape_string($connec, $_POST['comentario']);
+    $fecha      = date('Y-m-d H:i:s'); // Fecha y hora actual
 
-    $prod_list = implode(",", array_map(function($p) use ($connec) {
+    // Convertir el array de productos a string separado por coma
+    $prod_list = implode(", ", array_map(function($p) use ($connec) {
         return mysqli_real_escape_string($connec, $p);
     }, $productos));
 
-    $sql = "INSERT INTO ventas 
-        (vendedor, nombre_cliente, telefono_cliente, correo_cliente, direccion_zona, nit_cliente, sucursal, productos, monto, forma_pago, comentario)
-        VALUES
-        ('{$empleado}', '{$cliente}', '{$telefono}', '{$email}', {$zona}, '{$nit}', '{$sucursal}', '{$prod_list}', '{$precio}', '{$pago}', '{$comentario}')";
+    // Consulta corregida: asegúrese que las columnas existen en su tabla 'ventas'
+    $sql = "INSERT INTO ventas (vendedor, nombre_cliente, telefono, correo, direccion_zona, nit, sucursal, vehiculo, monto, comentario, fecha)
+            VALUES (
+                '{$empleado}',
+                '{$cliente}',
+                '{$telefono}',
+                '{$email}',
+                {$zona},
+                '{$nit}',
+                '{$sucursal}',
+                '{$prod_list}',
+                '{$precio}',
+                '{$comentario}',
+                '{$fecha}'
+            )";
+
+    // Puede descomentar para depuración
+    // echo $sql;
 
     if (mysqli_query($connec, $sql)) {
-        echo "<p class='success'>Venta registrada con éxito.</p>";
+        echo "<div class='success'>Venta guardada exitosamente.</div>";
     } else {
-        echo "<p class='error'>Error al registrar venta: " . mysqli_error($connec) . "</p>";
+        echo "<div class='error'>Error al guardar la venta: " . mysqli_error($connec) . "</div>";
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Ventas</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(to bottom right, #1e1e2f, #2c2c3c);
-        color: #f0f0f0;
-        min-height: 100vh;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom right, #1e1e2f, #2c2c3c);
+            color: #f0f0f0;
+            min-height: 100vh;
+        }
 
-    .citas-container {
-        max-width: 800px;
-        background-color: #2d2d3a;
-        margin: 80px auto;
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-    }
+        .citas-container {
+            max-width: 800px;
+            background-color: #2d2d3a;
+            margin: 80px auto;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+        }
 
-    h3 {
-        text-align: center;
-        margin-bottom: 10px;
-        font-size: 28px;
-        color: #00e5ff;
-    }
+        h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+            color: #00e5ff;
+        }
 
-    p {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #ccc;
-    }
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
 
-    form div {
-        margin-bottom: 20px;
-    }
+        form div {
+            margin-bottom: 20px;
+        }
 
-    label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        color: #e0e0e0;
-    }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
 
-    input[type="text"],
-    input[type="email"],
-    select,
-    textarea {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 8px;
-        background-color: #3a3a4a;
-        color: #fff;
-        font-size: 15px;
-    }
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #3a3a4a;
+            color: #fff;
+            font-size: 15px;
+        }
 
-    textarea {
-        resize: vertical;
-    }
+        textarea {
+            resize: vertical;
+        }
 
-    select[multiple] {
-        height: 120px;
-    }
+        select[multiple] {
+            height: 120px;
+        }
 
-    button {
-        background-color: #00bcd4;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        width: 100%;
-    }
+        button {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
 
-    button:hover {
-        background-color: #0097a7;
-    }
+        button:hover {
+            background-color: #0097a7;
+        }
 
-    .success {
-        background-color: #2e7d32;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        border-radius: 8px;
-        margin: 20px auto;
-        width: 80%;
-    }
+        .success {
+            background-color: #2e7d32;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 20px auto;
+            width: 80%;
+        }
 
-    .error {
-        background-color: #c62828;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        border-radius: 8px;
-        margin: 20px auto;
-        width: 80%;
-    }
-</style>
-
+        .error {
+            background-color: #c62828;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 20px auto;
+            width: 80%;
+        }
+    </style>
 </head>
 <body>
     <?php include('barras/navbar-usuario.php'); ?>
@@ -186,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div>
                 <label for="sucursal">Sucursal</label>
-                <select name="age" id="age" class="datoslocal" required>
+                <select name="age" id="age" required>
                     <option value="">--Seleccione una opción--</option>
                     <option value="CarByte La República">CarByte La República</option>
                     <option value="CarByte Las Américas">CarByte Las Américas</option>
@@ -201,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div>
                 <label for="productos">Productos Vendidos</label>
-                <select name="productos[]" id="productos" multiple size="5" required>
+                <select name="productos[]" id="productos" multiple required>
                     <option value="Rines Deportivos">Rines Deportivos</option>
                     <option value="Tapicería Premium">Tapicería Premium</option>
                     <option value="Alfombrilla">Alfombrilla</option>
@@ -220,24 +236,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
             </div>
             <div>
-                <label for="precio">Precio por producto</label>
+                <label for="precio">Precio total</label>
                 <input type="text" name="precio" id="precio" placeholder="Precio total" required>
             </div>
             <div>
-                <label for="forma_pago">Forma de pago</label>
-                <select name="forma_pago" id="forma_pago" required>
-                    <option value="">--Seleccione forma de pago--</option>
-                    <option value="Efectivo">Efectivo</option>
-                    <option value="Tarjeta">Tarjeta</option>
-                </select>
+                <label for="comentario">Comentario</label>
+                <textarea name="comentario" id="comentario" rows="4" placeholder="Comentario adicional..."></textarea>
             </div>
-            <div>
-                <label for="comentario">Comentario del pedido</label>
-                <textarea name="comentario" id="comentario" placeholder="Añadir comentarios"></textarea>
-            </div>
-            <div>
-                <button type="submit">Registrar Venta</button>
-            </div>
+            <button type="submit">Registrar Venta</button>
         </form>
     </div>
 </body>
