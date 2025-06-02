@@ -120,7 +120,6 @@ $tipo = $_SESSION['tipo_usuario'] ?? null;
                     </div>
                     </div>
                 </div>
-                <!-- Popup de detalles -->
                 <div class="detalle-popup">
                     Vehículo confiable, ideal para quienes buscan eficiencia y durabilidad. 
                     Motor de bajo consumo y excelente rendimiento urbano, perfecto para el tráfico de la Ciudad de Guatemala.
@@ -304,95 +303,96 @@ $tipo = $_SESSION['tipo_usuario'] ?? null;
                 </div>
             </div>
         </section>
-        <section id="accesorios">
-            <h1>Accesorios</h1>
-            <div class="accesorios-container">
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio1.jpg" alt="Accesorio 1">
-                    <div class="accesorio-info">
-                        <h3>Rines Deportivos</h3>
-                        <p>Personaliza tu auto con estilo y resistencia.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio2.jpg" alt="Accesorio 2">
-                    <div class="accesorio-info">
-                        <h3>Tapicería Premium</h3>
-                        <p>Mejora el confort y la elegancia interior.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio3.jpg" alt="Accesorio 3">
-                    <div class="accesorio-info">
-                        <h3>Alfombrilla</h3>
-                        <p>Para cuidar el interior de vehiculo.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio4.jpg" alt="Accesorio 4">
-                    <div class="accesorio-info">
-                        <h3>Película Polarizada</h3>
-                        <p>Protección solar y privacidad para tu vehículo.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio5.jpg" alt="Accesorio 5">
-                    <div class="accesorio-info">
-                        <h3>Sensores de Reversa</h3>
-                        <p>Mayor seguridad al estacionarte.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio6.jpg" alt="Accesorio 6">
-                    <div class="accesorio-info">
-                        <h3>Sistema de Navegación GPS</h3>
-                        <p>Llega a tu destino sin perderte.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio7.jpg" alt="Accesorio 7">
-                    <div class="accesorio-info">
-                        <h3>Portabicicletas</h3>
-                        <p>Ideal para tus viajes y aventuras al aire libre.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio8.jpg" alt="Accesorio 8">
-                    <div class="accesorio-info">
-                        <h3>Cargador Inalámbrico</h3>
-                        <p>Recarga tu celular sin cables mientras conduces.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio9.jpg" alt="Accesorio 9">
-                    <div class="accesorio-info">
-                        <h3>Fundas para Asientos</h3>
-                        <p>Protege y renueva el interior de tu auto.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div class="accesorio-card">
-                    <img src="imagenes/accesorio10.jpg" alt="Accesorio 10">
-                    <div class="accesorio-info">
-                        <h3>Protector de Cajuela</h3>
-                        <p>Mantén limpia y ordenada la cajuela de tu auto.</p>
-                        <button>Agregar al carrito</button>
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 20px;">
-    <a href="accesorios.php" class="btn-ver-mas">Ver más accesorios</a>
-</div>
-
+ <section id="accesorios">
+    <h1>Accesorios</h1>
+    <div class="accesorios-container">
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio1.jpg" alt="Accesorio 1">
+            <div class="accesorio-info">
+                <h3>Rines Deportivos</h3>
+                <p>Personaliza tu auto con estilo y resistencia.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
             </div>
-        </section>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio2.jpg" alt="Accesorio 2">
+            <div class="accesorio-info">
+                <h3>Tapicería Premium</h3>
+                <p>Mejora el confort y la elegancia interior.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio3.jpg" alt="Accesorio 3">
+            <div class="accesorio-info">
+                <h3>Alfombrilla</h3>
+                <p>Para cuidar el interior de vehiculo.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio4.jpg" alt="Accesorio 4">
+            <div class="accesorio-info">
+                <h3>Película Polarizada</h3>
+                <p>Protección solar y privacidad para tu vehículo.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio5.jpg" alt="Accesorio 5">
+            <div class="accesorio-info">
+                <h3>Sensores de Reversa</h3>
+                <p>Mayor seguridad al estacionarte.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio6.jpg" alt="Accesorio 6">
+            <div class="accesorio-info">
+                <h3>Sistema de Navegación GPS</h3>
+                <p>Llega a tu destino sin perderte.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio7.jpg" alt="Accesorio 7">
+            <div class="accesorio-info">
+                <h3>Portabicicletas</h3>
+                <p>Ideal para tus viajes y aventuras al aire libre.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio8.jpg" alt="Accesorio 8">
+            <div class="accesorio-info">
+                <h3>Cargador Inalámbrico</h3>
+                <p>Recarga tu celular sin cables mientras conduces.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio9.jpg" alt="Accesorio 9">
+            <div class="accesorio-info">
+                <h3>Fundas para Asientos</h3>
+                <p>Protege y renueva el interior de tu auto.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+        <div class="accesorio-card">
+            <img src="imagenes/accesorio10.jpg" alt="Accesorio 10">
+            <div class="accesorio-info">
+                <h3>Protector de Cajuela</h3>
+                <p>Mantén limpia y ordenada la cajuela de tu auto.</p>
+                <button onclick="window.location.href='citas.php'">Agendar cita</button>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="accesorios.php" class="btn-ver-mas">Ver más accesorios</a>
+        </div>
+    </div>
+</section>
+
     </main>
 
     <script src="js/Menu.js"></script>
@@ -403,10 +403,9 @@ $tipo = $_SESSION['tipo_usuario'] ?? null;
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             if (scrollTop > lastScrollTop) {
-                // Scrolling down
+
                 navbar.classList.add('navbar-hidden');
             } else {
-                // Scrolling up
                 navbar.classList.remove('navbar-hidden');
             }
             lastScrollTop = scrollTop;
@@ -418,16 +417,13 @@ $tipo = $_SESSION['tipo_usuario'] ?? null;
       const veh = btn.closest('.vehiculo');
       const popup = veh.querySelector('.detalle-popup');
 
-      // Oculta cualquier otro popup abierto
       document.querySelectorAll('.detalle-popup.mostrar')
         .forEach(p => { if(p!==popup) p.classList.remove('mostrar'); });
 
-      // Alterna el seleccionado
       popup.classList.toggle('mostrar');
     });
   });
 
-  // Cierra popup al hacer clic fuera
   document.addEventListener('click', e => {
     if (!e.target.closest('.vehiculo')) {
       document.querySelectorAll('.detalle-popup.mostrar')
@@ -442,14 +438,13 @@ $tipo = $_SESSION['tipo_usuario'] ?? null;
 
   function moverCarrusel() {
     const totalItems = carrusel.children.length;
-    index = (index + 1) % totalItems; // Avanza y vuelve al inicio
+    index = (index + 1) % totalItems; 
     carrusel.scrollTo({
       left: carrusel.clientWidth * index,
       behavior: 'smooth'
     });
   }
 
-  // Cambia cada 4 segundos, ajusta si quieres más rápido o lento
   setInterval(moverCarrusel, 4000);
 </script>
 

@@ -39,7 +39,7 @@ error_reporting(E_ALL);
             <a href="Vision.php">Vision</a>
             <a href="accesorios.php">Productos</a>
             <a href="contacto.php">Contacto</a>
-            <a href="#">Citas</a>
+            <a href="./citas.php">Citas</a>
 
             <div class="user-menu dropdown">
                 <?php if (isset($_SESSION['username'])): ?>

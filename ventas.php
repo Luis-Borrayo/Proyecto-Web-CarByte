@@ -1,6 +1,10 @@
-<?php
+<?php 
 session_start();
 include "conexion.php";
+
+// Obtener lista de empleados desde la base de datos
+$query_empleados = "SELECT nom_usuario FROM usuario ORDER BY nom_usuario ASC";
+$result_empleados = mysqli_query($connec, $query_empleados);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -39,9 +43,111 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Ventas</title>
-    <link rel="stylesheet" href="./css/citas-compras.css">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to bottom right, #1e1e2f, #2c2c3c);
+        color: #f0f0f0;
+        min-height: 100vh;
+    }
+
+    .citas-container {
+        max-width: 800px;
+        background-color: #2d2d3a;
+        margin: 80px auto;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    }
+
+    h3 {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 28px;
+        color: #00e5ff;
+    }
+
+    p {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #ccc;
+    }
+
+    form div {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #e0e0e0;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        background-color: #3a3a4a;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    select[multiple] {
+        height: 120px;
+    }
+
+    button {
+        background-color: #00bcd4;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #0097a7;
+    }
+
+    .success {
+        background-color: #2e7d32;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 80%;
+    }
+
+    .error {
+        background-color: #c62828;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 80%;
+    }
+</style>
+
 </head>
 <body>
+    <?php include('barras/navbar-usuario.php'); ?>
+    <?php include('barras/sidebar-usuario.php'); ?>
+
     <div class="citas-container">
         <h3>Registro de ventas</h3>
         <p>Llena el formulario de registro de ventas de productos</p>
@@ -50,11 +156,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="empleados">Nombre del empleado</label>
                 <select name="empleados" id="empleados" required>
                     <option value="">--Seleccione nombre del empleado--</option>
-                    <option value="Luis Borrayo">Luis Borrayo</option>
-                    <option value="Oscar Garcia">Oscar Garcia</option>
-                    <option value="Wesley Lopez">Wesley Lopez</option>
-                    <option value="Moise Cabrera">Moise Cabrera</option>
-                    <option value="Lourdes Alvarado">Lourdes Alvarado</option>
+                    <?php while ($row = mysqli_fetch_assoc($result_empleados)) : ?>
+                        <option value="<?= htmlspecialchars($row['nom_usuario']) ?>">
+                            <?= htmlspecialchars($row['nom_usuario']) ?>
+                        </option>
+                    <?php endwhile; ?>
                 </select>
             </div>
             <div>
@@ -80,14 +186,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div>
                 <label for="sucursal">Sucursal</label>
-                <select name="age" id="age"  name="age" class="datoslocal" required>
-                <option value="">--Seleccione una opción--</option>
-                <option value="CarByte La República">CarByte La República</option>
-                <option value="CarByte Las Américas">CarByte Las Américas</option>
-                <option value="CarByte CA Salvador">CarByte CA Salvador</option>
-                <option value="CarByte Santa Fe">CarByte Santa Fe</option>
-                <option value="CarByte Zona 10">CarByte Zona 10</option>
-            </select>
+                <select name="age" id="age" class="datoslocal" required>
+                    <option value="">--Seleccione una opción--</option>
+                    <option value="CarByte La República">CarByte La República</option>
+                    <option value="CarByte Las Américas">CarByte Las Américas</option>
+                    <option value="CarByte CA Salvador">CarByte CA Salvador</option>
+                    <option value="CarByte Santa Fe">CarByte Santa Fe</option>
+                    <option value="CarByte Zona 10">CarByte Zona 10</option>
+                </select>
             </div>
             <div>
                 <label for="nit">NIT</label>

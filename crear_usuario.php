@@ -1,11 +1,54 @@
 <?php
 session_start();
-// Mostrar mensajes de error/success
-$error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
-$success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
-unset($_SESSION['error']);
-unset($_SESSION['success']);
+include('conexion.php'); // Asegúrate que aquí se conecta a la BD
+
+$error = '';
+$success = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $nom_usuario = trim($_POST['nom_usuario']);
+    $puesto = $_POST['puesto'];
+    $password = $_POST['password'];
+    $codigo_seguridad = $_POST['codigo_seguridad'];
+    $avatar = $_FILES['avatar'];
+
+    if (strlen($password) < 6) {
+        $error = "La contraseña debe tener al menos 6 caracteres.";
+    } elseif ($avatar['error'] !== 0) {
+        $error = "Error al subir el avatar.";
+    } else {
+        $extensiones_permitidas = ['jpg', 'jpeg', 'png', 'gif'];
+        $nombre_archivo = $avatar['name'];
+        $extension = strtolower(pathinfo($nombre_archivo, PATHINFO_EXTENSION));
+
+        if (!in_array($extension, $extensiones_permitidas)) {
+            $error = "Formato de avatar no permitido.";
+        } else {
+            $nuevo_nombre = uniqid() . "." . $extension;
+            $ruta_destino = "avatars/" . $nuevo_nombre;
+            if (!is_dir("avatars")) mkdir("avatars");
+
+            if (move_uploaded_file($avatar['tmp_name'], $ruta_destino)) {
+                $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+                $stmt = $connec->prepare("INSERT INTO usuario (username, nom_usuario, puesto, password, codigo_seguridad, avatar) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("ssssss", $username, $nom_usuario, $puesto, $password_hash, $codigo_seguridad, $ruta_destino);
+
+                if ($stmt->execute()) {
+                    $success = "Usuario creado exitosamente.";
+                } else {
+                    $error = "Error al insertar en la base de datos.";
+                }
+                $stmt->close();
+            } else {
+                $error = "Error al mover el archivo del avatar.";
+            }
+        }
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -124,7 +167,7 @@ unset($_SESSION['success']);
             <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
         <?php endif; ?>
         
-        <form action="procesar_registro.php" method="POST" enctype="multipart/form-data">
+        <form action="crear_usuario.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="username">Usuario</label>
                 <input type="text" name="username" id="username" required>
@@ -161,7 +204,7 @@ unset($_SESSION['success']);
             <div class="form-group">
                 <label for="avatar">Subir Avatar (Imagen)</label>
                 <input type="file" name="avatar" id="avatar" accept="image/jpeg, image/png, image/gif" required>
-                <small style="color: #aaa;">Formatos aceptados: JPG, PNG, GIF (Máx. 2MB)</small>
+                <small style="color: #aaa;">Formatos aceptados: JPG, PNG, GIF</small>
             </div>
 
             <div class="form-buttons">
