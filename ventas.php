@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }, $productos));
 
     // Consulta corregida: asegúrese que las columnas existen en su tabla 'ventas'
-    $sql = "INSERT INTO ventas (vendedor, nombre_cliente, telefono, correo, direccion_zona, nit, sucursal, vehiculo, monto, comentario, fecha)
+    $sql = "INSERT INTO ventas (vendedor, nombre_cliente, telefono_cliente, correo_cliente, direccion_zona, nit_cliente, sucursal, productos, monto, comentario, fecha)
             VALUES (
                 '{$empleado}',
                 '{$cliente}',
