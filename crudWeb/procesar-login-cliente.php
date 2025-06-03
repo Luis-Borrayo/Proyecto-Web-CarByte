@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $fila['username'];
             $_SESSION['nom_usuario'] = $fila['nom_usuario'];
             $_SESSION['avatar'] = $fila['avatar'];
+            $_SESSION['tipo_usuario'] = 'cliente';
 
             header("Location: ../index.php");
             exit();

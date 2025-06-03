@@ -17,7 +17,7 @@ $id = $_SESSION['id'];
 $default_avatar = '../assets/images/default-avatar.jpg';
 
 // Consulta preparada
-$sql = "SELECT username, avatar FROM clientes WHERE Id = ?";
+$sql = "SELECT username, avatar FROM usuario WHERE Id1 = ?";
 $stmt = $connec->prepare($sql);
 
 if (!$stmt) {
@@ -27,9 +27,9 @@ if (!$stmt) {
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $resultado = $stmt->get_result();
-$cliente = $resultado->fetch_assoc();
+$usuario = $resultado->fetch_assoc();
 
-if (!$cliente) {
+if (!$usuario) {
     echo "Usuario no encontrado.";
     exit;
 }
@@ -54,26 +54,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar'])) {
         // Mover archivo
         if (move_uploaded_file($avatar['tmp_name'], $upload_path)) {
             // Eliminar avatar anterior si existe
-            if (!empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cliente['avatar'])) {
-                unlink(__DIR__ . '/../' . $cliente['avatar']);
+            if (!empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usuario['avatar'])) {
+                unlink(__DIR__ . '/../' . $usuario['avatar']);
             }
             
             // Actualizar en BD
             $new_avatar_path = 'avatars/' . $new_filename;
-            $update_sql = "UPDATE clientes SET avatar = ? WHERE Id = ?";
+            $update_sql = "UPDATE usuario SET avatar = ? WHERE Id1 = ?";
             $update_stmt = $connec->prepare($update_sql);
             $update_stmt->bind_param("si", $new_avatar_path, $id);
             $update_stmt->execute();
             
             // Actualizar variable para mostrar
-            $cliente['avatar'] = $new_avatar_path;
+            $usuario['avatar'] = $new_avatar_path;
         }
     }
 }
 
 // Establecer ruta del avatar
-$avatar_path = !empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cliente['avatar']) 
-    ? '../' . $cliente['avatar'] 
+$avatar_path = !empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usuario['avatar']) 
+    ? '../' . $usuario['avatar'] 
     : $default_avatar;
 ?>
 
@@ -138,6 +138,7 @@ $avatar_path = !empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cli
             transition: all 0.3s ease;
             border-radius: 8px;
             margin-bottom: 5px;
+            font-size: 13px;
         }
         .menu-section a i {
             background: linear-gradient(45deg, #D16002, #ED9121, #CC5500);
@@ -193,15 +194,16 @@ $avatar_path = !empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cli
     <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    
     <div class="sidebar" id="sidebar">
         <div class="toggle-btn" id="toggleBtn"><i class="fa-solid fa-bars"></i></div>
         <div class="profile">
             <div class="avatar-container">
                 <img src="<?php echo htmlspecialchars($avatar_path); ?>" 
-                     alt="Avatar de <?php echo htmlspecialchars($cliente['username']); ?>"
+                     alt="Avatar de <?php echo htmlspecialchars($usuario['username']); ?>"
                      onerror="this.src='<?php echo htmlspecialchars($default_avatar); ?>'">
             </div>
-            <h2 class="info-group"><?php echo htmlspecialchars($cliente['username']); ?></h2>
+            <h2 class="info-group"><?php echo htmlspecialchars($usuario['username']); ?></h2>
             <form class="avatar-form" method="POST" enctype="multipart/form-data">
                 <input type="file" id="avatar" name="avatar" accept="image/*" onchange="this.form.submit()">
                 <label for="avatar">Cambiar avatar</label>
@@ -210,9 +212,13 @@ $avatar_path = !empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cli
         <div class="menu-section">
             <h3 class="titlesidebar">Panel</h3>
             <a href="../index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
-            <a href="../citas.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">citas</span></a>
-            <a href="#"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Editar perfil</span></a>
-            <a href="#"><i class="fa-solid fa-shop"></i><span class="link-disebar">Compras</span></a>
+            <a href="../dashboard/dashboard-clientes.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Clientes</span></a>
+            <a href="../dashboard/dashboard-ventas.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Ventas</span></a>
+            <a href="../dashboard/dashboard-admin.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Vendedores</span></a>
+            <a href="../admin_usuarios.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar usuarios</span></a>
+            <a href="../admin_clientes.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar clientes</span></a>
+            <a href="/../ventas.php"><i class="fa-solid fa-cart-shopping"></i><span class="link-disebar">Registro ventas productos</span></a>
+            <a href="/../vehiculos-ventas.php"><i class="fa-solid fa-car-side"></i><span class="link-disebar">Registro ventas vehiculos</span></a>
         </div>
     </div>
 <script>

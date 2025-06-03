@@ -28,26 +28,26 @@ $params = [];
 $types = '';
 
 if (!empty($buscar)) {
-    $search_condition = "WHERE username LIKE ? OR nom_usuario LIKE ? OR puesto LIKE ?";
+    $search_condition = "WHERE username LIKE ? OR nom_usuario LIKE ?";
     $search_term = "%$buscar%";
-    $params = array_fill(0, 3, $search_term);
+    $params = array_fill(0, 2, $search_term);
     $types = str_repeat('s', count($params));
 }
 
 // Contar total de registros
-$count_query = "SELECT COUNT(*) as total FROM usuario $search_condition";
+$count_query = "SELECT COUNT(*) as total FROM clientes $search_condition";
 $stmt_count = $connec->prepare($count_query);
 if (!empty($params)) {
     $stmt_count->bind_param($types, ...$params);
 }
 $stmt_count->execute();
 $total_result = $stmt_count->get_result();
-$total_usuarios = $total_result->fetch_assoc()['total'];
-$total_pages = ceil($total_usuarios / $limit);
+$total_clientes = $total_result->fetch_assoc()['total'];
+$total_pages = ceil($total_clientes / $limit);
 $stmt_count->close();
 
 // Consulta principal
-$query = "SELECT * FROM usuario $search_condition LIMIT ? OFFSET ?";
+$query = "SELECT * FROM clientes $search_condition LIMIT ? OFFSET ?";
 $params[] = $limit;
 $params[] = $offset;
 $types .= 'ii';
@@ -58,9 +58,9 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 
 // Obtener todos los datos
-$usuarios = [];
+$clientes = [];
 while ($fila = $resultado->fetch_assoc()) {
-    $usuarios[] = $fila;
+    $clientes[] = $fila;
 }
 
 $stmt->close();
@@ -73,7 +73,7 @@ ob_end_clean();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administración de Usuarios</title>
+    <title>Administración de Clientes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body.admin-body {
@@ -81,8 +81,9 @@ ob_end_clean();
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            margin-top: 140px;
-            margin-left: 70px;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
         .admin-container {
@@ -92,11 +93,8 @@ ob_end_clean();
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
-            box-sizing: border-box;
-            flex-wrap: wrap;
-            height: 1200px;
-            
-        }
+        }
+
         .admin-title {
             text-align: center;
             color: #00c4cc;
@@ -255,15 +253,15 @@ ob_end_clean();
     <?php include('barras/sidebar-usuario.php'); ?>
     
     <div class="admin-container">
-        <h1 class="admin-title">Panel de Administración de Usuarios</h1>
+        <h1 class="admin-title">Panel de Administración de Clientes</h1>
 
-        <form class="search-form" method="GET" action="admin_usuarios.php">
-            <input type="text" name="buscar" placeholder="Buscar por usuario, nombre o puesto" 
+        <form class="search-form" method="GET" action="admin_clientes.php">
+            <input type="text" name="buscar" placeholder="Buscar por usuario o nombre" 
                    value="<?php echo htmlspecialchars($buscar ?? ''); ?>">
             <button type="submit">🔍 Buscar</button>
         </form>
 
-        <a href="crear_usuario.php" class="admin-btn crear-btn">➕ Crear Usuario</a>
+        <a href="crear_cliente.php" class="admin-btn crear-btn">➕ Crear Cliente</a>
 
         <table class="admin-table">
             <thead>
@@ -271,18 +269,16 @@ ob_end_clean();
                     <th>ID</th>
                     <th>Usuario</th>
                     <th>Nombre</th>
-                    <th>Puesto</th>
                     <th>Avatar</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($usuarios as $fila): ?>
+                <?php foreach ($clientes as $fila): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($fila['Id1'] ?? ''); ?></td>
+                        <td><?php echo htmlspecialchars($fila['Id'] ?? ''); ?></td>
                         <td><?php echo htmlspecialchars($fila['username'] ?? ''); ?></td>
                         <td><?php echo htmlspecialchars($fila['nom_usuario'] ?? ''); ?></td>
-                        <td><?php echo htmlspecialchars($fila['puesto'] ?? ''); ?></td>
                         <td>
                             <img src="<?php echo htmlspecialchars($fila['avatar'] ?? 'avatars/default-avatar.png'); ?>" 
                                  alt="Avatar" class="avatar-img"
@@ -291,10 +287,10 @@ ob_end_clean();
                                  onerror="this.src='avatars/default-avatar.png';this.onerror=null;">
                         </td>
                         <td class="acciones">
-                            <a href="ver_usuario.php?id=<?php echo $fila['Id1'] ?? ''; ?>" class="admin-btn ver-btn">👁️</a>
-                            <a href="editar_usuario.php?id=<?php echo $fila['Id1'] ?? ''; ?>" class="admin-btn editar-btn">✏️</a>
-                            <a href="eliminar_usuario.php?id=<?php echo $fila['Id1'] ?? ''; ?>" class="admin-btn eliminar-btn" 
-                               onclick="return confirm('¿Deseas eliminar este usuario?');">🗑️</a>
+                            <a href="ver_cliente.php?id=<?php echo $fila['Id'] ?? ''; ?>" class="admin-btn ver-btn">👁️</a>
+                            <a href="editar_cliente.php?id=<?php echo $fila['Id'] ?? ''; ?>" class="admin-btn editar-btn">✏️</a>
+                            <a href="eliminar_cliente.php?id=<?php echo $fila['Id'] ?? ''; ?>" class="admin-btn eliminar-btn" 
+                               onclick="return confirm('¿Deseas eliminar este cliente?');">🗑️</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -302,16 +298,16 @@ ob_end_clean();
         </table>
 
         <div class="total-registros">
-            Total de usuarios: <?php echo $total_usuarios; ?>
+            Total de clientes: <?php echo $total_clientes; ?>
         </div>
 
         <div class="paginacion">
             <?php if ($page > 1): ?>
-                <a href="admin_usuarios.php?page=<?php echo $page - 1; ?>&buscar=<?php echo urlencode($buscar ?? ''); ?>">⬅️ Anterior</a>
+                <a href="admin_clientes.php?page=<?php echo $page - 1; ?>&buscar=<?php echo urlencode($buscar ?? ''); ?>">⬅️ Anterior</a>
             <?php endif; ?>
             
             <?php if ($page < $total_pages): ?>
-                <a href="admin_usuarios.php?page=<?php echo $page + 1; ?>&buscar=<?php echo urlencode($buscar ?? ''); ?>">Siguiente ➡️</a>
+                <a href="admin_clientes.php?page=<?php echo $page + 1; ?>&buscar=<?php echo urlencode($buscar ?? ''); ?>">Siguiente ➡️</a>
             <?php endif; ?>
         </div>
     </div>

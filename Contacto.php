@@ -1,6 +1,20 @@
 <?php
 session_start();
 include('conexion.php');
+
+$tipo = $_SESSION['tipo_usuario'] ?? null;
+if ($tipo === 'cliente'){
+        include('barras/navbar-cliente.php');
+        include('barras/sidebar-cliente.php');
+    }
+    elseif ($tipo === 'usuario'){
+        include('barras/navbar-usuario.php');
+        include('barras/sidebar-usuario.php');
+    }
+    else {
+        include('barras/navbar.php');
+    }
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = mysqli_real_escape_string($connec, $_POST['usuario']);
     $correo = mysqli_real_escape_string($connec, $_POST['correo']);
@@ -30,8 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="contac-body">
-    <?php include('barras/navbar-cliente.php')?>
-    <?php include('barras/sidebar-cliente.php')?>
   <div class="contac-container">
 
     <!-- Lado izquierdo -->

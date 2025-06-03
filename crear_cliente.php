@@ -5,27 +5,25 @@ include("conexion.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $nom_usuario = $_POST['nom_usuario'];
-    $puesto = $_POST['puesto'];
-    $password = $_POST['password']; // Contraseña sin hash
-    $codigo_seguridad = $_POST['codigo_seguridad'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     $nombre_archivo = $_FILES['avatar']['name'];
     $archivo_tmp = $_FILES['avatar']['tmp_name'];
-    $ruta_destino = 'imagenes/avatars/' . uniqid() . '_' . basename($nombre_archivo);
+    $ruta_destino = 'imagenes/clientes/' . uniqid() . '_' . basename($nombre_archivo);
     $es_imagen = getimagesize($archivo_tmp);
 
     if ($es_imagen && move_uploaded_file($archivo_tmp, $ruta_destino)) {
-        $sql = "INSERT INTO usuario (username, nom_usuario, puesto, password, codigo_seguridad, avatar)
-                VALUES ('$username', '$nom_usuario', '$puesto', '$password', '$codigo_seguridad', '$ruta_destino')";
+        $sql = "INSERT INTO clientes (username, nom_usuario, password, avatar)
+                VALUES ('$username', '$nom_usuario', '$password', '$ruta_destino')";
 
         if ($connec->query($sql) === TRUE) {
-            header("Location: admin_usuarios.php");
+            header("Location: admin_clientes.php");
             exit();
         } else {
-            echo "Error al crear usuario: " . $connec->error;
+            echo "Error al crear cliente: " . $connec->error;
         }
     } else {
-        echo "Error al subir el archivo. Asegúrese de que sea una imagen válida.";
+        echo "Error al subir el avatar. Asegúrese de que sea una imagen válida.";
     }
 }
 ?>
@@ -33,10 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Usuario</title>
+    <title>Crear Cliente</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        .crearusuariocontainer {
+        .creadclientecontainer {
             background-color: #1b1f3a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
@@ -72,8 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         input[type="text"],
         input[type="password"],
-        input[type="file"],
-        select {
+        input[type="file"] {
             width: 100%;
             padding: 10px 12px;
             border: none;
@@ -119,32 +116,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
-<body class="crearusuariocontainer">
+<body class="creadclientecontainer">
     <?php include('barras/navbar-usuario.php'); ?>
     <?php include('barras/sidebar-usuario.php'); ?>
     <div class="form-container">
-        <h1>Crear Nuevo Usuario</h1>
-        <form action="crear_usuario.php" method="POST" enctype="multipart/form-data">
+        <h1>Crear Nuevo Cliente</h1>
+        <form action="crear_cliente.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="username">Usuario</label>
+                <label for="username">Nombre de Usuario</label>
                 <input type="text" name="username" id="username" required>
             </div>
 
             <div class="form-group">
-                <label for="nom_usuario">Nombre</label>
+                <label for="nom_usuario">Nombre Completo</label>
                 <input type="text" name="nom_usuario" id="nom_usuario" required>
-            </div>
-
-            <div class="form-group">
-                <label for="puesto">Puesto</label>
-                <select name="puesto" id="puesto" required>
-                    <option value="">Seleccione un puesto</option>
-                    <option value="Cliente">Cliente</option>
-                    <option value="Vendedor">Vendedor</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Gerente">Gerente</option>
-                    <option value="Jefe">Jefe</option>
-                </select>
             </div>
 
             <div class="form-group">
@@ -153,18 +138,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="form-group">
-                <label for="codigo_seguridad">Código de Seguridad</label>
-                <input type="text" name="codigo_seguridad" id="codigo_seguridad" required>
-            </div>
-
-            <div class="form-group">
-                <label for="avatar">Subir Avatar (Imagen)</label>
+                <label for="avatar">Avatar (imagen)</label>
                 <input type="file" name="avatar" id="avatar" accept="image/*" required>
             </div>
 
             <div class="form-buttons">
                 <button type="submit">Guardar</button>
-                <a href="admin_usuarios.php">Cancelar</a>
+                <a href="admin_clientes.php">Cancelar</a>
             </div>
         </form>
     </div>

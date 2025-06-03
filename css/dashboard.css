@@ -1,0 +1,120 @@
+.body-dashboard{
+    background-color: #694786;
+    margin: 0;
+    margin-top: 70px;
+    margin-left: 70px;
+}
+.contenedor-dashboardy{
+    background-color: #694786;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.titutlo-dash{
+    background-color: #694786;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    color: #cdb3b1;
+}
+.contenedor-filtros{
+    background-color: #694786;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.contenedor-filtros form {
+    margin: 30px 30px;
+}
+.contenedor-filtros label,
+.contenedor-filtros input,
+.contenedor-filtros button{
+    margin: 0 5px;
+}
+.contenedor-filtros button{
+    padding: 6px 12px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: #5A7894;
+}
+
+.contenedor-filtros button:hover{
+    background-color: #879cb7;
+}
+.tarjetas-container{
+    background: linear-gradient(to bottom, #694786, #522B5B);
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.tarjeta-dash{
+    background: linear-gradient(45deg, #FBE4D8, #DFB6B2, #8c5874);
+    color: #522B5B;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    height: 90px;
+    width: 230px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin: 15px 20px;
+    justify-content: center;
+}
+.tarjeta-dash h4 {
+    margin: 10px 0 5px 0;
+    font-size: 14px;
+}
+.tarjeta-dash h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.tarjeta-dash:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+.graficas-container{
+    background-color: #522B5B;
+    width: 100%;
+    height: auto;
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    color: #c46985;
+    justify-content: center;
+}
+.grafica{
+    text-align: center;
+    margin: 15px 50px;
+    
+}
+.tabla-container{
+    background-color: #522B5B;
+    width: 100%;
+    height: auto;
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.tabla-container h2{
+    color: #c46985;
+    text-align: center;
+    font-size: 35px;
+}
+table td,
+table th{
+    padding: 5px 50px;
+    color: #fff;
+    border: 1px solid #cdb3b1;
+}

@@ -2,47 +2,34 @@
 session_start();
 include('conexion.php');
 
-// Verificación de sesión
-if (!isset($_SESSION['usuarioingresando'])) {
-    header("Location: login.php");
-    exit();
-}
-
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
-    $_SESSION['error'] = "ID de usuario no proporcionado.";
-    header("Location: admin_usuarios.php");
+    echo "ID de cliente no proporcionado.";
     exit;
 }
 
-$sql = "SELECT * FROM usuario WHERE Id1 = ?";
+$sql = "SELECT * FROM clientes WHERE Id = ?";
 $stmt = $connec->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $resultado = $stmt->get_result();
-$usuario = $resultado->fetch_assoc();
+$cliente = $resultado->fetch_assoc();
 
-if (!$usuario) {
-    $_SESSION['error'] = "Usuario no encontrado.";
-    header("Location: admin_usuarios.php");
+if (!$cliente) {
+    echo "Cliente no encontrado.";
     exit;
 }
-
-// Establecer valores por defecto para campos opcionales
-$usuario['nom_usuario'] = $usuario['nom_usuario'] ?? '';
-$usuario['codigo_seguridad'] = $usuario['codigo_seguridad'] ?? '';
-$usuario['avatar'] = $usuario['avatar'] ?? 'avatars/default-avatar.png';
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Usuario</title>
+    <title>Editar Cliente</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        .bodyactuazlizarcl {
+        .bodyeditarcliente {
             background-color: #1b1f3a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
@@ -82,8 +69,7 @@ $usuario['avatar'] = $usuario['avatar'] ?? 'avatars/default-avatar.png';
         }
 
         input[type="text"],
-        input[type="password"],
-        select {
+        input[type="password"] {
             width: 100%;
             padding: 10px 12px;
             border: none;
@@ -132,55 +118,39 @@ $usuario['avatar'] = $usuario['avatar'] ?? 'avatars/default-avatar.png';
         }
     </style>
 </head>
-<body class="bodyactuazlizarcl">
+<body class="bodyeditarcliente">
     <?php include('barras/navbar-usuario.php'); ?>
     <?php include('barras/sidebar-usuario.php'); ?>
     <div class="form-container">
-        <h1>Editar Usuario</h1>
-        <form action="actualizar_usuario.php" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="Id1" value="<?= htmlspecialchars($usuario['Id1']) ?>">
+        <h1>Editar Cliente</h1>
+        <form action="actualizar_cliente.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="Id" value="<?= $cliente['Id'] ?>">
             <div class="form-group">
                 <label for="username">Usuario</label>
-                <input type="text" name="username" id="username" value="<?= htmlspecialchars($usuario['username']) ?>" required>
+                <input type="text" name="username" id="username" value="<?= htmlspecialchars($cliente['username']) ?>" required>
             </div>
             <div class="form-group">
                 <label for="nom_usuario">Nombre</label>
-                <input type="text" name="nom_usuario" id="nom_usuario" value="<?= htmlspecialchars($usuario['nom_usuario']) ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="puesto">Puesto</label>
-                <select name="puesto" id="puesto" required>
-                    <?php
-                    $puestos = ['Vendedor', 'Admin', 'Gerente', 'Jefe'];
-                    foreach ($puestos as $puesto) {
-                        $selected = ($usuario['puesto'] == $puesto) ? 'selected' : '';
-                        echo "<option value=\"".htmlspecialchars($puesto)."\" $selected>".htmlspecialchars($puesto)."</option>";
-                    }
-                    ?>
-                </select>
+                <input type="text" name="nom_usuario" id="nom_usuario" value="<?= htmlspecialchars($cliente['nom_usuario']) ?>" required>
             </div>
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" value="<?= htmlspecialchars($usuario['password']) ?>" required>
+                <input type="password" name="password" id="password" value="<?= htmlspecialchars($cliente['password']) ?>" required>
             </div>
             <div class="form-group">
-                <label for="codigo_seguridad">Código de Seguridad</label>
-                <input type="text" name="codigo_seguridad" id="codigo_seguridad" value="<?= htmlspecialchars($usuario['codigo_seguridad']) ?>" required>
-            </div>  
-            <div class="form-group">
                 <label for="avatar">Avatar actual</label><br>
-                <img src="<?= htmlspecialchars($usuario['avatar']) ?>" alt="Avatar actual" style="max-width: 100px; border-radius: 8px;" onerror="this.src='avatars/default-avatar.png'"><br><br>
+                <img src="<?= $cliente['avatar'] ?>" alt="Avatar actual" style="max-width: 100px; border-radius: 8px;"><br><br>
 
                 <label for="avatar">Cambiar Avatar (opcional)</label>
                 <input type="file" name="avatar" id="avatar" accept="image/*">
-                <input type="hidden" name="avatar_actual" value="<?= htmlspecialchars($usuario['avatar']) ?>">
+                <input type="hidden" name="avatar_actual" value="<?= $cliente['avatar'] ?>">
             </div>
 
             <div class="form-buttons">
                 <button type="submit">Actualizar</button>
-                <a href="admin_usuarios.php">Cancelar</a>
+                <a href="admin_clientes.php">Cancelar</a>
             </div>
         </form>
     </div>
 </body>
-</html> 
+</html>
