@@ -1,9 +1,8 @@
 /* Contenedor del login */
 .login-container {
-    border: 2px solid #9e3120;
-    background-color: #c90a0a;
+    border: 2px solid #0f1b32;
+    background-color: #11203f;
     text-align: center;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(50, 21, 21, 0.5);
     position: absolute;
@@ -12,52 +11,84 @@
     width: 380px;
     transform: translate(-50%, -50%);
     display: flex;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-}
-
-/* Título */
-.titulo {
-    font-size: 35px;
-    font-family: 'Times New Roman', Times, serif;
-    color: white;
-    margin: 10px 20px;
-    margin-top: 30px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2001; /* Superior al navbar */
 }
 
 /* Imagen superior */
-img {
+.login-container img {
     width: 150px;
     margin-top: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+/* Título */
+.login-container .titulo {
+    font-size: 35px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #ce8a32;
+    margin: 0px 10px 0px 5px;
 }
 
 /* Texto para los labels */
-.txt-login {
+.login-container .txt-login {
     font-size: 14px;
-    margin: 10px 20px 5px 20px;
+    margin: 5px 10px 5px 5px;
     text-align: left;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: white;
+    color: #c7a190;
 }
 
 /* Campos de texto */
-.textbox-login {
-  padding: 10px;
-  border: 1px solid #16233c;
-  font-size: 16px;
-  width: 90%;
-  max-width: 400px;
-  box-sizing: border-box;
-  height: 25px;
+.login-container .textbox-login {
+    width: 100%;
+    padding: 12px;
+    border: 0px solid #c7a190;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+    margin-top: 8px;
+    background-color: #2f4d89;
+    color: #c7a190;
 }
 
-.login-group {
-  margin-bottom: 20px;
+/* Grupo de campos */
+.login-container .login-group {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Checkboxes contenedor */
+.login-container .check-login {
+    width: 100%;
+    text-align:left;
+    box-sizing: border-box;
+    align-items:flex-start;
+}
+
+/* Checkboxes individuales */
+.login-container .check-login label {
+    display: flex;
+    align-items:flex-start;
+    font-size: 14px;
+    color: #ce8a32;
+    margin-bottom: 8px;
+}
+
+.login-container .check-recordar{
+    color: rgb(180, 86, 83);
+    background-color: #11203f;
 }
 
 /* Botón ingresar */
-.ingresar {
+.login-container .btn-ingresar,
+.login-container a.btn-cancelar {
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
@@ -68,47 +99,19 @@ img {
     font-size: 16px;
     border: none;
     cursor: pointer;
+    width: 110px;
+    height: 45px;
 }
 
-.ingresar:hover {
+.login-container .btn-ingresar:hover {
     background-color: #224367;
 }
 
-/* Checkboxes contenedor */
-.check-login {
-    width: 320px;
-    margin-right: 20px;
-    text-align: left;
-    padding-left: 30px;
-}
-
-/* Checkboxes individuales */
-.check-login label {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: white;
-    margin-bottom: 8px;
-}
-
-.check-login input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-/* Botón cancelar (si lo tienes) */
-.cancelar {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: transparent;
-    color: orange;
+.login-container a.btn-cancelar:hover{
+    background-color: #224367;
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
 }
 
-.cancelar:hover {
+.login-container .btn-cancelar:hover {
     text-decoration: underline;
 }

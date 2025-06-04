@@ -72,9 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar'])) {
 }
 
 // Establecer ruta del avatar
-$avatar_path = !empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cliente['avatar']) 
-    ? '../' . $cliente['avatar'] 
-    : $default_avatar;
+$base_url = '/Proyecto-Web-CarByte/';
+$avatar_path = (!empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cliente['avatar']))
+    ? $base_url . $cliente['avatar']
+    : $base_url . 'assets/images/default-avatar.jpg';
+
 ?>
 
 <!DOCTYPE html>
@@ -209,10 +211,9 @@ $avatar_path = !empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cli
         </div>
         <div class="menu-section">
             <h3 class="titlesidebar">Panel</h3>
-            <a href="../index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
-            <a href="../citas.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">citas</span></a>
+            <a href="/Proyecto-Web-CarByte/index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
+            <a href="/Proyecto-Web-CarByte/citas.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">citas</span></a>
             <a href="#"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Editar perfil</span></a>
-            <a href="#"><i class="fa-solid fa-shop"></i><span class="link-disebar">Compras</span></a>
         </div>
     </div>
 <script>

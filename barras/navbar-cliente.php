@@ -30,16 +30,16 @@ error_reporting(E_ALL);
 <body>
     <header class="navbar">
         <div class="logo-container">
-            <img src="imagenes/CarByte.png" alt="Logo Toyota" class="logo-img">
+            <img src="/Proyecto-Web-CarByte/imagenes/CarByte.png" alt="Logo Toyota" class="logo-img">
             <span class="logo-text">CarByte</span>
         </div>
         <nav class="nav-links">
-            <a href="./index.php">Inicio</a>
-            <a href="Mision.php">Mision</a>
-            <a href="Vision.php">Vision</a>
-            <a href="accesorios.php">Productos</a>
-            <a href="contacto.php">Contacto</a>
-            <a href="./citas.php">Citas</a>
+            <a href="./index.php" class="navbarlinka">Inicio</a>
+            <a href="Mision.php" class="navbarlinka">Mision</a>
+            <a href="Vision.php" class="navbarlinka">Vision</a>
+            <a href="accesorios.php" class="navbarlinka">Productos</a>
+            <a href="contacto.php" class="navbarlinka">Contacto</a>
+            <a href="./citas.php" class="navbarlinka">Citas</a>
 
             <div class="user-menu dropdown">
                 <?php if (isset($_SESSION['username'])): ?>
@@ -50,11 +50,6 @@ error_reporting(E_ALL);
                         <li class="logmenu">
                             <a href="perfil.php">
                                 <i class="material-icons">person</i> Mi Perfil
-                            </a>
-                        </li>
-                        <li class="logmenu">
-                            <a href="mis_pedidos.php">
-                                <i class="material-icons">shopping_cart</i> Mis Pedidos
                             </a>
                         </li>
                         <li class="logmenu">

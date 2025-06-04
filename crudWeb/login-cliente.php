@@ -6,7 +6,7 @@
     <form method="POST" action="crudWeb/procesar-login-cliente.php">
         <div class="login-group">
         <label class="txt-login">Ingrese nombre de usuario:</label>
-        <input type="text" name="user" id="user" class="textbox-login" placeholder="Nombre de usuario" required>
+        <input type="text" name="username" id="username" class="textbox-login" placeholder="Nombre de usuario" required>
         </div>
         <div class="login-group">
         <label class="txt-login">Ingrese contraseña:</label>
@@ -22,11 +22,12 @@
             <label class="txt-login" for="check">
             <input type="checkbox" name="check" id="check-remenber" onclick="recordarusuario()">
             Recordar usuario</label>
+            <a class="check-recordar" href="">Olvidé mi contraseña</a>
         </div>
         </div>
-        <div>
-            <button type="submit" name="ingresar" id="ingresar" class="ingresar">Ingresar</button>
-            <a href="#" class="ingresar" onclick="cerrarModal()">Cancelar</a>
+        <div class="btn-login">
+            <button type="submit" name="ingresar" id="ingresar" class="btn-ingresar">Ingresar</button>
+            <a href="#" class="btn-cancelar" onclick="cerrarModal()">Cancelar</a>
         </div>
     </form>
 </div>
