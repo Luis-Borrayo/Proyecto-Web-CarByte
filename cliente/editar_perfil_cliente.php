@@ -11,7 +11,7 @@ include('../conexion.php');
 $id = $_SESSION['id'];
 
 // Obtener datos del cliente
-$sql = "SELECT username, nom_usuario, ubicacion FROM clientes WHERE Id = ?";
+$sql = "SELECT username, nom_usuario FROM clientes WHERE Id = ?";
 $stmt = $connec->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -21,11 +21,18 @@ $cliente = $result->fetch_assoc();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nuevo_username = trim($_POST['username']);
     $nuevo_nombre = trim($_POST['nom_usuario']);
-    $nueva_ubicacion = trim($_POST['ubicacion']);
+    $nueva_contra = trim($_POST['password']);
 
-    $update_sql = "UPDATE clientes SET username = ?, nom_usuario = ?, ubicacion = ? WHERE Id = ?";
-    $update_stmt = $connec->prepare($update_sql);
-    $update_stmt->bind_param("sssi", $nuevo_username, $nuevo_nombre, $nueva_ubicacion, $id);
+    if (!empty($nueva_contra)) {
+        $password_hash = password_hash($nueva_contra, PASSWORD_DEFAULT);
+        $update_sql = "UPDATE clientes SET username = ?, nom_usuario = ?, password = ? WHERE Id = ?";
+        $update_stmt = $connec->prepare($update_sql);
+        $update_stmt->bind_param("sssi", $nuevo_username, $nuevo_nombre, $password_hash, $id);
+    } else {
+        $update_sql = "UPDATE clientes SET username = ?, nom_usuario = ? WHERE Id = ?";
+        $update_stmt = $connec->prepare($update_sql);
+        $update_stmt->bind_param("ssi", $nuevo_username, $nuevo_nombre, $id);
+    }
 
     if ($update_stmt->execute()) {
         header("Location: editar_perfil_cliente.php?exito=1");
@@ -78,7 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #ddd;
         }
 
-        input[type="text"] {
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -154,11 +162,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label for="ubicacion">Ubicación</label>
-                <input type="text" id="ubicacion" name="ubicacion" 
-                    value="<?php echo htmlspecialchars($cliente['ubicacion'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
-                    required>
+                <label for="password">Nueva contraseña (dejar vacío si no desea cambiarla)</label>
+                <input type="password" id="password" name="password">
             </div>
+
             <button type="submit" class="btn-guardar">Guardar Cambios</button>
         </form>
     </div>
