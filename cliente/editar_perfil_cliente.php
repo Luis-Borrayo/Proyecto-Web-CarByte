@@ -1,52 +1,168 @@
 <?php
 session_start();
-include("../conexion.php");
 
-if(!isset($_SESSION['id'])){
-    header('Location: ..login-cliente.php');
-    exit();
+if (!isset($_SESSION['id'])) {
+    header("Location: ../login.php");
+    exit;
 }
+
+include('../conexion.php');
 
 $id = $_SESSION['id'];
 
+// Obtener datos del cliente
+$sql = "SELECT username, nom_usuario, ubicacion FROM clientes WHERE Id = ?";
+$stmt = $connec->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$cliente = $result->fetch_assoc();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nuevo_username = trim($_POST['username']);
+    $nuevo_nombre = trim($_POST['nom_usuario']);
+    $nueva_ubicacion = trim($_POST['ubicacion']);
+
+    $update_sql = "UPDATE clientes SET username = ?, nom_usuario = ?, ubicacion = ? WHERE Id = ?";
+    $update_stmt = $connec->prepare($update_sql);
+    $update_stmt->bind_param("sssi", $nuevo_username, $nuevo_nombre, $nueva_ubicacion, $id);
+
+    if ($update_stmt->execute()) {
+        header("Location: editar_perfil_cliente.php?exito=1");
+        exit;
+    } else {
+        $error = "Error al actualizar el perfil.";
+    }
+}
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perfil</title>
+    <title>Editar Perfil | CarByte</title>
+    <link rel="stylesheet" href="../assets/estilos.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #0d1721;
+            color: #fff;
+        }
+
+        .contenido {
+            margin-left: 220px;
+            padding: 30px;
+            margin-top: 70px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #1e2a38;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #ddd;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            background-color: #2a3749;
+            color: #fff;
+        }
+
+        .btn-guardar {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background-color: #06b6d4;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-guardar:hover {
+            background-color: #0891b2;
+        }
+
+        .mensaje-exito, .mensaje-error {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .mensaje-exito {
+            background-color: #155724;
+            color: #d4edda;
+        }
+
+        .mensaje-error {
+            background-color: #721c24;
+            color: #f8d7da;
+        }
+    </style>
 </head>
 <body>
-    <div>
+
+<?php include('../barras/navbar-cliente.php'); ?>
+<?php include('../barras/sidebar-cliente.php'); ?>
+
+<div class="contenido">
+    <div class="form-container">
         <h2>Editar Perfil</h2>
-        <div class="avatar-container">
-                <img src="<?php echo htmlspecialchars($avatar_path); ?>" 
-                     alt="Avatar de <?php echo htmlspecialchars($cliente['username']); ?>"
-                     onerror="this.src='<?php echo htmlspecialchars($default_avatar); ?>'">
+
+        <?php if (isset($_GET['exito'])): ?>
+            <div class="mensaje-exito">Perfil actualizado correctamente.</div>
+        <?php endif; ?>
+
+        <?php if (!empty($error)): ?>
+            <div class="mensaje-error"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Nombre de usuario</label>
+                <input type="text" id="username" name="username" 
+                    value="<?php echo htmlspecialchars($cliente['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+                    required>
             </div>
-        <form action="">
-        <div>
-            <label for="">Cambiar avatar</label>
-            <input type="file" id="avatar" name="avatar" accept="image/*" onchange="this.form.submit()">
-        </div>
-        <div>
-            <label for="">Usuario</label>
-            <input type="text" id="user" name="user" value="" required>
-        </div>
-        <div>
-            <label for="">Nombre Completo</label>
-            <input type="text" id="nombre" name="nombre" value="" required>
-        </div>
-        <div>
-            <label for="">Contraseña</label>
-            <input type="password" id="pass" name="pass" value="" required>
-        </div>
-        <div>
-            <button>Actualizar</button>
-            <a href="">Cancelar</a>
-        </div>
+
+            <div class="form-group">
+                <label for="nom_usuario">Nombre completo</label>
+                <input type="text" id="nom_usuario" name="nom_usuario" 
+                    value="<?php echo htmlspecialchars($cliente['nom_usuario'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="ubicacion">Ubicación</label>
+                <input type="text" id="ubicacion" name="ubicacion" 
+                    value="<?php echo htmlspecialchars($cliente['ubicacion'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+                    required>
+            </div>
+            <button type="submit" class="btn-guardar">Guardar Cambios</button>
         </form>
     </div>
+</div>
+
 </body>
 </html>
