@@ -102,13 +102,17 @@ i{
         height: auto;
 }
 
-
+.btn-login a{
+    color: white;
+    background-color: #000;
+    text-decoration: none;
+}
 
 .nav-links {
     display: flex;
 }
 
-.nav-links a {
+.navbar .nav-links .navbarlinka {
     margin-left: 40px;
     text-decoration: none;
     background: linear-gradient(45deg, #D16002, #ED9121, #CC5500);
@@ -121,23 +125,23 @@ i{
     transition: all 0.3s ease;
 }
 
-.nav-links a:hover {
+.navbar .nav-links a:hover {
     color: #9e9e9e;
 }
 
-.nav-links a::after {
+.navbar .nav-links a::after {
     content: "";
     display: block;
     height: 2px;
     width: 0%;
-    background-color: #363535;
+    background-color: #b43d12;
     transition: width 0.3s;
     position: absolute;
     bottom: -5px;
     left: 0;
 }
 
-.nav-links a:hover::after {
+.navbar .nav-links a:hover::after {
     width: 100%;
 }
 

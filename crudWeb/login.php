@@ -30,7 +30,7 @@
         </div>
         <div>
             <button type="submit" name="ingresar" id="ingresar" class="ingresar">Ingresar</button>
-            <a href="#" class="ingresar" onclick="cerrarModal()">Cancelar</a>
+            <a href="#" class="btn-cancelar" onclick="cerrarModal()">Cancelar</a>
         </div>
     </form>
 </div>
