@@ -81,8 +81,8 @@ input[type="time"]{
 
 input::placeholder,
 textarea::placeholder {
-    color: #c7a190; /* Cambia este valor por el color que prefieras */
-    opacity: 1;  /* Asegura que no se vea transparente en algunos navegadores */
+    color: #c7a190;
+    opacity: 1;
 }
 
 textarea {

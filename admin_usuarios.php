@@ -1,27 +1,21 @@
 <?php
-// Buffer de salida al inicio para evitar parpadeos
 ob_start();
 
-// Inicio seguro de sesión
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificación de sesión
 if (!isset($_SESSION['usuarioingresando'])) {
     header("Location: login.php");
     exit();
 }
 
-// Conexión a la base de datos
 require_once 'conexion.php';
 
-// Configuración de paginación
 $limit = 10;
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-// Búsqueda
 $buscar = isset($_GET['buscar']) ? trim($_GET['buscar']) : '';
 $search_condition = '';
 $params = [];
@@ -34,7 +28,6 @@ if (!empty($buscar)) {
     $types = str_repeat('s', count($params));
 }
 
-// Contar total de registros
 $count_query = "SELECT COUNT(*) as total FROM usuario $search_condition";
 $stmt_count = $connec->prepare($count_query);
 if (!empty($params)) {
@@ -46,7 +39,6 @@ $total_usuarios = $total_result->fetch_assoc()['total'];
 $total_pages = ceil($total_usuarios / $limit);
 $stmt_count->close();
 
-// Consulta principal
 $query = "SELECT * FROM usuario $search_condition LIMIT ? OFFSET ?";
 $params[] = $limit;
 $params[] = $offset;
@@ -57,7 +49,6 @@ $stmt->bind_param($types, ...$params);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
-// Obtener todos los datos
 $usuarios = [];
 while ($fila = $resultado->fetch_assoc()) {
     $usuarios[] = $fila;
@@ -65,7 +56,6 @@ while ($fila = $resultado->fetch_assoc()) {
 
 $stmt->close();
 
-// Limpiar buffer antes de enviar HTML
 ob_end_clean();
 ?>
 <!DOCTYPE html>
@@ -241,7 +231,6 @@ ob_end_clean();
             margin-top: 10px;
         }
 
-        /* Estilos para la carga progresiva */
         .loaded {
             opacity: 1 !important;
         }
@@ -317,11 +306,9 @@ ob_end_clean();
     </div>
 
     <script>
-    // Mostrar contenido cuando todo esté listo
     document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('loaded');
         
-        // Precargar imágenes de avatares para evitar parpadeos
         const avatarImages = document.querySelectorAll('.avatar-img');
         avatarImages.forEach(img => {
             const tempImg = new Image();

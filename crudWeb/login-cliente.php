@@ -22,7 +22,7 @@
             <label class="txt-login" for="check">
             <input type="checkbox" name="check" id="check-remenber" onclick="recordarusuario()">
             Recordar usuario</label>
-            <a class="check-recordar" href="">Olvidé mi contraseña</a>
+            <a class="check-recordar btn-modal" href="#" data-modal-target="modalRecuperar">¿Olvidé mi contraseña?</a>
         </div>
         </div>
         <div class="btn-login">

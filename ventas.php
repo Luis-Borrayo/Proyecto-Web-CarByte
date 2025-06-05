@@ -2,7 +2,6 @@
 session_start();
 include "conexion.php";
 
-// Obtener lista de empleados desde la base de datos
 $query_empleados = "SELECT nom_usuario FROM usuario ORDER BY nom_usuario ASC";
 $result_empleados = mysqli_query($connec, $query_empleados);
 
@@ -18,14 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productos  = $_POST['productos'] ?? [];
     $precio     = mysqli_real_escape_string($connec, $_POST['precio']);
     $comentario = mysqli_real_escape_string($connec, $_POST['comentario']);
-    $fecha      = date('Y-m-d H:i:s'); // Fecha y hora actual
+    $fecha      = date('Y-m-d H:i:s');
 
-    // Convertir el array de productos a string separado por coma
     $prod_list = implode(", ", array_map(function($p) use ($connec) {
         return mysqli_real_escape_string($connec, $p);
     }, $productos));
 
-    // Consulta corregida: asegúrese que las columnas existen en su tabla 'ventas'
     $sql = "INSERT INTO ventas (vendedor, nombre_cliente, telefono_cliente, correo_cliente, direccion_zona, nit_cliente, sucursal, productos, monto, comentario, fecha)
             VALUES (
                 '{$empleado}',
@@ -40,9 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 '{$comentario}',
                 '{$fecha}'
             )";
-
-    // Puede descomentar para depuración
-    // echo $sql;
 
     if (mysqli_query($connec, $sql)) {
         echo "<div class='success'>Venta guardada exitosamente.</div>";

@@ -2,12 +2,10 @@
 session_start();
 include('../conexion.php');
 
-// Captura de filtros
 $fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : '';
 $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : '';
 $zona = isset($_GET['zona']) ? $_GET['zona'] : '';
 
-// Armado de condiciones
 $condiciones = [];
 if (!empty($fecha_inicio) && !empty($fecha_fin)) {
     $condiciones[] = "(fecha BETWEEN '$fecha_inicio' AND '$fecha_fin')";
@@ -17,23 +15,19 @@ if (!empty($zona)) {
 }
 $where = (count($condiciones) > 0) ? 'WHERE ' . implode(' AND ', $condiciones) : '';
 
-// Trabajadores totales
 $sqlusuario = "SELECT COUNT(Id1) AS totalusuarios FROM usuario";
 $resulusario = $connec->query($sqlusuario);
 $totalusuario = $resulusario->fetch_assoc()['totalusuarios'] ?? 0;
 
-// Clientes totales
 $sqlclientes = "SELECT COUNT(*) AS totalclientes FROM clientes";
 $resultadocl = $connec->query($sqlclientes);
 $fila = $resultadocl->fetch_assoc();
 $totalclientes = $fila['totalclientes'];
 
-// Citas totales
 $sqlcitas = "SELECT COUNT(*) AS totalcitas FROM citas";
 $resultadocitas = $connec->query($sqlcitas);
 $totalcitas = $resultadocitas->fetch_assoc()['totalcitas'] ?? 0;
 
-// Promedio de compras (ventas + vehículos)
 $whereVehiculos = '';
 if (!empty($fecha_inicio) && !empty($fecha_fin)) {
     $whereVehiculos = "WHERE fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'";
@@ -46,7 +40,6 @@ SELECT (
 $resulprecio = $connec->query($promedioVentas);
 $totalprecio = $resulprecio->fetch_assoc()['promedio'] ?? 0;
 
-// Top zonas con más ingresos (aplicando filtros)
 $sqlBarrasProduc = "SELECT direccion_zona, SUM(monto) AS ingresos_zona FROM (
                     SELECT direccion_zona, monto, fecha FROM ventas UNION ALL
                     SELECT direccion_zona, monto, fecha FROM vehiculos
@@ -64,7 +57,6 @@ while ($row = $resultBarrasproduct->fetch_assoc()) {
     $datosG1[] = $row['ingresos_zona'];
 }
 
-// Gráfica de barras: top sucursales con más ingresos (aplicando filtros)
 $sqlsucursal = "SELECT sucursal, SUM(monto) AS topsucursal FROM (
                 SELECT sucursal, monto, fecha FROM ventas
                 UNION ALL

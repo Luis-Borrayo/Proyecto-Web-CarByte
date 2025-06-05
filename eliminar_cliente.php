@@ -8,7 +8,6 @@ if (!$id) {
     exit;
 }
 
-// Obtener datos del cliente
 $sql = "SELECT * FROM clientes WHERE Id = ?";
 $stmt = $connec->prepare($sql);
 $stmt->bind_param("i", $id);
@@ -21,7 +20,6 @@ if (!$cliente) {
     exit;
 }
 
-// Eliminar si se envió confirmación
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sqlEliminar = "DELETE FROM clientes WHERE Id = ?";
     $stmtEliminar = $connec->prepare($sqlEliminar);

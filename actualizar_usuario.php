@@ -10,18 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $codigo = $_POST['codigo_seguridad'] ?? '';
     $avatar_actual = $_POST['avatar_actual'] ?? '';
 
-    // Validar ID
     if (!$id) {
         echo "ID no proporcionado.";
         exit;
     }
 
-    // Manejo de subida de imagen
     if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
         $nombreArchivo = basename($_FILES["avatar"]["name"]);
         $rutaDestino = "uploads/" . uniqid() . "_" . $nombreArchivo;
 
-        // Asegurarse que la carpeta exista
         if (!is_dir("uploads")) {
             mkdir("uploads", 0777, true);
         }

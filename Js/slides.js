@@ -13,5 +13,4 @@ function MoverSlide(n) {
 
 setInterval(() => MoverSlide(1), 4000);
 
-// Inicializa el carrusel al cargar
 MostrarSlide(index);

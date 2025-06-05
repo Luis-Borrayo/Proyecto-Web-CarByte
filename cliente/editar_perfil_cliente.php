@@ -10,7 +10,6 @@ include('../conexion.php');
 
 $id = $_SESSION['id'];
 
-// Obtener datos del cliente
 $sql = "SELECT username, nom_usuario FROM clientes WHERE Id = ?";
 $stmt = $connec->prepare($sql);
 $stmt->bind_param("i", $id);
@@ -49,6 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Editar Perfil | CarByte</title>
     <link rel="stylesheet" href="../assets/estilos.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/Menu.css">
     <style>
         body {
             margin: 0;

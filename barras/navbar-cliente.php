@@ -53,7 +53,7 @@ error_reporting(E_ALL);
                             </a>
                         </li>
                         <li class="logmenu">
-                            <a href="crudWeb/logout.php" onclick="return confirm('¿Desea cerrar sesión?')">
+                            <a href="/Proyecto-Web-CarByte/crudWeb/logout.php" onclick="return confirm('¿Desea cerrar sesión?')">
                                 <i class="material-icons">logout</i> Cerrar Sesión
                             </a>
                         </li>

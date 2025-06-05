@@ -10,10 +10,9 @@ if (!$connec) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'], $_POST['pass'], $_POST['cod'])) {
     $username = mysqli_real_escape_string($connec, trim($_POST['username']));
-    $password = trim($_POST['pass']); // No escapar la contraseña antes de verificarla
+    $password = trim($_POST['pass']);
     $codigo = mysqli_real_escape_string($connec, trim($_POST['cod']));
 
-    // Consulta mejorada - agregar puesto para verificar permisos si es necesario
     $sql = "SELECT Id1, username, nom_usuario, password, codigo_seguridad, avatar, puesto FROM usuario WHERE username = ?";
     $stmt = mysqli_prepare($connec, $sql);
     
@@ -28,25 +27,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'], $_POST['pa
     $resultado = mysqli_stmt_get_result($stmt);
 
     if ($fila = mysqli_fetch_assoc($resultado)) {
-        // Verificar código de seguridad primero
         if ($codigo !== $fila['codigo_seguridad']) {
             error_log("Código incorrecto para usuario: " . $username);
             echo "<script>alert('Código de seguridad incorrecto'); window.location.href='../index.php';</script>";
             exit();
         }
 
-        // Verificar contraseña - funciona tanto para contraseñas hasheadas como para texto plano (transición)
         $password_valida = false;
         
-        // Primero intentar con password_verify (contraseñas hasheadas)
         if (password_verify($password, $fila['password'])) {
             $password_valida = true;
         } 
-        // Si falla, verificar contraseña en texto plano (para usuarios existentes)
         elseif ($password === $fila['password']) {
             $password_valida = true;
             
-            // Actualizar contraseña a formato hasheado
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             $update_sql = "UPDATE usuario SET password = ? WHERE Id1 = ?";
             $update_stmt = mysqli_prepare($connec, $update_sql);
@@ -56,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'], $_POST['pa
         }
 
         if ($password_valida) {
-            // Login exitoso
             $_SESSION['usuarioingresando'] = true;
             $_SESSION['id'] = $fila['Id1'];
             $_SESSION['username'] = $fila['username'];
@@ -65,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'], $_POST['pa
             $_SESSION['puesto'] = $fila['puesto'];
             $_SESSION['tipo_usuario'] = 'usuario';
 
-            // Log del login exitoso
             error_log("Login exitoso para usuario: " . $username);
             
             header("Location: ../index.php");

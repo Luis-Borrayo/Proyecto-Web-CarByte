@@ -15,7 +15,7 @@
     border-radius: 10px;
     width: 90%;
     max-width: 10px;
-    position: relative; /* ← IMPORTANTE para que .close-btn se posicione dentro */
+    position: relative;
 }
 
 .close-btn {
@@ -31,7 +31,6 @@
 .close-btn:hover {
     color: #d32f2f;
 }
-/* Contenedor del login */
 .login-container {
     border: 2px solid #9e3120;
     background-color: #c90a0a;
@@ -53,7 +52,6 @@
     background-color: #000;
     text-decoration: none;
 }
-/* Título */
 .titulo {
     font-size: 35px;
     font-family: 'Times New Roman', Times, serif;
@@ -62,14 +60,12 @@
     margin-top: 30px;
 }
 
-/* Imagen superior */
 img {
     width: 150px;
     margin-top: 10px;
     margin-bottom: 15px;
 }
 
-/* Texto para los labels */
 .txt-login {
     font-size: 14px;
     margin: 10px 10px 5px 20px;
@@ -78,7 +74,6 @@ img {
     color: white;
 }
 
-/* Campos de texto */
 .textbox-login {
   padding: 10px;
   border: 1px solid #16233c;
@@ -93,7 +88,6 @@ img {
   margin-bottom: 20px;
 }
 
-/* Botón ingresar */
 .ingresar {
     display: inline-block;
     margin-top: 10px;
@@ -111,7 +105,6 @@ img {
     background-color: #224367;
 }
 
-/* Checkboxes contenedor */
 .check-login {
     width: 100%;
     margin-right: 10px;
@@ -119,7 +112,6 @@ img {
     padding-left: 30px;
 }
 
-/* Checkboxes individuales */
 .check-login label {
     display: flex;
     align-items: center;
@@ -132,7 +124,6 @@ img {
     margin-right: 10px;
 }
 
-/* Botón cancelar (si lo tienes) */
 .cancelar {
     margin-top: 10px;
     padding: 10px 20px;

@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'];
     $avatar_actual = $_POST['avatar_actual'];
 
-    // Manejar nuevo avatar si se sube uno
     if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
         $nombreArchivo = $_FILES['avatar']['name'];
         $rutaTemporal = $_FILES['avatar']['tmp_name'];

@@ -1,5 +1,4 @@
 <?php
-// dashboard_admin.php
 ?>
 <!DOCTYPE html>
 <html lang="es">

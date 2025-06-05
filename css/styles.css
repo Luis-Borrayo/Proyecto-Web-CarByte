@@ -15,8 +15,8 @@
 #conteItemsCarrusel {
     border: 4px solid black;
     height: 560px;
-    width: 100%;          /* Más ancho que antes, casi el total */
-    max-width: 1500px;   /* Un poco más grande */
+    width: 100%;
+    max-width: 1500px;
     margin: 0 auto;
     overflow: hidden;
     display: flex;
@@ -419,7 +419,6 @@ i{
     width: auto;
 }
 
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -432,14 +431,12 @@ body {
     line-height: 1.6;
 }
 
-/* Contenedor principal */
 .container {
     width: 90%;
     max-width: 500px;
     margin: 80px auto;
     padding: 20px;
 }
-/* Tarjeta (como en login, formularios, etc.) */
 .card {
     background-color: #fff;
     padding: 30px;

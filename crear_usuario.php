@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('conexion.php'); // Asegúrate que aquí se conecta a la BD
+include('conexion.php');
 
 $error = '';
 $success = '';

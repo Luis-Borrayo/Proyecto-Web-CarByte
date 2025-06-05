@@ -2,12 +2,10 @@
 session_start();
 include('../conexion.php');
 
-// Captura de filtros
 $fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : '';
 $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : '';
 $zona = isset($_GET['zona']) ? $_GET['zona'] : '';
 
-// Armado de condiciones
 $condiciones = [];
 if (!empty($fecha_inicio) && !empty($fecha_fin)) {
     $condiciones[] = "(fecha BETWEEN '$fecha_inicio' AND '$fecha_fin')";
@@ -17,7 +15,6 @@ if (!empty($zona)) {
 }
 $where = (count($condiciones) > 0) ? 'WHERE ' . implode(' AND ', $condiciones) : '';
 
-//total ventas
 $sqlventastotales = "SELECT 
         (SELECT COUNT(id) FROM ventas) as ventas,
         (SELECT COUNT(id) FROM vehiculos) as vehiculos,
@@ -30,17 +27,14 @@ $totalVentas = intval($dataventasT['ventas'] ?? 0);
 $totalVehiculos = intval($dataventasT['vehiculos'] ?? 0);
 $totalGeneral = intval($dataventasT['total'] ?? 0);
 
-// Ingresos productos
 $sqlproduct = "SELECT IFNULL(SUM(monto),0) AS ingresos_productos FROM ventas $where";
 $resultadoproduc = $connec->query($sqlproduct);
 $totalproduct = $resultadoproduc->fetch_assoc()['ingresos_productos'] ?? 0;
 
-// Ingresos vehiculos
 $sqlvehiculos = "SELECT IFNULL(SUM(monto),0) AS ingresos_vehiculos FROM vehiculos $where";
 $resutadovehiculos = $connec->query($sqlvehiculos);
 $totalvehiculos = $resutadovehiculos->fetch_assoc()['ingresos_vehiculos'] ?? 0;
 
-// Promedio de compras (ventas + vehículos)
 $whereVehiculos = '';
 if (!empty($fecha_inicio) && !empty($fecha_fin)) {
     $whereVehiculos = "WHERE fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'";
@@ -53,7 +47,6 @@ SELECT (
 $resulprecio = $connec->query($promedioVentas);
 $totalprecio = $resulprecio->fetch_assoc()['promedio'] ?? 0;
 
-// Gráfica barras: top productos
 $sqlBarrasProduc = "SELECT productos, COUNT(*) AS totalGrafica1 FROM ventas $where GROUP BY productos ORDER BY totalGrafica1 DESC LIMIT 3";
 $resultBarrasproduct = $connec->query($sqlBarrasProduc);
 $labelG1 = [];
@@ -63,7 +56,6 @@ while ($row = $resultBarrasproduct->fetch_assoc()) {
     $datosG1[] = $row['totalGrafica1'];
 }
 
-// Gráfica de barras: top vehículos
 $sqlTopAuto = "SELECT vehiculo, COUNT(*) AS totalauto FROM vehiculos $whereVehiculos GROUP BY vehiculo ORDER BY totalauto DESC LIMIT 3";
 $resultAuto = $connec->query($sqlTopAuto);
 $vehiculos = [];

@@ -21,7 +21,6 @@ if (!$usuario) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Eliminar avatar si existe físicamente
     if (!empty($usuario['avatar']) && file_exists($usuario['avatar'])) {
         unlink($usuario['avatar']);
     }

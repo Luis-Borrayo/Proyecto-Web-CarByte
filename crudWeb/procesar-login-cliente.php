@@ -10,9 +10,8 @@ if (!$connec) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'], $_POST['pass'])) {
     $username = mysqli_real_escape_string($connec, trim($_POST['username']));
-    $password = trim($_POST['pass']); // No escapar la contraseña antes de verificarla
+    $password = trim($_POST['pass']);
 
-    // Consulta mejorada - agregar puesto para verificar permisos si es necesario
     $sql = "SELECT Id, username, nom_usuario, password, avatar FROM clientes WHERE username = ?";
     $stmt = mysqli_prepare($connec, $sql);
     
@@ -29,15 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'], $_POST['pa
     if ($fila = mysqli_fetch_assoc($resultado)) {
         $password_valida = false;
         
-        // Primero intentar con password_verify (contraseñas hasheadas)
         if (password_verify($password, $fila['password'])) {
             $password_valida = true;
         } 
-        // Si falla, verificar contraseña en texto plano (para usuarios existentes)
         elseif ($password === $fila['password']) {
             $password_valida = true;
             
-            // Actualizar contraseña a formato hasheado
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             $update_sql = "UPDATE clientes SET password = ? WHERE Id = ?";
             $update_stmt = mysqli_prepare($connec, $update_sql);
@@ -47,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'], $_POST['pa
         }
 
         if ($password_valida) {
-            // Login exitoso
             $_SESSION['usuarioingresando'] = true;
             $_SESSION['id'] = $fila['Id'];
             $_SESSION['username'] = $fila['username'];
@@ -55,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'], $_POST['pa
             $_SESSION['avatar'] = $fila['avatar'];
             $_SESSION['tipo_usuario'] = 'cliente';
 
-            // Log del login exitoso
             error_log("Login exitoso para usuario: " . $username);
             
             header("Location: ../index.php");
