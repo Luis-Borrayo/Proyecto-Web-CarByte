@@ -1,34 +1,54 @@
 <?php
 session_start();
-include("conexion.php");
+include('conexion.php'); // Asegúrate que aquí se conecta a la BD
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $nom_usuario = $_POST['nom_usuario'];
+$error = '';
+$success = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $nom_usuario = trim($_POST['nom_usuario']);
     $puesto = $_POST['puesto'];
-    $password = $_POST['password']; // Contraseña sin hash
+    $password = $_POST['password'];
     $codigo_seguridad = $_POST['codigo_seguridad'];
+    $avatar = $_FILES['avatar'];
 
-    $nombre_archivo = $_FILES['avatar']['name'];
-    $archivo_tmp = $_FILES['avatar']['tmp_name'];
-    $ruta_destino = 'imagenes/avatars/' . uniqid() . '_' . basename($nombre_archivo);
-    $es_imagen = getimagesize($archivo_tmp);
-
-    if ($es_imagen && move_uploaded_file($archivo_tmp, $ruta_destino)) {
-        $sql = "INSERT INTO usuario (username, nom_usuario, puesto, password, codigo_seguridad, avatar)
-                VALUES ('$username', '$nom_usuario', '$puesto', '$password', '$codigo_seguridad', '$ruta_destino')";
-
-        if ($connec->query($sql) === TRUE) {
-            header("Location: admin_usuarios.php");
-            exit();
-        } else {
-            echo "Error al crear usuario: " . $connec->error;
-        }
+    if (strlen($password) < 6) {
+        $error = "La contraseña debe tener al menos 6 caracteres.";
+    } elseif ($avatar['error'] !== 0) {
+        $error = "Error al subir el avatar.";
     } else {
-        echo "Error al subir el archivo. Asegúrese de que sea una imagen válida.";
+        $extensiones_permitidas = ['jpg', 'jpeg', 'png', 'gif'];
+        $nombre_archivo = $avatar['name'];
+        $extension = strtolower(pathinfo($nombre_archivo, PATHINFO_EXTENSION));
+
+        if (!in_array($extension, $extensiones_permitidas)) {
+            $error = "Formato de avatar no permitido.";
+        } else {
+            $nuevo_nombre = uniqid() . "." . $extension;
+            $ruta_destino = "avatars/" . $nuevo_nombre;
+            if (!is_dir("avatars")) mkdir("avatars");
+
+            if (move_uploaded_file($avatar['tmp_name'], $ruta_destino)) {
+                $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+                $stmt = $connec->prepare("INSERT INTO usuario (username, nom_usuario, puesto, password, codigo_seguridad, avatar) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("ssssss", $username, $nom_usuario, $puesto, $password_hash, $codigo_seguridad, $ruta_destino);
+
+                if ($stmt->execute()) {
+                    $success = "Usuario creado exitosamente.";
+                } else {
+                    $error = "Error al insertar en la base de datos.";
+                }
+                $stmt->close();
+            } else {
+                $error = "Error al mover el archivo del avatar.";
+            }
+        }
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -117,6 +137,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form-buttons a:hover {
             background-color: #3a4060;
         }
+        .alert {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .alert-error {
+            background-color: #ff6b6b;
+            color: #fff;
+        }
+        .alert-success {
+            background-color: #51cf66;
+            color: #fff;
+        }
     </style>
 </head>
 <body class="crearusuariocontainer">
@@ -124,6 +158,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include('barras/sidebar-usuario.php'); ?>
     <div class="form-container">
         <h1>Crear Nuevo Usuario</h1>
+        
+        <?php if ($error): ?>
+            <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+        
+        <?php if ($success): ?>
+            <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
+        <?php endif; ?>
+        
         <form action="crear_usuario.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="username">Usuario</label>
@@ -149,7 +192,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" required>
+                <input type="password" name="password" id="password" required minlength="6">
+                <small style="color: #aaa;">Mínimo 6 caracteres</small>
             </div>
 
             <div class="form-group">
@@ -159,7 +203,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
                 <label for="avatar">Subir Avatar (Imagen)</label>
-                <input type="file" name="avatar" id="avatar" accept="image/*" required>
+                <input type="file" name="avatar" id="avatar" accept="image/jpeg, image/png, image/gif" required>
+                <small style="color: #aaa;">Formatos aceptados: JPG, PNG, GIF</small>
             </div>
 
             <div class="form-buttons">

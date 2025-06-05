@@ -6,65 +6,114 @@
   <link rel="stylesheet" href="estilos.css">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right,rgb(66, 112, 153),rgb(33, 86, 146)); /* Desvanecido azul intermedio */
+  margin: 0;
+  padding: 0;
+}
 
-    .contenido-vision {
-      margin-top: 120px; /* Desplaza el contenido para que no lo tape el header */
-      padding: 40px;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+
+    .contenido-estatico {
       display: flex;
-      align-items: flex-start;
-      gap: 40px;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    .contenedor-flex {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 1100px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .contenido-texto {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       background-color: #ffffff;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
+      position: relative;
     }
 
-    .texto-vision {
-      flex: 1.5;
+    .burbuja-contenido {
+      background-color: #ffffff;
+      border-radius: 60px 60px 60px 0;
+      padding: 30px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
     }
 
-    .texto-vision h1 {
-      font-size: 36px;
-      color: #007BFF;
+    .img-persona {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    .titulo-mision {
+      text-align: center;
+      font-size: 1.5em;
+      color: #333;
       margin-bottom: 20px;
     }
 
-    .texto-vision p {
-      font-size: 18px;
-      line-height: 1.7;
-      color: #444;
-      margin-bottom: 16px;
+    .burbuja-contenido p {
+      font-size: 1em;
+      line-height: 1.6;
+      color: #555;
+      text-align: center;
     }
 
-    .imagen-vision {
-      flex: 1.2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .btn-aprende-mas {
+      display: inline-block;
+      background-color: #ff6b00;
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      margin: 20px auto 0;
+      text-align: center;
     }
 
-    .imagen-vision img {
+    .creditos {
+      font-size: 0.8em;
+      color: #999;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .imagen-mision {
+      flex: 1;
+      min-height: 300px;
+    }
+
+    .imagen-mision img {
       width: 100%;
-      max-width: 500px;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    @media (max-width: 992px) {
-      .contenido-vision {
+    @media screen and (max-width: 992px) {
+      .contenedor-flex {
         flex-direction: column;
-        padding: 20px;
       }
-      .imagen-vision {
+
+      .imagen-mision {
         order: -1;
+        height: 250px;
+      }
+
+      .imagen-mision img {
+        border-radius: 0 0 20px 20px;
       }
     }
   </style>
@@ -73,7 +122,10 @@
 
   <?php include('barras/navbar-cliente.php'); ?>
 
-  <div class="contenido-vision">
+  <main class="contenido-estatico">
+    <div class="contenedor-flex">
+      <div class="contenido-texto">
+        <div class="burbuja-contenido">
     <div class="texto-vision">
       <h1>Nuestra Visión</h1>
       <p>Nuestra visión en CarByte es convertirnos en la plataforma automotriz digital más reconocida, confiable e innovadora de Guatemala y Centroamérica, siendo un referente regional en la transformación de la experiencia de compra, venta y gestión de vehículos. Aspiramos a liderar un cambio cultural en la forma en que los guatemaltecos se relacionan con la movilidad, pasando de modelos tradicionales a experiencias digitales ágiles, transparentes y centradas en el usuario.</p>
@@ -87,9 +139,11 @@
       <p>En resumen, la visión de CarByte es clara: ser líderes en innovación automotriz digital en Guatemala, crear impacto positivo en la vida de nuestros usuarios y en el entorno, y construir el futuro de la movilidad con pasión, tecnología y propósito. Porque donde otros ven autos, nosotros vemos caminos, proyectos, metas y el comienzo de algo nuevo para cada uno de nuestros usuarios.</p>
     </div>
     <div class="imagen-vision">
-      <img src="imagenes/vision.png" alt="Visión CarByte">
-    </div>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUnyDCoad43Ora59fM7VLsiRkT8b4iCeHOEw&s" alt="Visión CarByte">
+    </div>"
   </div>
+</main>
 
+  <script src="js/Menu.js"></script>
 </body>
 </html>

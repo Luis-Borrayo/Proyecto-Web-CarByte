@@ -72,9 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar'])) {
 }
 
 // Establecer ruta del avatar
-$avatar_path = !empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usuario['avatar']) 
-    ? '../' . $usuario['avatar'] 
-    : $default_avatar;
+$base_url = '/Proyecto-Web-CarByte/';
+$avatar_path = (!empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usuario['avatar']))
+    ? $base_url . $usuario['avatar']
+    : $base_url . 'assets/images/default-avatar.jpg';
+
 ?>
 
 <!DOCTYPE html>
@@ -211,14 +213,14 @@ $avatar_path = !empty($usuario['avatar']) && file_exists(__DIR__ . '/../' . $usu
         </div>
         <div class="menu-section">
             <h3 class="titlesidebar">Panel</h3>
-            <a href="../index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
-            <a href="../dashboard/dashboard-clientes.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Clientes</span></a>
-            <a href="../dashboard/dashboard-ventas.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Ventas</span></a>
-            <a href="../dashboard/dashboard-admin.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Vendedores</span></a>
-            <a href="../admin_usuarios.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar usuarios</span></a>
-            <a href="../admin_clientes.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar clientes</span></a>
-            <a href="/../ventas.php"><i class="fa-solid fa-cart-shopping"></i><span class="link-disebar">Registro ventas productos</span></a>
-            <a href="/../vehiculos-ventas.php"><i class="fa-solid fa-car-side"></i><span class="link-disebar">Registro ventas vehiculos</span></a>
+            <a href="/Proyecto-Web-CarByte/index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
+            <a href="/Proyecto-Web-CarByte/dashboard/dashboard-clientes.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Clientes</span></a>
+            <a href="/Proyecto-Web-CarByte/dashboard/dashboard-ventas.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Ventas</span></a>
+            <a href="/Proyecto-Web-CarByte/dashboard/dashboard-admin.php"><i class="fa-solid fa-square-poll-vertical"></i><span class="link-disebar">Dashboard Vendedores</span></a>
+            <a href="/Proyecto-Web-CarByte/admin_usuarios.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar usuarios</span></a>
+            <a href="/Proyecto-Web-CarByte/admin_clientes.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Administrar clientes</span></a>
+            <a href="/Proyecto-Web-CarByte/ventas.php"><i class="fa-solid fa-cart-shopping"></i><span class="link-disebar">Registro ventas productos</span></a>
+            <a href="/Proyecto-Web-CarByte/vehiculos-ventas.php"><i class="fa-solid fa-car-side"></i><span class="link-disebar">Registro ventas vehiculos</span></a>
         </div>
     </div>
 <script>
