@@ -33,7 +33,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <span class="logo-text">CarByte</span>
         </div>
         <nav class="nav-links">
-            <a href="./index.php" class="navbarlinka">Inicio</a>
+            <a href="/Proyecto-Web-CarByte//index.php" class="navbarlinka">Inicio</a>
             <a href="Mision.php" class="navbarlinka">Mision</a>
             <a href="Vision.php" class="navbarlinka">Vision</a>
             <a href="accesorios.php" class="navbarlinka">Productos</a>
@@ -44,11 +44,6 @@ if (session_status() === PHP_SESSION_NONE) {
                         <span class="welcome-text">Bienvenido: <?php echo htmlspecialchars($_SESSION['username']); ?></span>
                     </a>
                     <ul class="dropdown-content">
-                        <li class="logmenu">
-                            <a href="perfil.php">
-                                <i class="material-icons">person</i> Mi Perfil
-                            </a>
-                        </li>
                         <li class="logmenu">
                             <a href="/Proyecto-Web-CarByte/crudWeb/logout.php" onclick="return confirm('¿Desea cerrar sesión?')">
                                 <i class="material-icons">logout</i> Cerrar Sesión

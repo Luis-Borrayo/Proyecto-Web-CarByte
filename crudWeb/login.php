@@ -23,9 +23,6 @@
             Mostrar contraseña</label>
         </div>
         <div>
-            <label class="txt-login" for="check">
-            <input type="checkbox" name="check" id="check-remenber" onclick="recordarusuario()">
-            Recordar usuario</label>
             <a class="check-recordar btn-modal" href="#" data-modal-target="modalRecuperaruser">¿Olvidé mi contraseña?</a>
         </div>
         </div>

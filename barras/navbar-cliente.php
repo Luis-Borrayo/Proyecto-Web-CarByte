@@ -48,11 +48,6 @@ error_reporting(E_ALL);
                     </a>
                     <ul class="dropdown-content">
                         <li class="logmenu">
-                            <a href="perfil.php">
-                                <i class="material-icons">person</i> Mi Perfil
-                            </a>
-                        </li>
-                        <li class="logmenu">
                             <a href="/Proyecto-Web-CarByte/crudWeb/logout.php" onclick="return confirm('¿Desea cerrar sesión?')">
                                 <i class="material-icons">logout</i> Cerrar Sesión
                             </a>

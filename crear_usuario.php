@@ -182,7 +182,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="puesto">Puesto</label>
                 <select name="puesto" id="puesto" required>
                     <option value="">Seleccione un puesto</option>
-                    <option value="Cliente">Cliente</option>
                     <option value="Vendedor">Vendedor</option>
                     <option value="Admin">Admin</option>
                     <option value="Gerente">Gerente</option>

@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+$tipo = $_SESSION['tipo_usuario'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -113,8 +115,20 @@ session_start();
     }
   </style>
 </head>
-<body>
-  <?php include('barras/navbar-cliente.php'); ?>
+<body class="body-index <?php echo ($tipo === 'cliente' || $tipo === 'usuario') ? 'con-sidebar' : ''; ?>">
+    <?php 
+    if ($tipo === 'cliente'){
+        include('barras/navbar-cliente.php');
+        include('barras/sidebar-cliente.php');
+    }
+    elseif ($tipo === 'usuario'){
+        include('barras/navbar-usuario.php');
+        include('barras/sidebar-usuario.php');
+    }
+    else {
+        include('barras/navbar.php');
+    }
+    ?>
 
   <main>
     <div class="contenedor-flex">

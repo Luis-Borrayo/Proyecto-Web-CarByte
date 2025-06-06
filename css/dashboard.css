@@ -1,17 +1,18 @@
 .body-dashboard{
-    background-color: #694786;
+    background-color: #3758a0;/*694786*/
     margin: 0;
     margin-top: 70px;
     margin-left: 70px;
 }
+
 .contenedor-dashboardy{
-    background-color: #694786;
+    background-color: #3758a0;
     box-sizing: border-box;
     flex-wrap: wrap;
     flex-wrap: wrap;
 }
 .titutlo-dash{
-    background-color: #694786;
+    background-color: #3758a0;
     width: 100%;
     display: flex;
     box-sizing: border-box;
@@ -23,7 +24,7 @@
     color: #cdb3b1;
 }
 .contenedor-filtros{
-    background-color: #694786;
+    background-color: #3758a0;
     width: 100%;
     display: flex;
     box-sizing: border-box;
@@ -50,7 +51,7 @@
     background-color: #879cb7;
 }
 .tarjetas-container{
-    background: linear-gradient(to bottom, #694786, #522B5B);
+    background: linear-gradient(to bottom, #3758a0, #1e3360);
     width: 100%;
     display: flex;
     box-sizing: border-box;
@@ -84,7 +85,7 @@
     transition: all 0.3s ease;
 }
 .graficas-container{
-    background-color: #522B5B;
+    background-color: #1e3360;
     width: 100%;
     height: auto;
     display: flex;
@@ -99,7 +100,7 @@
     
 }
 .tabla-container{
-    background-color: #522B5B;
+    background-color: #1e3360;
     width: 100%;
     height: auto;
     display: flex;

@@ -18,10 +18,7 @@
             <input type="checkbox" name="mostrs-pass"id="check-ver" onclick="mostrarpass()"> 
             Mostrar contraseña</label>
         </div>
-        <div>
-            <label class="txt-login" for="check">
-            <input type="checkbox" name="check" id="check-remenber" onclick="recordarusuario()">
-            Recordar usuario</label>
+        <div>   
             <a class="check-recordar btn-modal" href="#" data-modal-target="modalRecuperar">¿Olvidé mi contraseña?</a>
         </div>
         </div>

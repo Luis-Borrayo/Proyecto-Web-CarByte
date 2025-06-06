@@ -55,7 +55,7 @@ if (isset($_GET['enviado']) && $_GET['enviado'] == 1) {
     <link rel="stylesheet" href="./css/citas-compras.css">
     <title>Document</title>
 </head>
-<body class="citas-contac">
+<body class="body-index <?php echo ($tipo === 'cliente' || $tipo === 'usuario') ? 'con-sidebar' : ''; ?>">
     <?php if (isset($_GET['enviado'])): ?>
     <script>alert('Mensaje enviado correctamente.');</script>
     <?php endif; ?>

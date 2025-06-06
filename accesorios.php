@@ -1,9 +1,25 @@
 <?php
 session_start();
-include('conexion.php');
 
 $tipo = $_SESSION['tipo_usuario'] ?? null;
-if ($tipo === 'cliente'){
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarByte | Venta de Autos</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/Menu.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/ingreso.css">
+    <link rel="stylesheet" href="css/portada.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
+</head>
+<body class="body-index">
+    <?php 
+    if ($tipo === 'cliente'){
         include('barras/navbar-cliente.php');
         include('barras/sidebar-cliente.php');
     }
@@ -14,107 +30,17 @@ if ($tipo === 'cliente'){
     else {
         include('barras/navbar.php');
     }
-?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Accesorios</title>
-        <link rel="stylesheet" href=".css/styles.css">
-        <link rel="stylesheet" href=".css/Menu.css">
-    <link rel="stylesheet" href=".css/modal.css">
-    <link rel="stylesheet" href=".css/ingreso.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
-</head>
-  <style>
-    .contenedor-accesorios {
-      max-width: 1200px;
-      margin: auto;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .contenedor-accesorios h2 {
-      margin-bottom: 30px;
-      font-size: 2rem;
-    }
-
-    .grid-accesorios {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .card-accesorio {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      padding: 20px;
-      transition: transform 0.2s ease;
-    }
-
-    .card-accesorio:hover {
-      transform: translateY(-5px);
-    }
-
-    .card-accesorio img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .card-accesorio h3 {
-      font-size: 1.1rem;
-      margin: 15px 0 10px;
-    }
-
-    .card-accesorio p {
-      font-size: 0.95rem;
-      color: #444;
-      margin-bottom: 15px;
-    }
-
-    .card-accesorio button {
-      background-color:rgb(0, 0, 0);
-      color: #fff;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    .card-accesorio button:hover {
-      background-color: #a00000;
-    }
-
-    .footer {
-      background-color: #f2f2f2;
-      padding: 20px;
-      text-align: center;
-      color: #333;
-      font-size: 0.9rem;
-      margin-top: 40px;
-    }
-  </style>
-</head>
-<body class="body-index">
-        <div class="space"></div>
-  <main class="contenedor-accesorios">
-    
-        <section id="accesorios">
-            <h1>Accesorios</h1>
+    ?>
+        <div class="tituloscontainer">
+          <label class="titlesucursales">Accesorios</label>
+        </div>
             <div class="accesorios-container">
                 <div class="accesorio-card">
                     <img src="imagenes/accesorio1.jpg" alt="Accesorio 1">
                     <div class="accesorio-info">
                         <h3>Rines Deportivos</h3>
                         <p>Personaliza tu auto con estilo y resistencia.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -122,7 +48,7 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Tapicería Premium</h3>
                         <p>Mejora el confort y la elegancia interior.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -130,7 +56,7 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Alfombrilla</h3>
                         <p>Para cuidar el interior de vehiculo.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -138,7 +64,7 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Película Polarizada</h3>
                         <p>Protección solar y privacidad para tu vehículo.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -146,7 +72,7 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Sensores de Reversa</h3>
                         <p>Mayor seguridad al estacionarte.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -154,7 +80,7 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Sistema de Navegación GPS</h3>
                         <p>Llega a tu destino sin perderte.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -162,7 +88,7 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Portabicicletas</h3>
                         <p>Ideal para tus viajes y aventuras al aire libre.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -170,7 +96,7 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Cargador Inalámbrico</h3>
                         <p>Recarga tu celular sin cables mientras conduces.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -178,7 +104,7 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Fundas para Asientos</h3>
                         <p>Protege y renueva el interior de tu auto.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
                 <div class="accesorio-card">
@@ -186,60 +112,78 @@ if ($tipo === 'cliente'){
                     <div class="accesorio-info">
                         <h3>Protector de Cajuela</h3>
                         <p>Mantén limpia y ordenada la cajuela de tu auto.</p>
-                        <button>Agregar al carrito</button>
+                        <a href="citas.php">Agendar cita</a>
                     </div>
                 </div>
-
-      <div  class="accesorio-card">
-        <img src="imagenes/accesorio11.jpg" alt="Accesorio 11">
-        <div class="accesorio-info">
-        <h3>Deflectores de Viento</h3>
-        <p>Circulación de aire sin entrada de agua o polvo.</p>
-        <button>Agregar al carrito</button>
-          </div>
-      </div>
-
-      <div  class="accesorio-card">
-        <img src="imagenes/accesorio12.jpg" alt="Accesorio 12">
-        <div class="accesorio-info">
-        <h3>Sistema de Alarma</h3>
-        <p>Protege tu vehículo contra robos.</p>
-        <button>Agregar al carrito</button>
-          </div>
-      </div>
-
-      <div  class="accesorio-card">
-        <img src="imagenes/accesorio13.jpg" alt="Accesorio 13">
-        <div class="accesorio-info">
-        <h3>Rastreador Satelital</h3>
-        <p>Ubica tu auto en tiempo real en caso de emergencia.</p>
-        <button>Agregar al carrito</button>
-          </div>
-      </div>
-
-      <div  class="accesorio-card">
-        <img src="imagenes/accesorio14.jpg" alt="Accesorio 14">
-        <div class="accesorio-info">
-        <h3>Kit de Seguridad</h3>
-        <p>Incluye extintor, triángulo y botiquín básico.</p>
-        <button>Agregar al carrito</button>
-          </div>
-      </div>
-
-      <div  class="accesorio-card">
-        <img src="imagenes/accesorio15.jpg" alt="Accesorio 15">
-        <div class="accesorio-info">
-        <h3>Luces LED Personalizadas</h3>
-        <p>Ilumina con estilo el interior o exterior del auto.</p>
-        <button>Agregar al carrito</button>
-          </div>
-      </div>
+                <div  class="accesorio-card">
+                    <img src="imagenes/accesorio11.jpg" alt="Accesorio 11">
+                    <div class="accesorio-info">
+                      <h3>Deflectores de Viento</h3>
+                      <p>Circulación de aire sin entrada de agua o polvo.</p>
+                      <a href="citas.php">Agendar cita</a>
+                    </div>
+                </div>
+                <div  class="accesorio-card">
+                    <img src="imagenes/accesorio12.jpg" alt="Accesorio 12">
+                    <div class="accesorio-info">
+                      <h3>Sistema de Alarma</h3>
+                      <p>Protege tu vehículo contra robos.</p>
+                      <a href="citas.php">Agendar cita</a>
+                    </div>
+                </div>
+                <div  class="accesorio-card">
+                  <img src="imagenes/accesorio13.jpg" alt="Accesorio 13">
+                  <div class="accesorio-info">
+                    <h3>Rastreador Satelital</h3>
+                    <p>Ubica tu auto en tiempo real en caso de emergencia.</p>
+                    <a href="citas.php">Agendar cita</a>
+                    </div>
+                </div>
+                <div  class="accesorio-card">
+                  <img src="imagenes/accesorio14.jpg" alt="Accesorio 14">
+                  <div class="accesorio-info">
+                    <h3>Kit de Seguridad</h3>
+                    <p>Incluye extintor, triángulo y botiquín básico.</p>
+                    <a href="citas.php">Agendar cita</a>
+                  </div>
+                </div>
+                <div  class="accesorio-card">
+                  <img src="imagenes/accesorio15.jpg" alt="Accesorio 15">
+                  <div class="accesorio-info">
+                    <h3>Luces LED Personalizadas</h3>
+                    <p>Ilumina con estilo el interior o exterior del auto.</p>
+                    <a href="citas.php">Agendar cita</a>
+                  </div>
+                </div>
 
     </div>
-  </main>
+<footer class="footerindex">
+    <div class="footercontainer">
+      <div class="footercol">
+        <h4 class="footercoltitle">Contacto</h4>
+        <p>info@carbyte.com.gt</p>
+        <p>Lunes - Viernes, 8:00am - 4:00pm</p>
+        <p>PBX: 2228-6100</p>
+        <p>Whatsapp: +502 5638-9688</p>
+      </div>
 
-  <footer class="footer">
-    <p>&copy; 2025 CarByte Guatemala - Todos los derechos reservados</p>
+      <div class="footercol">
+        <h4 class="footercoltitle">Agencias</h4>
+        <ul>
+          <li>CarByte La República</li>
+          <li>CarByte Santa Fe</li>
+          <li>CarByte Las Américas</li>
+          <li>CarByte Zona 10</li>
+          <li>CarByte CA Salvador</li>
+        </ul>
+      </div>
+
+      <div class="footercol">
+        <h4 class="footercoltitle">&copy; 2025 CarByte Guatemala</h4>
+        <p>Derechos Reservados</p>
+        <img src="/Proyecto-Web-CarByte/imagenes/CarByte.png" alt="Logo Toyota" class="footerlogo">
+      </div>
+    </div>
   </footer>
 </body>
 </html>

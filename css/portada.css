@@ -1,0 +1,152 @@
+.contenedor-principal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+    gap: 0;
+}
+
+.rutascontainerizquierda {
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0px;
+}
+
+.rutascontainerderecha {
+    width: 40%;
+    display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.imagenportada {
+    position: relative;
+    width: 45%;
+    height: 65%px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+}
+
+.videoportadaleft {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 5px 0 5px 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.imagenportada:hover,
+.videoportadaleft:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.imgmenu,
+.imgmenuleft {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.imagenportadalink,
+.videoportadalinkleft {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.textmenu {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 1px 1px 4px #000;
+    pointer-events: none;
+    line-height: 1.2;
+}
+.containercintaportada{
+    margin-top: 4%;
+    width: 100%;
+    background-color: #694516;
+    justify-items: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    flex-wrap: wrap;
+}
+.textcinta{
+    margin-bottom: 1%;
+    color: #000;
+    font-weight: bold;
+}
+.iconosportada {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.iconosportada i{
+    color: #000;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.cintaportadaimg{
+    width: 100%;
+    margin-bottom: 4%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0%;
+}
+.footerindex {
+  background-color: #694516;
+  color: #000;
+  width: 100%;
+  padding: 20px 0;
+  font-family: sans-serif;
+}
+
+.footercontainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: auto;
+  margin: auto;
+  padding: 0px;
+}
+
+.footercol {
+  width: 300px;
+  margin: 10px;
+}
+
+.footercoltitle {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.footercol ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footercol ul li {
+  margin-bottom: 6px;
+}
+
+.footerlogo{
+    width: 100px;
+}
