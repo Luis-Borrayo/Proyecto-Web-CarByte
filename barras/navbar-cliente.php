@@ -34,12 +34,12 @@ error_reporting(E_ALL);
             <span class="logo-text">CarByte</span>
         </div>
         <nav class="nav-links">
-            <a href="./index.php" class="navbarlinka">Inicio</a>
-            <a href="Mision.php" class="navbarlinka">Mision</a>
-            <a href="Vision.php" class="navbarlinka">Vision</a>
-            <a href="accesorios.php" class="navbarlinka">Productos</a>
-            <a href="contacto.php" class="navbarlinka">Contacto</a>
-            <a href="./citas.php" class="navbarlinka">Citas</a>
+            <a href="/Proyecto-Web-CarByte/index.php" class="navbarlinka">Inicio</a>
+            <a href="/Proyecto-Web-CarByte/Mision.php" class="navbarlinka">Mision</a>
+            <a href="/Proyecto-Web-CarByte/Vision.php" class="navbarlinka">Vision</a>
+            <a href="/Proyecto-Web-CarByte/accesorios.php" class="navbarlinka">Productos</a>
+            <a href="/Proyecto-Web-CarByte/contacto.php" class="navbarlinka">Contacto</a>
+            <a href="/Proyecto-Web-CarByte/citas.php" class="navbarlinka">Citas</a>
 
             <div class="user-menu dropdown">
                 <?php if (isset($_SESSION['username'])): ?>
