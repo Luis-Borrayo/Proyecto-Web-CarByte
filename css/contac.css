@@ -71,7 +71,7 @@
 /* --- Lado derecho: formulario --- */
 .form-container {
   width: 40%;
-  background-color: #d0f0f9;
+  background-color: #293855;
   padding: 70px;
   box-sizing: border-box;
   margin: 0%;
@@ -79,13 +79,14 @@
 
 .form-container h1 {
   font-size: 28px;
-  color: #16233c;
+  color: #ed9223;
   margin-bottom: 30px;
   text-align: center;
 }
 
 .formContac-container {
   display: flex;
+  color: #ce7d0c;
   flex-direction: column;
 }
 
