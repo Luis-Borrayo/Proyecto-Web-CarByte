@@ -12,7 +12,7 @@ session_start();
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, rgb(66, 112, 153), rgb(33, 86, 146));
+      background: linear-gradient(to bottom right,rgb(15, 55, 95),rgb(12, 53, 107));
       margin: 0;
       padding: 0;
     }
@@ -26,9 +26,9 @@ session_start();
     .contenedor-flex {
       display: flex;
       flex-wrap: wrap;
-      background-color: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      background-color:rgb(100, 152, 161);
+      border-radius: 30px;
+      box-shadow:  0 4px 15px rgb(0, 0, 0);
       max-width: 1100px;
       width: 100%;
       overflow: hidden;
@@ -51,7 +51,7 @@ session_start();
     }
 
     .burbuja-contenido {
-      background-color: #f7f7f7;
+      background: linear-gradient(to bottom right,rgb(143, 176, 208),rgb(48, 81, 124));
       border-radius: 20px;
       padding: 25px 30px;
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);

@@ -15,7 +15,7 @@ session_start();
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #3b82a0, #225986);
+      background: linear-gradient(to bottom right,rgb(15, 55, 95),rgb(12, 53, 107));
       margin: 0;
       padding: 0;
     }
@@ -29,11 +29,11 @@ session_start();
     .contenedor-flex {
       display: flex;
       flex-wrap: wrap;
-      background-color: #fff;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      background-color:  #1a1a1a;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgb(0, 0, 0);
       max-width: 1100px;
-      width: 100%;
+      width: 120%;
       overflow: hidden;
     }
 
@@ -54,7 +54,7 @@ session_start();
     }
 
     .burbuja-contenido {
-      background-color: #f7f7f7;
+      background: linear-gradient(to bottom right,rgb(143, 176, 208),rgb(48, 81, 124));
       border-radius: 20px;
       padding: 25px 30px;
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
@@ -63,13 +63,13 @@ session_start();
     .burbuja-contenido p {
       font-size: 1.05em;
       line-height: 1.8;
-      color: #444;
+      color: #1a1a1a;
       margin-bottom: 20px;
     }
 
     .btn-aprende-mas {
       display: block;
-      background-color: #ff6b00;
+      background-color:rgb(241, 134, 57);
       color: white;
       text-decoration: none;
       padding: 14px 28px;
