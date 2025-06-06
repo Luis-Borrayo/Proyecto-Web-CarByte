@@ -31,6 +31,7 @@ $tipo = $_SESSION['tipo_usuario'] ?? null;
         include('barras/navbar.php');
     }
     ?>
+        
             <div class="tituloscontainer">
                 <label class="titulo-Vehiculo">Catálogo de Vehículos</label>
             </div>
@@ -235,6 +236,25 @@ $tipo = $_SESSION['tipo_usuario'] ?? null;
       </div>
     </div>
   </footer>
+<script>
+  document.querySelectorAll('.btn-detalles').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const veh = btn.closest('.vehiculo');
+      const popup = veh.querySelector('.detalle-popup');
 
+      document.querySelectorAll('.detalle-popup.mostrar')
+        .forEach(p => { if(p!==popup) p.classList.remove('mostrar'); });
+
+      popup.classList.toggle('mostrar');
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.vehiculo')) {
+      document.querySelectorAll('.detalle-popup.mostrar')
+              .forEach(p => p.classList.remove('mostrar'));
+    }
+  });
+</script>
 </body>
 </html>

@@ -222,26 +222,6 @@ $tipo = $_SESSION['tipo_usuario'] ?? null;
             lastScrollTop = scrollTop;
         });
     </script>
-<script>
-  document.querySelectorAll('.btn-detalles').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const veh = btn.closest('.vehiculo');
-      const popup = veh.querySelector('.detalle-popup');
-
-      document.querySelectorAll('.detalle-popup.mostrar')
-        .forEach(p => { if(p!==popup) p.classList.remove('mostrar'); });
-
-      popup.classList.toggle('mostrar');
-    });
-  });
-
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.vehiculo')) {
-      document.querySelectorAll('.detalle-popup.mostrar')
-              .forEach(p => p.classList.remove('mostrar'));
-    }
-  });
-</script>
 
 <script>
   const carrusel = document.getElementById('conteItemsCarrusel');
