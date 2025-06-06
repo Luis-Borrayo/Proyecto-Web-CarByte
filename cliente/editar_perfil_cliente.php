@@ -10,6 +10,7 @@ include('../conexion.php');
 
 $id = $_SESSION['id'];
 
+// Obtener todos los datos necesarios del usuario
 $sql = "SELECT username, nom_usuario FROM clientes WHERE Id = ?";
 $stmt = $connec->prepare($sql);
 $stmt->bind_param("i", $id);
@@ -150,21 +151,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST">
             <div class="form-group">
                 <label for="username">Nombre de usuario</label>
-                <input type="text" id="username" name="username" 
-                    value="<?php echo htmlspecialchars($cliente['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
-                    required>
+                <input type="text" id="username" name="username"
+                       value="<?php echo htmlspecialchars($cliente['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
+                       required>
             </div>
 
             <div class="form-group">
                 <label for="nom_usuario">Nombre completo</label>
-                <input type="text" id="nom_usuario" name="nom_usuario" 
-                    value="<?php echo htmlspecialchars($cliente['nom_usuario'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
-                    required>
+                <input type="text" id="nom_usuario" name="nom_usuario"
+                       value="<?php echo htmlspecialchars($cliente['nom_usuario'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
+                       required>
             </div>
 
             <div class="form-group">
-                <label for="password">Nueva contraseña (dejar vacío si no desea cambiarla)</label>
-                <input type="password" id="password" name="password">
+                <label for="password">Nueva contraseña (dejar en blanco si no quieres cambiarla)</label>
+                <input type="password" id="password" name="password" placeholder="••••••••••">
             </div>
 
             <button type="submit" class="btn-guardar">Guardar Cambios</button>
