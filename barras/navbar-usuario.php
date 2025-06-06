@@ -50,7 +50,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             </a>
                         </li>
                         <li class="logmenu">
-                            <a href="crudWeb/logout.php" onclick="return confirm('¿Desea cerrar sesión?')">
+                            <a href="/Proyecto-Web-CarByte/crudWeb/logout.php" onclick="return confirm('¿Desea cerrar sesión?')">
                                 <i class="material-icons">logout</i> Cerrar Sesión
                             </a>
                         </li>

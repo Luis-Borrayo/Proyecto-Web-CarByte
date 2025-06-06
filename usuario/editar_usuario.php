@@ -1,9 +1,4 @@
 <?php
-// Aquí puedes incluir tu lógica PHP para traer los datos actuales del usuario
-// session_start();
-// require 'conexion.php';
-// $usuario = $_SESSION['usuario'];
-// $datos = obtenerDatosUsuario($usuario);
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Usuario</title>
-    <link rel="stylesheet" href="estilos.css"> <!-- Si tienes tu CSS global -->
+    <link rel="stylesheet" href="estilos.css">
     <style>
         body {
             background-color: #f5f5f5;

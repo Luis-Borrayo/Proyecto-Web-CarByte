@@ -1,4 +1,3 @@
-/* Contenedor del login */
 .login-container {
     border: 2px solid #0f1b32;
     background-color: #11203f;
@@ -8,24 +7,23 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 380px;
     transform: translate(-50%, -50%);
+    width: 350px;
+    padding: auto;
     display: flex;
-    box-sizing: border-box;
-    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-    z-index: 2001; /* Superior al navbar */
+    box-sizing: border-box;
+    z-index: 2001;
+    margin: auto;
 }
 
-/* Imagen superior */
 .login-container img {
-    width: 150px;
+    width: 125px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-/* Título */
 .login-container .titulo {
     font-size: 35px;
     font-family: 'Times New Roman', Times, serif;
@@ -33,7 +31,6 @@
     margin: 0px 10px 0px 5px;
 }
 
-/* Texto para los labels */
 .login-container .txt-login {
     font-size: 14px;
     margin: 5px 10px 5px 5px;
@@ -42,7 +39,6 @@
     color: #c7a190;
 }
 
-/* Campos de texto */
 .login-container .textbox-login {
     width: 100%;
     padding: 12px;
@@ -55,7 +51,6 @@
     color: #c7a190;
 }
 
-/* Grupo de campos */
 .login-container .login-group {
     width: 100%;
     margin-bottom: 20px;
@@ -64,7 +59,6 @@
     align-items: flex-start;
 }
 
-/* Checkboxes contenedor */
 .login-container .check-login {
     width: 100%;
     text-align:left;
@@ -72,7 +66,6 @@
     align-items:flex-start;
 }
 
-/* Checkboxes individuales */
 .login-container .check-login label {
     display: flex;
     align-items:flex-start;
@@ -86,7 +79,6 @@
     background-color: #11203f;
 }
 
-/* Botón ingresar */
 .login-container .btn-ingresar,
 .login-container a.btn-cancelar {
     display: inline-block;
@@ -101,6 +93,27 @@
     cursor: pointer;
     width: 110px;
     height: 45px;
+}
+
+.login-container .actualizar,
+.login-container a.cancelaract{
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #531a1a;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 45px;
+}
+
+.login-container .actuallizar:hover,
+.login-container a.cancelaract:hover{
+    background-color: #224367;
 }
 
 .login-container .btn-ingresar:hover {

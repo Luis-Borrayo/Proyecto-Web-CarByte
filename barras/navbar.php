@@ -83,6 +83,7 @@ error_reporting(E_ALL);
                         <i class="material-icons">person_add</i> Registrarse
                         </a>
                     </li>
+                    
                 </ul>
 
             <div id="modalLogin" class="modal">
@@ -103,6 +104,19 @@ error_reporting(E_ALL);
                     <?php include('crudWeb/registro.php'); ?>
                 </div>
             </div>
+            <div id="modalRecuperar" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="cerrarModal()">✖</span>
+                    <?php include('crudWeb/recuperar-pass.php'); ?>
+                </div>
+            </div>
+            <div id="modalRecuperaruser" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="cerrarModal()">✖</span>
+                    <?php include('crudWeb/recuperar-pass-usuario.php'); ?>
+                </div>
+            </div>
+
 <script>
     function bloquearscroll(){
         document.body.style.overflow='hidden';
@@ -146,6 +160,16 @@ error_reporting(E_ALL);
             modal.style.display = 'none';
             habilitarscroll();
         });
+    }
+
+    function mostrarLoginDesdeRecuperar() {
+    document.getElementById('modalRecuperar').style.display = 'none';
+    document.getElementById('modalLogin').style.display = 'flex';
+    }
+    
+    function mostrarLoginUserDesdeRecuperar() {
+    document.getElementById('modalRecuperaruser').style.display = 'none';
+    document.getElementById('modalLogin-usuario').style.display = 'flex';
     }
 </script>
                 <?php endif; ?>

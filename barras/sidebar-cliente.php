@@ -1,10 +1,8 @@
 <?php 
-// Iniciar sesión
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificar si el usuario está logueado
 if (!isset($_SESSION['id'])) {
     header('Location: ../login.php');
     exit;
@@ -12,11 +10,9 @@ if (!isset($_SESSION['id'])) {
 
 include(__DIR__ . "/../conexion.php");
 
-// Obtener ID de usuario de la sesión
 $id = $_SESSION['id'];
 $default_avatar = '../assets/images/default-avatar.jpg';
 
-// Consulta preparada
 $sql = "SELECT username, avatar FROM clientes WHERE Id = ?";
 $stmt = $connec->prepare($sql);
 
@@ -34,44 +30,35 @@ if (!$cliente) {
     exit;
 }
 
-// Procesar actualización de avatar
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar'])) {
     $avatar = $_FILES['avatar'];
     
-    // Validaciones
     $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-    $max_size = 2 * 1024 * 1024; // 2MB
+    $max_size = 2 * 1024 * 1024;
     
     if ($avatar['error'] === UPLOAD_ERR_OK && 
         in_array($avatar['type'], $allowed_types) && 
         $avatar['size'] <= $max_size) {
         
-        // Generar nombre único
         $ext = pathinfo($avatar['name'], PATHINFO_EXTENSION);
         $new_filename = uniqid('avatar_') . '.' . $ext;
         $upload_path = __DIR__ . '/../avatars/' . $new_filename;
         
-        // Mover archivo
         if (move_uploaded_file($avatar['tmp_name'], $upload_path)) {
-            // Eliminar avatar anterior si existe
             if (!empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cliente['avatar'])) {
                 unlink(__DIR__ . '/../' . $cliente['avatar']);
             }
-            
-            // Actualizar en BD
-            $new_avatar_path = 'avatars/' . $new_filename;
+                        $new_avatar_path = 'avatars/' . $new_filename;
             $update_sql = "UPDATE clientes SET avatar = ? WHERE Id = ?";
             $update_stmt = $connec->prepare($update_sql);
             $update_stmt->bind_param("si", $new_avatar_path, $id);
             $update_stmt->execute();
             
-            // Actualizar variable para mostrar
             $cliente['avatar'] = $new_avatar_path;
         }
     }
 }
 
-// Establecer ruta del avatar
 $base_url = '/Proyecto-Web-CarByte/';
 $avatar_path = (!empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cliente['avatar']))
     ? $base_url . $cliente['avatar']
@@ -188,8 +175,8 @@ $avatar_path = (!empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cl
     cursor: pointer;
         }
         .sidebar.collapsed .menu-section a {
-        margin-bottom: 20px; /* Ajusta el valor según necesites */
-        justify-content: center; /* Centra el ícono si ya no hay texto */
+        margin-bottom: 20px;
+        justify-content: center;
         }
     </style>
     <script src="https://kit.fontawesome.com/7339621b21.js" crossorigin="anonymous"></script>
@@ -209,16 +196,12 @@ $avatar_path = (!empty($cliente['avatar']) && file_exists(__DIR__ . '/../' . $cl
                 <label for="avatar">Cambiar avatar</label>
             </form>
         </div>
-<!-- ... Código anterior sin cambios ... -->
-
 <div class="menu-section">
     <h3 class="titlesidebar">Panel</h3>
     <a href="/Proyecto-Web-CarByte/index.php"><i class="fa-solid fa-house"></i><span class="link-disebar">Inicio</span></a>
     <a href="/Proyecto-Web-CarByte/citas.php"><i class="fa-solid fa-calendar-days"></i><span class="link-disebar">citas</span></a>
     <a href="/Proyecto-Web-CarByte/cliente/editar_perfil_cliente.php"><i class="fa-solid fa-pen-to-square"></i><span class="link-disebar">Editar perfil</span></a>
 </div>
-
-<!-- ... Resto del código sin cambios ... -->
 
     </div>
 <script>

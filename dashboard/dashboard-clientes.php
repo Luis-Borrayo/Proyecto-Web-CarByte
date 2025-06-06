@@ -2,12 +2,10 @@
 session_start();
 include('../conexion.php');
 
-// Captura de filtros
 $fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : '';
 $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : '';
 $zona = isset($_GET['zona']) ? $_GET['zona'] : '';
 
-// Armado de condiciones
 $condiciones = [];
 if (!empty($fecha_inicio) && !empty($fecha_fin)) {
     $condiciones[] = "(fecha BETWEEN '$fecha_inicio' AND '$fecha_fin')";
@@ -17,23 +15,19 @@ if (!empty($zona)) {
 }
 $where = (count($condiciones) > 0) ? 'WHERE ' . implode(' AND ', $condiciones) : '';
 
-// Clientes registrados (no depende de filtro)
 $sqltotalCL = "SELECT COUNT(*) AS totalclientes FROM clientes";
 $resultadocl = $connec->query($sqltotalCL);
 $fila = $resultadocl->fetch_assoc();
 $totalclientes = $fila['totalclientes'];
 
-// Zonas diferentes filtradas
 $sqlubiD = "SELECT COUNT(DISTINCT direccion_zona) AS ubicacion_dictinta FROM ventas $where";
 $resultadoZona = $connec->query($sqlubiD);
 $ubicaciones = $resultadoZona->fetch_assoc()['ubicacion_dictinta'] ?? 0;
 
-// Cantidad de ventas filtradas
 $sqlventastiempo = "SELECT COUNT(*) AS ventasperiodo FROM ventas $where";
 $resutadoVentas = $connec->query($sqlventastiempo);
 $totalventas = $resutadoVentas->fetch_assoc()['ventasperiodo'] ?? 0;
 
-// Promedio de compras (ventas + vehículos)
 $whereVehiculos = '';
 if (!empty($fecha_inicio) && !empty($fecha_fin)) {
     $whereVehiculos = "WHERE fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'";
@@ -46,7 +40,6 @@ SELECT (
 $resulprecio = $connec->query($promedioVentas);
 $totalprecio = $resulprecio->fetch_assoc()['promedio'] ?? 0;
 
-// Gráfica circular
 $sqlGCircule = "SELECT direccion_zona, COUNT(*) AS totalGrafica1 FROM ventas $where GROUP BY direccion_zona";
 $resultGrafica1 = $connec->query($sqlGCircule);
 $labelG1 = [];
@@ -56,7 +49,6 @@ while ($row = $resultGrafica1->fetch_assoc()) {
     $datosG1[] = $row['totalGrafica1'];
 }
 
-// Gráfica de barras: top vehículos
 $sqlTopAuto = "SELECT vehiculo, COUNT(*) AS totalauto FROM vehiculos $whereVehiculos GROUP BY vehiculo ORDER BY totalauto DESC LIMIT 3";
 $resultAuto = $connec->query($sqlTopAuto);
 $vehiculos = [];
@@ -188,21 +180,21 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
             label: 'Clientes por zona',
             data: <?= json_encode($datosG1) ?>,
             backgroundColor: ['#E39A78','#B97972','#A99BAE','#71555C','#68442C','#7E8988','#A75953','#B27F84'],
-            borderColor: 'transparent' // ← Elimina borde blanco entre secciones
+            borderColor: 'transparent'
         }]
     },
     options: {
         responsive: true,
         maintainAspectRatio: false,
         layout: {
-            padding: 0 // Quita padding interno del gráfico
+            padding: 0
         },
         plugins: {
             legend: {
                 position: 'bottom',
                 labels: {
-                    color: '#fff', // Color del texto de leyenda
-                    boxWidth: 12,   // Tamaño del cuadrado de color
+                    color: '#fff',
+                    boxWidth: 12,
                     padding: 8
                 }
             },
@@ -217,7 +209,7 @@ while ($rowauto = mysqli_fetch_assoc($resultAuto)) {
         },
         elements: {
             arc: {
-                borderWidth: 0 // ← Esto elimina cualquier borde entre secciones
+                borderWidth: 0
             }
         }
     },

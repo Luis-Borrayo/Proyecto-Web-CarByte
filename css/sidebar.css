@@ -102,6 +102,6 @@
     cursor: pointer;
         }
         .sidebar.collapsed .menu-section a {
-        margin-bottom: 20px; /* Ajusta el valor según necesites */
-        justify-content: center; /* Centra el ícono si ya no hay texto */
+        margin-bottom: 20px;
+        justify-content: center;
         }

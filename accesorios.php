@@ -1,5 +1,19 @@
 <?php
 session_start();
+include('conexion.php');
+
+$tipo = $_SESSION['tipo_usuario'] ?? null;
+if ($tipo === 'cliente'){
+        include('barras/navbar-cliente.php');
+        include('barras/sidebar-cliente.php');
+    }
+    elseif ($tipo === 'usuario'){
+        include('barras/navbar-usuario.php');
+        include('barras/sidebar-usuario.php');
+    }
+    else {
+        include('barras/navbar.php');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -89,8 +103,6 @@ session_start();
   </style>
 </head>
 <body class="body-index">
-<?php include('barras/navbar-cliente.php')?>
-<?php include('barras/sidebar-cliente.php')?>
         <div class="space"></div>
   <main class="contenedor-accesorios">
     

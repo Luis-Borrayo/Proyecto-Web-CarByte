@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Verificar la conexión a la base de datos
 require_once 'conexion.php';
 ?>
 <!DOCTYPE html>
@@ -117,14 +116,11 @@ require_once 'conexion.php';
 
     <script src="js/Menu.js"></script>
     <script>
-    // Funciones JavaScript básicas para la interactividad
     function verDetalles(id) {
-        // Implementar lógica para ver detalles
         alert('Ver detalles del vehículo ' + id);
     }
 
     function agregarAlCarrito(id) {
-        // Implementar lógica para agregar al carrito
         alert('Producto agregado al carrito');
     }
     </script>
