@@ -1,6 +1,6 @@
 <div class="registro-container">
     <div class="login-container">
-        <label class="titulo">Registro de Usuario</label>
+        <label class="titulo">Registrar cliente</label>
         <form method="POST" action="crudWeb/procesar_registro.php">
             <label class="txt-login">Ingrese nombre de usuario:</label>
             <input type="text" name="user" class="textbox-login" placeholder="Nombre de usuario" required>
