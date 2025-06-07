@@ -39,7 +39,7 @@ if (!$cliente) {
         }
 
         .container {
-            max-width: 700px; /* Aumentado */
+            max-width: 700px;
             margin: 60px auto;
             background-color: #2e3856;
             padding: 30px;

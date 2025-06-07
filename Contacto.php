@@ -46,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body class="body-index <?php echo ($tipo === 'cliente' || $tipo === 'usuario') ? 'con-sidebar' : ''; ?>">
   <div class="contac-container">
 
-    <!-- Lado izquierdo -->
     <div class="contact-info">
       <h2 style="text-align: center;">Contáctanos</h2>
       <p class="descripcontac">Llama o visitanos por nuestros medios de comunicacion o completa el formulario
@@ -120,7 +119,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     </div>
 
-    <!-- Lado derecho -->
     <div id="contacto" class="form-container">
       <h1>Envía un mensaje</h1>
       <form class="formContac-container" method="post" action="#">
@@ -148,6 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </form>
     </div>
 
-  </div> <!-- Aquí sí se cierra correctamente contac-container -->
+  </div>
 </body>
 </html>

@@ -10,7 +10,6 @@ include('../conexion.php');
 
 $id = $_SESSION['id'];
 
-// Obtener todos los datos necesarios del usuario
 $sql = "SELECT username, nom_usuario FROM clientes WHERE Id = ?";
 $stmt = $connec->prepare($sql);
 $stmt->bind_param("i", $id);
